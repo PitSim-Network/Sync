@@ -1,0 +1,52 @@
+name: PitRemake
+authors:
+  - Kyro
+  - Wiji
+version: 1.0.0
+main: dev.kyro.pitsim.PitSim
+description: Remake of the Hypixel Pit
+depend:
+  - Citizens
+  - Vault
+  - PlaceholderAPI
+  - NoteBlockAPI
+  - ProtocolLib
+  - Essentials
+commands:
+  pitsim:
+  ps:
+  oof:
+  atest:
+  enchant:
+  fresh:
+  non:
+  show:
+  perks:
+  jewel:
+  market:
+  enchants:
+  setkills:
+  togglestereo:
+  donator:
+  renown:
+  bounty:
+  spawn:
+  changemap:
+  crategive:
+  cg:
+  afk:
+  pitreload:
+  setvalue:
+  check:
+  rape:
+  shop:
+  store:
+  discord:
+  disc:
+  booster:
+  boostergive:
+  fps:
+  resource:
+  lightning:
+  stat:
+  captcha:
