@@ -1,6 +1,8 @@
 package net.pitsim.sync.hypixel;
 
 import me.nullicorn.nedit.type.NBTCompound;
+import net.pitsim.sync.enums.PantColor;
+import org.bukkit.Bukkit;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,6 +24,7 @@ public class Mystic {
 	public long nonce;
 	public int tier;
 	public int lives;
+	public PantColor color;
 	public int maxLives;
 	public boolean isGemmed;
 	public Map<Enchant, Integer> enchantMap = new HashMap<>();
@@ -32,6 +35,8 @@ public class Mystic {
 		this.data = data;
 
 		try {
+
+//			Bukkit.broadcastMessage(data + "");
 
 			NBTCompound display = data.getCompound("tag").getCompound("display");
 			NBTCompound attributes = data.getCompound("tag").getCompound("ExtraAttributes");
@@ -46,6 +51,15 @@ public class Mystic {
 			nonce = attributes.getLong("Nonce", -1);
 			tier = attributes.getInt("UpgradeTier", -1);
 			lives = attributes.getInt("Lives", -1);
+
+
+			if(type == MysticType.PANTS) {
+				Bukkit.broadcastMessage(display.getInt("color", -1) + "");
+				for(PantColor value : PantColor.values()) {
+					if(value.decimalColor == display.getInt("color", -1)) color = value;
+				}
+			}
+
 			maxLives = attributes.getInt("MaxLives", -1);
 			isGemmed = attributes.containsKey("UpgradeGemsUses");
 			for(Object enchantObject : attributes.getList("CustomEnchants")) {
