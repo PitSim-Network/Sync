@@ -7,6 +7,7 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
+import net.pitsim.sync.hypixel.Enchant;
 import net.pitsim.sync.hypixel.HypixelAPI;
 import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.misc.Misc;
@@ -153,8 +154,10 @@ public class PlayerManager implements Listener {
 		Player player = event.getPlayer();
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 
-		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(UUID.fromString("5ad8e149-8ed8-49ee-9e3c-ff1c69f8e19c")));
-		Bukkit.broadcastMessage(hypixelPlayer.recentKills + "");
+		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(event.getPlayer().getUniqueId()));
+		HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
+
+		Enchant.sort();
 
 //		FeatherBoardAPI.resetDefaultScoreboard(event.getPlayer());
 //		FeatherBoardAPI.showScoreboard(event.getPlayer(), "default");

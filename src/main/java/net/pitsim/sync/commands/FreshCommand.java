@@ -55,10 +55,12 @@ public class FreshCommand implements CommandExecutor {
 	}
 
 	public static ItemStack getFreshItem(String type) {
-		if(type.equals("sword")) {
+		if(type.equalsIgnoreCase("sword")) {
 			return getFreshItem(MysticType.SWORD, null);
-		} else if(type.equals("bow")) {
+		} else if(type.equalsIgnoreCase("bow")) {
 			return getFreshItem(MysticType.BOW, null);
+		} else if(type.equalsIgnoreCase("pants")) {
+			return getFreshItem(MysticType.PANTS, PantColor.getPantColor("blue"));
 		} else if(PantColor.getPantColor(type) != null) {
 			return getFreshItem(MysticType.PANTS, PantColor.getPantColor(type));
 		}

@@ -14,6 +14,8 @@ import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enchants.GoldBoost;
 import net.pitsim.sync.enchants.*;
+import net.pitsim.sync.hypixel.HypixelAPI;
+import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.misc.*;
 import net.pitsim.sync.perks.*;
 import net.pitsim.sync.placeholders.*;
@@ -126,6 +128,11 @@ public class PitSim extends JavaPlugin {
 		registerEnchants();
 		registerCommands();
 		registerListeners();
+
+		for(Player player : Bukkit.getOnlinePlayers()) {
+			HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(player.getUniqueId()));
+			HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
+		}
 	}
 
 	@Override
@@ -172,6 +179,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("discord").setExecutor(new DiscordCommand());
 		getCommand("disc").setExecutor(new DiscordCommand());
 		getCommand("captcha").setExecutor(new CaptchaCommand());
+		getCommand("ecitems").setExecutor(new EncerchestCommand());
 //		getCommand("togglestereo").setExecutor(new ToggleStereoCommand());
 	}
 
