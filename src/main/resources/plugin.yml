@@ -1,10 +1,10 @@
-name: PitRemake
+name: Sync
 authors:
   - Kyro
   - Wiji
 version: 1.0.0
 main: dev.kyro.pitsim.PitSim
-description: Remake of the Hypixel Pit
+description: Sync Pit Gamemode
 depend:
   - Citizens
   - Vault

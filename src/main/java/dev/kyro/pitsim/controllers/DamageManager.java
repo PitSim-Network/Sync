@@ -94,19 +94,17 @@ public class DamageManager implements Listener {
 		if(nonHitCooldownList.contains(defender) && !Regularity.toReg.contains(defender.getUniqueId()) &&
 				!(event.getDamager() instanceof Arrow)) {
 			event.setCancelled(true);
+			Bukkit.broadcastMessage("1");
 			return;
 		}
 //		Regular player to player hit
 		if(!Regularity.toReg.contains(defender.getUniqueId())) {
 			fakeHit = hitCooldownList.contains(defender);
-			if(hopperCooldownList.contains(defender)) {
-				event.setCancelled(true);
-				return;
-			}
 		}
 
 		if(Regularity.regCooldown.contains(defender.getUniqueId()) && !Regularity.toReg.contains(defender.getUniqueId())) {
 			event.setCancelled(true);
+			Bukkit.broadcastMessage("3");
 			return;
 		}
 
@@ -124,7 +122,7 @@ public class DamageManager implements Listener {
 
 					if(count == 8) DamageManager.hitCooldownList.remove(defender);
 					if(count == 10) DamageManager.hopperCooldownList.remove(defender);
-					if(count == 15) DamageManager.nonHitCooldownList.remove(defender);
+					if(count == 10) DamageManager.nonHitCooldownList.remove(defender);
 				}
 			}.runTaskTimer(PitSim.INSTANCE, 0L, 1L);
 		}
