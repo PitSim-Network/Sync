@@ -2,7 +2,6 @@ package dev.kyro.pitsim.commands;
 
 import dev.kyro.arcticapi.misc.AOutput;
 import dev.kyro.pitsim.controllers.AFKManager;
-import dev.kyro.pitsim.controllers.MapManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

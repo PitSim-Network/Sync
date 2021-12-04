@@ -1,11 +1,6 @@
 package dev.kyro.pitsim.misc;
 
 import dev.kyro.pitsim.PitSim;
-import dev.kyro.pitsim.commands.LightningCommand;
-import dev.kyro.pitsim.controllers.NonManager;
-import dev.kyro.pitsim.controllers.objects.GoldenHelmet;
-import dev.kyro.pitsim.controllers.objects.PitPlayer;
-import dev.kyro.pitsim.megastreaks.Uberstreak;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -47,13 +42,6 @@ public class Misc {
 		if(amplifier < 0) return;
 		if(duration == 0) return;
 
-		if(NonManager.getNon(player) == null) {
-			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-			if(pitPlayer.megastreak.getClass() == Uberstreak.class) {
-				Uberstreak uberstreak = (Uberstreak) pitPlayer.megastreak;
-				if(uberstreak.uberEffects.contains(Uberstreak.UberEffect.NO_SPEED) && type == PotionEffectType.SPEED) return;
-			}
-		}
 
 		for(PotionEffect potionEffect : player.getActivePotionEffects()) {
 			if(!potionEffect.getType().equals(type) || potionEffect.getAmplifier() > amplifier) continue;
@@ -188,7 +176,7 @@ public class Misc {
 			if(!(nearbyEntity instanceof Player) || NonManager.getNon((Player) nearbyEntity) != null) continue;
 			nearbyPlayers.add((Player) nearbyEntity);
 		}
-		for(Player lightningPlayer : LightningCommand.lightningPlayers) nearbyPlayers.remove(lightningPlayer);
+
 
 		Player[] lightningPlayers = new Player[nearbyPlayers.size()];
 		lightningPlayers = nearbyPlayers.toArray(lightningPlayers);

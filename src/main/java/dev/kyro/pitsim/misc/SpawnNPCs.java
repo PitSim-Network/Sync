@@ -1,11 +1,7 @@
 package dev.kyro.pitsim.misc;
 
 import dev.kyro.arcticapi.misc.AOutput;
-import dev.kyro.pitsim.controllers.MapManager;
 import dev.kyro.pitsim.controllers.objects.PitPlayer;
-import dev.kyro.pitsim.inventories.PerkGUI;
-import dev.kyro.pitsim.inventories.PrestigeGUI;
-import dev.kyro.pitsim.inventories.StatGUI;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
