@@ -5,7 +5,6 @@ import dev.kyro.arcticapi.misc.AOutput;
 import dev.kyro.pitsim.PitSim;
 import dev.kyro.pitsim.controllers.objects.PitEnchant;
 import dev.kyro.pitsim.controllers.objects.PitPlayer;
-import dev.kyro.pitsim.enchants.PitBlob;
 import dev.kyro.pitsim.enchants.Regularity;
 import dev.kyro.pitsim.enchants.Telebow;
 import dev.kyro.pitsim.enchants.WolfPack;
@@ -19,7 +18,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -29,12 +27,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class DamageManager implements Listener {
@@ -233,7 +228,7 @@ public class DamageManager implements Listener {
 
 		if(damager instanceof Player) return (Player) damager;
 		if(damager instanceof Arrow) return (Player) ((Arrow) damager).getShooter();
-		if(damager instanceof Slime) return PitBlob.getOwner((Slime) damager);
+//		if(damager instanceof Slime) return PitBlob.getOwner((Slime) damager);
 		if(damager instanceof Wolf) return WolfPack.getOwner((Wolf) damager);
 
 		return null;
@@ -244,13 +239,10 @@ public class DamageManager implements Listener {
 		KillEvent killEvent = new KillEvent(attackEvent, killer, dead, exeDeath);
 		Bukkit.getServer().getPluginManager().callEvent(killEvent);
 
-		EnchantManager.incrementKills(killer, dead);
-
 		PitPlayer pitAttacker = PitPlayer.getPitPlayer(killer);
 		PitPlayer pitDefender = PitPlayer.getPitPlayer(dead);
 		EntityPlayer nmsPlayer = ((CraftPlayer) dead).getHandle();
 		nmsPlayer.setAbsorptionHearts(0);
-		pitDefender.endKillstreak();
 
 		Telebow.teleShots.removeIf(teleShot -> teleShot.getShooter().equals(dead));
 
@@ -259,7 +251,6 @@ public class DamageManager implements Listener {
 		Sounds.DEATH_FALL.play(dead);
 		Sounds.DEATH_FALL.play(dead);
 		Regularity.toReg.remove(dead.getUniqueId());
-		pitAttacker.incrementKills();
 
 		Misc.multiKill(killer);
 
@@ -269,17 +260,12 @@ public class DamageManager implements Listener {
 			dead.removePotionEffect(potionEffect.getType());
 		}
 
-		DecimalFormat df = new DecimalFormat("##0.00");
 		String kill = "&a&lKILL!&7 on %luckperms_prefix%" + "%player_name%";
 		String death = "&c&lDEATH! &7by %luckperms_prefix%" + "%player_name%";
 		String killActionBar = "&7%luckperms_prefix%" + "%player_name%" + " &a&lKILL!";
 
-		PitPlayer pitKiller = PitPlayer.getPitPlayer(killer);
-		if(!pitKiller.disabledKillFeed)
-			AOutput.send(killEvent.killer, PlaceholderAPI.setPlaceholders(killEvent.dead, kill));
-		PitPlayer pitDead = PitPlayer.getPitPlayer(dead);
-		if(!pitDead.disabledKillFeed)
-			AOutput.send(killEvent.dead, PlaceholderAPI.setPlaceholders(killEvent.killer, death));
+		AOutput.send(killEvent.killer, PlaceholderAPI.setPlaceholders(killEvent.dead, kill));
+		AOutput.send(killEvent.dead, PlaceholderAPI.setPlaceholders(killEvent.killer, death));
 		String actionBarPlaceholder = PlaceholderAPI.setPlaceholders(killEvent.dead, killActionBar);
 		new BukkitRunnable() {
 			@Override
@@ -333,22 +319,15 @@ public class DamageManager implements Listener {
 		KillEvent killEvent = new KillEvent(attackEvent, killer, dead, exeDeath);
 		Bukkit.getServer().getPluginManager().callEvent(killEvent);
 
-		EnchantManager.incrementKills(killer, dead);
-
 		PitPlayer pitAttacker = PitPlayer.getPitPlayer(killer);
 		PitPlayer pitDefender = PitPlayer.getPitPlayer(dead);
-
-		pitAttacker.incrementKills();
 
 		Misc.multiKill(killer);
 
 		String kill = "&a&lKILL!&7 on %luckperms_prefix%" + "%player_name%";
 		String killActionBar = "&7%luckperms_prefix%" + "%player_name%" + " &a&lKILL!";
 
-		PitPlayer pitKiller = PitPlayer.getPitPlayer(killer);
-		if(!pitKiller.disabledKillFeed)
-			AOutput.send(killEvent.killer, PlaceholderAPI.setPlaceholders(killEvent.dead, kill));
-		PitPlayer pitDead = PitPlayer.getPitPlayer(dead);
+		AOutput.send(killEvent.killer, PlaceholderAPI.setPlaceholders(killEvent.dead, kill));
 		String actionBarPlaceholder = PlaceholderAPI.setPlaceholders(killEvent.dead, killActionBar);
 		new BukkitRunnable() {
 			@Override

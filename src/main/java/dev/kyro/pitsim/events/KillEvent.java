@@ -35,8 +35,6 @@ public class KillEvent extends Event {
 		this.dead = dead;
 		this.exeDeath = exeDeath;
 
-		Non defendingNon = NonManager.getNon(this.dead);
-		xpReward = defendingNon == null ? 5 : 20;
 	}
 
 	public int getFinalXp() {

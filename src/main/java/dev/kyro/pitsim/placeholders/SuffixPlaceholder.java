@@ -17,6 +17,6 @@ public class SuffixPlaceholder implements APAPIPlaceholder {
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 		if(AFKManager.AFKPlayers.contains(player)) return "&8 [AFK]";
-		else return pitPlayer.bounty != 0 ? "&7 &6&l" + pitPlayer.bounty + "g" : "";
+		else return "";
 	}
 }

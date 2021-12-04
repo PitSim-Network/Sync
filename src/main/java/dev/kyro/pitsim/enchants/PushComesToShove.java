@@ -8,7 +8,6 @@ import dev.kyro.pitsim.controllers.objects.PitEnchant;
 import dev.kyro.pitsim.controllers.objects.PitPlayer;
 import dev.kyro.pitsim.enums.ApplyType;
 import dev.kyro.pitsim.events.AttackEvent;
-import dev.kyro.pitsim.megastreaks.Uberstreak;
 import org.bukkit.event.EventHandler;
 import org.bukkit.util.Vector;
 
@@ -38,13 +37,11 @@ public class PushComesToShove extends PitEnchant {
 		Cooldown cooldown = getCooldown(attackEvent.attacker, 200);
 		if(cooldown.isOnCooldown()) return; else cooldown.reset();
 
-		if(pitDefender.megastreak.getClass() == Uberstreak.class && pitDefender.megastreak.isOnMega()) return;
 		Vector velocity = attackEvent.arrow.getVelocity().normalize().multiply(getPunchMultiplier(enchantLvl) / 2.35);
 		velocity.setY(0);
 
 		attackEvent.defender.setVelocity(velocity);
 
-		if(pitAttacker.stats != null) pitAttacker.stats.pcts++;
 	}
 
 	@Override

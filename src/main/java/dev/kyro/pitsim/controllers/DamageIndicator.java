@@ -66,10 +66,9 @@ public class DamageIndicator implements Listener {
             }
         }
 
-        Non defendingNon = NonManager.getNon(defender);
         StringBuilder output = new StringBuilder();
 
-        String playername = "&7%luckperms_prefix%" + (defendingNon == null ? "%player_name%" : defendingNon.displayName) + " ";
+        String playername = "&7%luckperms_prefix%" + "%player_name%" + " ";
         output.append(PlaceholderAPI.setPlaceholders(attackEvent.defender, playername));
 
         for (int i = 0; i < Math.max(originalHealth - roundedDamageTaken, 0); i++) {

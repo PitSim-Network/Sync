@@ -10,8 +10,6 @@ import dev.kyro.pitsim.enums.ApplyType;
 import dev.kyro.pitsim.events.AttackEvent;
 import dev.kyro.pitsim.misc.Misc;
 import dev.kyro.pitsim.misc.Sounds;
-import dev.kyro.pitsim.pitevents.CaptureTheFlag;
-import dev.kyro.pitsim.pitevents.Juggernaut;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
@@ -116,33 +114,6 @@ public class Telebow extends PitEnchant {
 						teleportLoc.setYaw(-teleArrow.getLocation().getYaw());
 						teleportLoc.setPitch(-teleArrow.getLocation().getPitch());
 
-						Location midTeleportLoc = teleportLoc.clone();
-						midTeleportLoc.setY(MapManager.getMid().getY());
-						if(midTeleportLoc.getWorld() == teleportLoc.getWorld()) {
-							double distance = MapManager.getMid().distance(midTeleportLoc);
-							if(distance < 12) {
-								AOutput.error(player, "You are not allowed to telebow into mid");
-								teleShots.remove(teleShot);
-								return;
-							}
-						}
-
-						if(SpawnManager.isInSpawn(teleportLoc)) {
-								AOutput.error(player, "You are not allowed to telebow into spawn");
-							teleShots.remove(teleShot);
-							return;
-						}
-
-						if(PitEventManager.majorEvent && PitEventManager.activeEvent.getClass() == CaptureTheFlag.class) {
-							AOutput.error(player, "Telebow is disabled during this event");
-							teleShots.remove(teleShot);
-							return;
-						}
-
-						if(player == Juggernaut.juggernaut) {
-							teleShots.remove(teleShot);
-							return;
-						}
 
 						player.teleport(teleportLoc);
 						Sounds.TELEBOW.play(teleArrow.getLocation());
@@ -150,7 +121,6 @@ public class Telebow extends PitEnchant {
 						teleShots.remove(teleShot);
 
 						PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-						if(pitPlayer.stats != null) pitPlayer.stats.telebow++;
 						return;
 					}
 				}

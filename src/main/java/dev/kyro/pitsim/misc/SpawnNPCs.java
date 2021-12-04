@@ -22,11 +22,11 @@ public class SpawnNPCs implements Listener {
 	public static NPC vnx2 = null;
 
 	public static void createNPCs() {
-		createPrestigeNPC();
-		createUpgradeNPC();
-		createKyroNPC();
-		createWijiNPC();
-		createVnx2NPC();
+//		createPrestigeNPC();
+//		createUpgradeNPC();
+//		createKyroNPC();
+//		createWijiNPC();
+//		createVnx2NPC();
 	}
 
 	public static void removeNPCs() {
@@ -57,73 +57,73 @@ public class SpawnNPCs implements Listener {
 		}
 	}
 
-	public static void createUpgradeNPC() {
-		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		upgrade = registry.createNPC(EntityType.VILLAGER, " ");
-		upgrade.spawn(MapManager.getUpgradeNPCSpawn());
-	}
-
-	public static void createPrestigeNPC() {
-		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		prestige = registry.createNPC(EntityType.VILLAGER, " ");
-		prestige.spawn(MapManager.getPrestigeNPCSpawn());
-	}
-
-	public static void createKyroNPC() {
-		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		kyro = registry.createNPC(EntityType.PLAYER, "&9KyroKrypt");
-		kyro.spawn(MapManager.getKyroNPCSpawn());
-		skin(kyro, "KyroKrypt");
-		kyro.addTrait(LookClose.class);
-		kyro.getTrait(LookClose.class).setRange(10);
-		kyro.getTrait(LookClose.class).toggle();
-	}
-
-	public static void createWijiNPC() {
-		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		wiji = registry.createNPC(EntityType.PLAYER, "&9wiji1");
-		wiji.spawn(MapManager.getWijiNPCSpawn());
-		skin(wiji, "wiji1");
-		wiji.addTrait(LookClose.class);
-		wiji.getTrait(LookClose.class).setRange(10);
-		wiji.getTrait(LookClose.class).toggle();
-	}
-
-	public static void createVnx2NPC() {
-		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		vnx2 = registry.createNPC(EntityType.PLAYER, "&e&lSTATISTICS");
-		vnx2.spawn(MapManager.getVnx2NPCSpawn());
-		skin(vnx2, "vnxz");
-		vnx2.addTrait(LookClose.class);
-		vnx2.getTrait(LookClose.class).setRange(10);
-		vnx2.getTrait(LookClose.class).toggle();
-	}
+//	public static void createUpgradeNPC() {
+//		NPCRegistry registry = CitizensAPI.getNPCRegistry();
+//		upgrade = registry.createNPC(EntityType.VILLAGER, " ");
+//		upgrade.spawn(MapManager.getUpgradeNPCSpawn());
+//	}
+//
+//	public static void createPrestigeNPC() {
+//		NPCRegistry registry = CitizensAPI.getNPCRegistry();
+//		prestige = registry.createNPC(EntityType.VILLAGER, " ");
+//		prestige.spawn(MapManager.getPrestigeNPCSpawn());
+//	}
+//
+//	public static void createKyroNPC() {
+//		NPCRegistry registry = CitizensAPI.getNPCRegistry();
+//		kyro = registry.createNPC(EntityType.PLAYER, "&9KyroKrypt");
+//		kyro.spawn(MapManager.getKyroNPCSpawn());
+//		skin(kyro, "KyroKrypt");
+//		kyro.addTrait(LookClose.class);
+//		kyro.getTrait(LookClose.class).setRange(10);
+//		kyro.getTrait(LookClose.class).toggle();
+//	}
+//
+//	public static void createWijiNPC() {
+//		NPCRegistry registry = CitizensAPI.getNPCRegistry();
+//		wiji = registry.createNPC(EntityType.PLAYER, "&9wiji1");
+//		wiji.spawn(MapManager.getWijiNPCSpawn());
+//		skin(wiji, "wiji1");
+//		wiji.addTrait(LookClose.class);
+//		wiji.getTrait(LookClose.class).setRange(10);
+//		wiji.getTrait(LookClose.class).toggle();
+//	}
+//
+//	public static void createVnx2NPC() {
+//		NPCRegistry registry = CitizensAPI.getNPCRegistry();
+//		vnx2 = registry.createNPC(EntityType.PLAYER, "&e&lSTATISTICS");
+//		vnx2.spawn(MapManager.getVnx2NPCSpawn());
+//		skin(vnx2, "vnxz");
+//		vnx2.addTrait(LookClose.class);
+//		vnx2.getTrait(LookClose.class).setRange(10);
+//		vnx2.getTrait(LookClose.class).toggle();
+//	}
 
 	@EventHandler
 	public void onClickEvent(NPCRightClickEvent event){
 
-		Player player = event.getClicker();
-
-		if(event.getNPC().getId() == upgrade.getId())  {
-			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-			if(pitPlayer.megastreak.isOnMega()) {
-				AOutput.error(player, "&cYou cannot use this command while on a megastreak!");
-				return;
-			}
-
-			PerkGUI perkGUI = new PerkGUI(player);
-			perkGUI.open();
-		}
-
-		if(event.getNPC().getId() == prestige.getId()) {
-			PrestigeGUI prestigeGUI = new PrestigeGUI(player);
-			prestigeGUI.open();
-		}
-
-		if(event.getNPC().getId() == vnx2.getId()) {
-			StatGUI statGUI = new StatGUI(player);
-			statGUI.open();
-		}
+//		Player player = event.getClicker();
+//
+//		if(event.getNPC().getId() == upgrade.getId())  {
+//			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+//			if(pitPlayer.megastreak.isOnMega()) {
+//				AOutput.error(player, "&cYou cannot use this command while on a megastreak!");
+//				return;
+//			}
+//
+//			PerkGUI perkGUI = new PerkGUI(player);
+//			perkGUI.open();
+//		}
+//
+//		if(event.getNPC().getId() == prestige.getId()) {
+//			PrestigeGUI prestigeGUI = new PrestigeGUI(player);
+//			prestigeGUI.open();
+//		}
+//
+//		if(event.getNPC().getId() == vnx2.getId()) {
+//			StatGUI statGUI = new StatGUI(player);
+//			statGUI.open();
+//		}
 	}
 
 	public static void skin(NPC npc, String name) {

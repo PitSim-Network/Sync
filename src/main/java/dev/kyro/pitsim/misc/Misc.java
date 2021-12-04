@@ -50,11 +50,6 @@ public class Misc {
 			break;
 		}
 		player.addPotionEffect(new PotionEffect(type, duration, amplifier, ambient, particles));
-		if(type == PotionEffectType.POISON) {
-			for(GoldenHelmet goldenHelmet : GoldenHelmet.getHelmetsFromPlayer(player)) {
-				if(goldenHelmet.ability != null && goldenHelmet.ability.isActive) goldenHelmet.deactivate();
-			}
-		}
 	}
 
 	public static void multiKill(Player player) {
@@ -173,7 +168,7 @@ public class Misc {
 	public static void strikeLightningForPlayers(Location location, double radius) {
 		List<Player> nearbyPlayers = new ArrayList<>();
 		for(Entity nearbyEntity : location.getWorld().getNearbyEntities(location, radius, radius, radius)) {
-			if(!(nearbyEntity instanceof Player) || NonManager.getNon((Player) nearbyEntity) != null) continue;
+			if(!(nearbyEntity instanceof Player)) continue;
 			nearbyPlayers.add((Player) nearbyEntity);
 		}
 

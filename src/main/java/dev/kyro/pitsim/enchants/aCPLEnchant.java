@@ -53,8 +53,6 @@ public class aCPLEnchant extends PitEnchant {
 		if(enchantLvl == 0 || !isWorthy(attackEvent.attacker)) return;
 
 		PitPlayer pitAttacker = PitPlayer.getPitPlayer(attackEvent.attacker);
-		Non defendingNon = NonManager.getNon(attackEvent.defender);
-		if(defendingNon != null) return;
 
 //		if(Math.random() < 0.25 * enchantLvl) {
 //

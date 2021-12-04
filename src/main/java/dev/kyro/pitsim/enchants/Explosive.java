@@ -8,7 +8,6 @@ import dev.kyro.pitsim.controllers.objects.PitEnchant;
 import dev.kyro.pitsim.controllers.objects.PitPlayer;
 import dev.kyro.pitsim.enums.ApplyType;
 import dev.kyro.pitsim.events.AttackEvent;
-import dev.kyro.pitsim.megastreaks.Uberstreak;
 import dev.kyro.pitsim.misc.Sounds;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -56,19 +55,14 @@ public class Explosive extends PitEnchant {
 		for (Entity entity : arrow.getNearbyEntities(getRange(enchantLvl), getRange(enchantLvl), getRange(enchantLvl))) {
 			if(entity instanceof Player) {
 				Player player = (Player) entity;
-				Non non = NonManager.getNon(player);
 
 				if(SpawnManager.isInSpawn(player.getLocation())) continue;
 
 				if(player != shooter) {
 
-					PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-					if(NonManager.getNon(player) == null) {
-						if(pitPlayer.megastreak.getClass() == Uberstreak.class && pitPlayer.megastreak.isOnMega()) continue;
-						Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector())
-								.setY(1).normalize().multiply(non == null ? 1.15 : 5);
+					Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector())
+							.setY(1).normalize().multiply(1.15);
 						player.setVelocity(force);
-					}
 				}
 			}
 		}
@@ -78,7 +72,6 @@ public class Explosive extends PitEnchant {
 				getEffect(enchantLvl).getData(), 100);
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(shooter);
-		if(pitPlayer.stats != null) pitPlayer.stats.explosive++;
 	}
 
 	@Override

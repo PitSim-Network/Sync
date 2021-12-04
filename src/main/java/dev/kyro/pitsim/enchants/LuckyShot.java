@@ -67,7 +67,6 @@ public class LuckyShot extends PitEnchant {
 			luckyShots.add((Arrow) event.getProjectile());
 
 			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-			if(pitPlayer.stats != null) pitPlayer.stats.lucky++;
 		}
 	}
 

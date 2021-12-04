@@ -33,7 +33,6 @@ public class Executioner extends PitEnchant {
 		killEvent.dead.getWorld().playEffect(killEvent.dead.getLocation().add(0, 1, 0), Effect.STEP_SOUND, 152);
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(killEvent.killer);
-		if(pitPlayer.stats != null) pitPlayer.stats.executioner++;
 	}
 
 	@EventHandler

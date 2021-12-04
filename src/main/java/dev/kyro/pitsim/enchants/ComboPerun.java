@@ -33,8 +33,6 @@ public class ComboPerun extends PitEnchant {
 		HitCounter.incrementCounter(pitPlayer.player, this);
 		if(!HitCounter.hasReachedThreshold(pitPlayer.player, this, enchantLvl == 3 ? 4 : getStrikes(enchantLvl))) return;
 
-		if(pitPlayer.stats != null) pitPlayer.stats.perun++;
-
 		if(enchantLvl == 3) {
 			int damage = 2;
 			if(!(attackEvent.defender.getInventory().getHelmet() == null) && attackEvent.defender.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) {
@@ -53,7 +51,6 @@ public class ComboPerun extends PitEnchant {
 			attackEvent.trueDamage += damage;
 		} else {
 			double damage = 2;
-			if(NonManager.getNon(attackEvent.defender) != null) damage += getTrueDamage(enchantLvl);
 
 			attackEvent.trueDamage += damage;
 		}

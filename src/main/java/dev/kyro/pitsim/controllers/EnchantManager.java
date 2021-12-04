@@ -38,22 +38,6 @@ public class EnchantManager implements Listener {
 
 	public static List<PitEnchant> pitEnchants = new ArrayList<>();
 
-	@EventHandler
-	public static void onEnchantingTableClick(PlayerInteractEvent event) {
-		if(event.getAction() != Action.LEFT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-		Player player = event.getPlayer();
-		Block block = event.getClickedBlock();
-
-		if(block.getType() != Material.ENCHANTMENT_TABLE) return;
-
-		event.setCancelled(true);
-
-		EnchantingGUI enchantingGUI = new EnchantingGUI(player);
-		enchantingGUI.open();
-		Sounds.MYSTIC_WELL_OPEN_1.play(player);
-		Sounds.MYSTIC_WELL_OPEN_2.play(player);
-	}
-
 	public static void registerEnchant(PitEnchant pitEnchant) {
 
 		pitEnchants.add(pitEnchant);
@@ -376,7 +360,6 @@ public class EnchantManager implements Listener {
 		Sounds.JEWEL_FIND.play(player);
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(pitPlayer.stats != null) pitPlayer.stats.jewelsCompleted++;
 
 		try {
 			return EnchantManager.addEnchant(nbtItem.getItem(), jewelEnchant, 3, false, true, -1);
@@ -384,56 +367,6 @@ public class EnchantManager implements Listener {
 		return null;
 	}
 
-	public static void incrementKills(Player attacker, Player killed) {
-		Non non = NonManager.getNon(killed);
-		String ref = non == null ? NBTTag.PLAYER_KILLS.getRef() : NBTTag.BOT_KILLS.getRef();
-
-		if(!Misc.isAirOrNull(attacker.getItemInHand())) {
-			ItemStack itemStack = attacker.getItemInHand();
-			NBTItem nbtItem = new NBTItem(itemStack);
-			nbtItem.setInteger(ref, nbtItem.getInteger(ref) + 1);
-
-			if(isJewel(itemStack) && !isJewelComplete(itemStack))
-				nbtItem.setInteger(NBTTag.JEWEL_KILLS.getRef(), nbtItem.getInteger(NBTTag.JEWEL_KILLS.getRef()) + 1);
-
-			ItemStack jewelStack = completeJewel(attacker, nbtItem.getItem());
-			if(jewelStack != null) nbtItem = new NBTItem(jewelStack);
-
-			setItemLore(nbtItem.getItem());
-			attacker.setItemInHand(nbtItem.getItem());
-
-			for(int i = 0; i < 9; i++) {
-				if(i == attacker.getInventory().getHeldItemSlot()) continue;
-
-				ItemStack hotbarStack = attacker.getInventory().getItem(i);
-				if(Misc.isAirOrNull(hotbarStack) || hotbarStack.getType() != Material.BOW) continue;
-				NBTItem hotbarNbtItem = new NBTItem(hotbarStack);
-
-				if(isJewel(hotbarStack) && !isJewelComplete(hotbarStack))
-					hotbarNbtItem.setInteger(NBTTag.JEWEL_KILLS.getRef(), hotbarNbtItem.getInteger(NBTTag.JEWEL_KILLS.getRef()) + 1);
-
-				ItemStack hotbarJewelStack = completeJewel(attacker, hotbarNbtItem.getItem());
-				if(hotbarJewelStack != null) hotbarNbtItem = new NBTItem(hotbarJewelStack);
-
-				setItemLore(hotbarNbtItem.getItem());
-				attacker.getInventory().setItem(i, hotbarNbtItem.getItem());
-			}
-		}
-		if(!Misc.isAirOrNull(attacker.getInventory().getLeggings())) {
-			ItemStack itemStack = attacker.getInventory().getLeggings();
-			NBTItem nbtItem = new NBTItem(itemStack);
-			nbtItem.setInteger(ref, nbtItem.getInteger(ref) + 1);
-
-			if(isJewel(itemStack) && !isJewelComplete(itemStack))
-				nbtItem.setInteger(NBTTag.JEWEL_KILLS.getRef(), nbtItem.getInteger(NBTTag.JEWEL_KILLS.getRef()) + 1);
-
-			ItemStack jewelStack = completeJewel(attacker, nbtItem.getItem());
-			if(jewelStack != null) nbtItem = new NBTItem(jewelStack);
-
-			setItemLore(nbtItem.getItem());
-			attacker.getInventory().setLeggings(nbtItem.getItem());
-		}
-	}
 
 	public static PitEnchant getEnchant(String refName) {
 

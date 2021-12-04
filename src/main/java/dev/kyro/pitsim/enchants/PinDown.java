@@ -44,7 +44,6 @@ public class PinDown extends PitEnchant {
 		AOutput.send(attackEvent.attacker, PlaceholderAPI.setPlaceholders(attackEvent.defender, pinMessage2));
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(attackEvent.attacker);
-		if(pitPlayer.stats != null) pitPlayer.stats.pin++;
 	}
 
 	@Override

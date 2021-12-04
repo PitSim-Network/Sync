@@ -64,7 +64,6 @@ public class Robinhood extends PitEnchant {
 		if(cooldown.isOnCooldown()) return; else cooldown.reset();
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(pitPlayer.stats != null) pitPlayer.stats.robinhood++;
 
 		new BukkitRunnable() {
 			@Override
@@ -79,8 +78,6 @@ public class Robinhood extends PitEnchant {
 
 					if(!(nearbyEntity instanceof Player) || nearbyEntity.equals(player)) continue;
 					Player target = (Player) nearbyEntity;
-					if(NonManager.getNon(target) != null) continue;
-
 					double distance = arrow.getLocation().distance(target.getLocation());
 					if(targetInfo == null || distance < targetInfo.getValue()) {
 						targetInfo = new AbstractMap.SimpleEntry<>(target, distance);

@@ -40,12 +40,12 @@ public class LockdownManager implements Listener {
 					if(SpawnManager.isInSpawn(player.getLocation())) continue;
 					if(requireVerification && !isVerified(player)) {
 						AOutput.error(player, verificationMessage);
-						player.teleport(MapManager.getPlayerSpawn());
+						player.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
 						continue;
 					}
 					if(requireCaptcha && !isCaptcha(player)) {
 						sendCaptchaMessage(player);
-						player.teleport(MapManager.getPlayerSpawn());
+						player.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
 					}
 				}
 			}
@@ -99,7 +99,6 @@ public class LockdownManager implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(pitPlayer.prestige > 0) return;
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -116,7 +115,6 @@ public class LockdownManager implements Listener {
 		if(!requireVerification || player.hasPermission("pitsim.autoverify")) return true;
 		FileConfiguration playerData = APlayerData.getPlayerData(player);
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(pitPlayer.prestige > 0) return true;
 		return playerData.getLong("discord-id") != 0;
 	}
 
@@ -155,7 +153,7 @@ public class LockdownManager implements Listener {
 	public static boolean isCaptcha(Player player) {
 		if(!requireCaptcha || player.hasPermission("pitsim.autoverify")) return true;
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		return pitPlayer.prestige > 0 || captchaPlayers.contains(player);
+		return captchaPlayers.contains(player);
 	}
 
 	public static boolean verificationRequired() {

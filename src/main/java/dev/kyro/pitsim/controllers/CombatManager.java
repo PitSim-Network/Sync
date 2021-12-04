@@ -78,19 +78,11 @@ public class CombatManager implements Listener {
    @EventHandler
     public static void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-       FileConfiguration playerData = APlayerData.getPlayerData(event.getPlayer());
-       PitPlayer pitplayer = PitPlayer.getPitPlayer(event.getPlayer());
-       playerData.set("level", pitplayer.level);
-       playerData.set("prestige", pitplayer.prestige);
-       playerData.set("playerkills", pitplayer.playerKills);
-       playerData.set("xp", pitplayer.remainingXP);
-       playerData.set("renown", pitplayer.renown);
-       APlayerData.savePlayerData(event.getPlayer());
+        PitPlayer pitplayer = PitPlayer.getPitPlayer(event.getPlayer());
+
+        APlayerData.savePlayerData(event.getPlayer());
         event.getPlayer().closeInventory();
-//        PlayerManager.bossBars.remove(event.getPlayer());
-        PitEventManager.kills.remove(event.getPlayer());
-        PitEventManager.bounty.remove(event.getPlayer());
-        if(NonManager.getNon(event.getPlayer()) != null) return;
+
 
        PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
        UUID attackerUUID = pitPlayer.lastHitUUID;

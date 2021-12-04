@@ -6,7 +6,6 @@ import dev.kyro.pitsim.controllers.objects.PitEnchant;
 import dev.kyro.pitsim.controllers.objects.PitPlayer;
 import dev.kyro.pitsim.enums.ApplyType;
 import dev.kyro.pitsim.events.AttackEvent;
-import dev.kyro.pitsim.megastreaks.Uberstreak;
 import org.bukkit.event.EventHandler;
 import org.bukkit.util.Vector;
 
@@ -30,13 +29,11 @@ public class Pullbow extends PitEnchant {
 		if(cooldown.isOnCooldown()) return; else cooldown.reset();
 
 		PitPlayer pitDefender = PitPlayer.getPitPlayer(attackEvent.defender);
-		if(pitDefender.megastreak.getClass() == Uberstreak.class && pitDefender.megastreak.isOnMega()) return;
 		Vector dirVector = attackEvent.attacker.getLocation().toVector().subtract(attackEvent.defender.getLocation().toVector()).setY(0);
 		Vector pullVector = dirVector.clone().normalize().setY(0.5).multiply(2.5).add(dirVector.clone().multiply(0.03));
 		attackEvent.defender.setVelocity(pullVector.multiply(getMultiplier(enchantLvl)));
 
 		PitPlayer pitAttacker = PitPlayer.getPitPlayer(attackEvent.attacker);
-		if(pitAttacker.stats != null) pitAttacker.stats.pullbow++;
 	}
 
 	@Override
