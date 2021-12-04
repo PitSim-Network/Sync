@@ -3,6 +3,7 @@ package net.pitsim.sync;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.xxmicloxx.NoteBlockAPI.songplayer.EntitySongPlayer;
+import de.schlichtherle.key.passwd.swing.BasicUnknownKeyFeedback;
 import dev.kyro.arcticapi.ArcticAPI;
 import dev.kyro.arcticapi.commands.ABaseCommand;
 import dev.kyro.arcticapi.data.AData;
@@ -12,8 +13,12 @@ import net.pitsim.sync.commands.*;
 import net.pitsim.sync.commands.admin.*;
 import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.GoldBoost;
 import net.pitsim.sync.enchants.*;
+import net.pitsim.sync.enchants.useless.*;
+import net.pitsim.sync.enchants.useless.BottomlessQuiver;
+import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.hypixel.HypixelAPI;
 import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.misc.*;
@@ -137,11 +142,7 @@ public class PitSim extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
 		SpawnNPCs.removeNPCs();
-
-
-
 
 		for(PitEnchant pitEnchant : EnchantManager.pitEnchants) pitEnchant.onDisable();
 
@@ -300,5 +301,76 @@ public class PitSim extends JavaPlugin {
 
 //		EnchantManager.registerEnchant(new Sweaty());
 		EnchantManager.registerEnchant(new XpBump());
+
+
+
+//		Fake Enchants
+		EnchantManager.registerEnchant(new ArrowArmory());
+		EnchantManager.registerEnchant(new Assassin());
+		EnchantManager.registerEnchant(new Berserker());
+		EnchantManager.registerEnchant(new Billy());
+		EnchantManager.registerEnchant(new BottomlessQuiver());
+		EnchantManager.registerEnchant(new BountyReaper());
+		EnchantManager.registerEnchant(new Bruiser());
+		EnchantManager.registerEnchant(new ComboXP());
+		EnchantManager.registerEnchant(new CounterJanitor());
+		EnchantManager.registerEnchant(new Creative());
+		EnchantManager.registerEnchant(new Cricket());
+		EnchantManager.registerEnchant(new CriticallyRich());
+		EnchantManager.registerEnchant(new DangerClose());
+		EnchantManager.registerEnchant(new DavidAndGoliath());
+		EnchantManager.registerEnchant(new DevilChicks());
+		EnchantManager.registerEnchant(new DiamondAllergy());
+		EnchantManager.registerEnchant(new DivineMiracle());
+		EnchantManager.registerEnchant(new DoubleJump());
+		EnchantManager.registerEnchant(new Duelist());
+		EnchantManager.registerEnchant(new Eggs());
+		EnchantManager.registerEnchant(new EscapePod());
+		EnchantManager.registerEnchant(new Excess());
+		EnchantManager.registerEnchant(new FancyRaider());
+		EnchantManager.registerEnchant(new FirstShot());
+		EnchantManager.registerEnchant(new GomrawsHeart());
+		EnchantManager.registerEnchant(new Grasshopper());
+		EnchantManager.registerEnchant(new Hemorrhage());
+		EnchantManager.registerEnchant(new HiddenJewelPants());
+		EnchantManager.registerEnchant(new HiddenJewelSword());
+		EnchantManager.registerEnchant(new Instaboom());
+		EnchantManager.registerEnchant(new Jumpspammer());
+		EnchantManager.registerEnchant(new Knockback());
+		EnchantManager.registerEnchant(new Lodbrok());
+		EnchantManager.registerEnchant(new Martyrdom());
+		EnchantManager.registerEnchant(new McSwimmer());
+		EnchantManager.registerEnchant(new MixedCombat());
+		EnchantManager.registerEnchant(new Negotiator());
+		EnchantManager.registerEnchant(new PantsRadar());
+		EnchantManager.registerEnchant(new Paparazzi());
+		EnchantManager.registerEnchant(new Pebble());
+		EnchantManager.registerEnchant(new Phoenix());
+		EnchantManager.registerEnchant(new PitBlob());
+		EnchantManager.registerEnchant(new PitMBA());
+		EnchantManager.registerEnchant(new Pitpocket());
+		EnchantManager.registerEnchant(new PurpleGold());
+		EnchantManager.registerEnchant(new RespawnAbsorption());
+		EnchantManager.registerEnchant(new RespawnResistance());
+		EnchantManager.registerEnchant(new Revengeance());
+		EnchantManager.registerEnchant(new Revitalize());
+		EnchantManager.registerEnchant(new SelfCheckout());
+		EnchantManager.registerEnchant(new Sierra());
+		EnchantManager.registerEnchant(new Singularity());
+		EnchantManager.registerEnchant(new Sniper());
+		EnchantManager.registerEnchant(new Snowballs());
+		EnchantManager.registerEnchant(new SnowmenArmy());
+		EnchantManager.registerEnchant(new SpammerAndProud());
+		EnchantManager.registerEnchant(new SpeedyKill());
+		EnchantManager.registerEnchant(new Steaks());
+		EnchantManager.registerEnchant(new StrikeGold());
+		EnchantManager.registerEnchant(new Sweaty());
+		EnchantManager.registerEnchant(new ThePunch());
+		EnchantManager.registerEnchant(new TNT());
+		EnchantManager.registerEnchant(new TrueShot());
+		EnchantManager.registerEnchant(new WhatDoesntKillYou());
+		EnchantManager.registerEnchant(new WolfPack());
+		EnchantManager.registerEnchant(new XPBoost());
+		EnchantManager.registerEnchant(new XPBump());
 	}
 }
