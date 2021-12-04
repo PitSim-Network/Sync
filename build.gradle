@@ -9,6 +9,7 @@ version '1.0.0'
 repositories {
     mavenCentral()
     mavenLocal()
+    jcenter()
 
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
@@ -20,6 +21,7 @@ repositories {
     maven { url "https://maven.enginehub.org/repo/" }
     maven { url "https://repo.inventivetalent.org/content/repositories/snapshots" }
     maven { url "https://repo.dmulloy2.net/repository/public/" }
+    maven { url 'https://repo.hypixel.net/repository/Hypixel/' }
 }
 
 dependencies {
@@ -41,6 +43,11 @@ dependencies {
     compileOnly files('libs/FeatherBoard.jar')
 
     compileOnly 'net.luckperms:api:5.3'
+    implementation 'com.github.HypixelDev.PublicAPI:Java:2.0.0'
+
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+    compile group: 'org.json', name: 'json', version: '20201115'
+    compile 'com.github.TheNullicorn:Nedit:v1.2.0'
 }
 
 shadowJar {

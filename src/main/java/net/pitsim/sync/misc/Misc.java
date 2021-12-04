@@ -15,6 +15,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -189,5 +192,15 @@ public class Misc {
 			player.playSound(location, Sound.AMBIENCE_THUNDER, 10, 1);
 			player.playSound(location, Sound.EXPLODE, 10, (float) (Math.random() * 0.2 + 0.6));
 		}
+	}
+
+	public static File getFileFromResource(String fileName) throws URISyntaxException {
+
+		ClassLoader classLoader = Misc.class.getClassLoader();
+		URL resource = classLoader.getResource(fileName);
+		if (resource == null) {
+			return null;
+		}
+		return new File(resource.toURI());
 	}
 }
