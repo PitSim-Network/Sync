@@ -45,7 +45,6 @@ public class Misc {
 		if(amplifier < 0) return;
 		if(duration == 0) return;
 
-
 		for(PotionEffect potionEffect : player.getActivePotionEffects()) {
 			if(!potionEffect.getType().equals(type) || potionEffect.getAmplifier() > amplifier) continue;
 			if(potionEffect.getAmplifier() == amplifier && potionEffect.getDuration() >= duration) continue;
