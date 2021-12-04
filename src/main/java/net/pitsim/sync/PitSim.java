@@ -21,6 +21,7 @@ import net.pitsim.sync.enchants.useless.BottomlessQuiver;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.hypixel.HypixelAPI;
 import net.pitsim.sync.hypixel.HypixelPlayer;
+import net.pitsim.sync.inventories.EnderchestInventoryGUI;
 import net.pitsim.sync.misc.*;
 import net.pitsim.sync.perks.*;
 import net.pitsim.sync.placeholders.*;

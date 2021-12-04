@@ -1,33 +1,11 @@
 package net.pitsim.sync.commands;
 
-import dev.kyro.arcticapi.misc.AOutput;
-import dev.kyro.arcticapi.misc.AUtil;
 import lombok.SneakyThrows;
-import net.pitsim.sync.controllers.CombatManager;
-import net.pitsim.sync.controllers.DamageManager;
-import net.pitsim.sync.controllers.EnchantManager;
-import net.pitsim.sync.controllers.SpawnManager;
-import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
-import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.events.OofEvent;
-import net.pitsim.sync.hypixel.Enchant;
-import net.pitsim.sync.hypixel.HypixelPlayer;
-import net.pitsim.sync.hypixel.Mystic;
-import net.pitsim.sync.misc.Sounds;
-import org.bukkit.Bukkit;
+import net.pitsim.sync.controllers.InventoryManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class EncerchestCommand implements CommandExecutor {
 
@@ -38,20 +16,21 @@ public class EncerchestCommand implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
 
-        PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-
-        if(args.length > 0) {
-            player.sendMessage("Inventory:");
-            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.inventoryMystics.entrySet()) {
-                AUtil.giveItemSafely(player, integerItemStackEntry.getValue());
-            }
-            return false;
-        } else {
-            player.sendMessage("Ender Chest:");
-            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.enderchestMystics.entrySet()) {
-                AUtil.giveItemSafely(player, integerItemStackEntry.getValue());
-            }
-        }
+        InventoryManager.getInventory(player).openInventory();
+//        PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+//
+//        if(args.length > 0) {
+//            player.sendMessage("Inventory:");
+//            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.inventoryMystics.entrySet()) {
+//                AUtil.giveItemSafely(player, integerItemStackEntry.getValue());
+//            }
+//            return false;
+//        } else {
+//            player.sendMessage("Ender Chest:");
+//            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.enderchestMystics.entrySet()) {
+//                AUtil.giveItemSafely(player, integerItemStackEntry.getValue());
+//            }
+//        }
 
 //        HypixelPlayer hypixelPlayer = HypixelPlayer.getHypixelPlayer(player);
 //

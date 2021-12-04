@@ -102,7 +102,6 @@ public class HypixelPlayer {
 				Mystic mystic = new Mystic(this, compound);
 				if(!mystic.isMystic()) return;
 				enderchestMystics.put(i[0], mystic);
-//				Bukkit.broadcastMessage(mystic.owner.name + " " + mystic.enchantMap);
 
 			});
 
@@ -114,7 +113,7 @@ public class HypixelPlayer {
 			byte[] byteArrInv= new byte[stringArrInInv.length];
 			for(int j = 0; j < stringArrInInv.length; j++) {
 				String string = stringArrInInv[j];
-				byteArr[j] = Byte.parseByte(string);
+				byteArrInv[j] = Byte.parseByte(string);
 			}
 
 			InputStream  inputStreamInv = new ByteArrayInputStream(byteArrInv);
@@ -131,7 +130,6 @@ public class HypixelPlayer {
 				Mystic mystic = new Mystic(this, compound);
 				if(!mystic.isMystic()) return;
 				inventoryMystics.put(j[0], mystic);
-//				Bukkit.broadcastMessage(mystic.owner.name + " " + mystic.enchantMap);
 
 			});
 		} catch(Exception e) {
@@ -192,8 +190,6 @@ public class HypixelPlayer {
 
 		if(player == null) return;
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-
-		Bukkit.broadcastMessage(enderchestMystics +  "");
 
 		for(Map.Entry<Integer, Mystic> item : this.enderchestMystics.entrySet()) {
 
