@@ -3,7 +3,7 @@ authors:
   - Kyro
   - Wiji
 version: 1.0.0
-main: dev.kyro.pitsim.PitSim
+main: net.pitsim.sync.PitSim
 description: Sync Pit Gamemode
 depend:
   - Citizens
