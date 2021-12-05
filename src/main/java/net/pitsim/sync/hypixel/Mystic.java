@@ -26,14 +26,10 @@ public class Mystic {
 	public Map<Enchant, Integer> enchantMap = new HashMap<>();
 
 	public Mystic(HypixelPlayer owner, NBTCompound data) {
-
 		this.owner = owner;
 		this.data = data;
 
 		try {
-
-//			Bukkit.broadcastMessage(data + "");
-
 			NBTCompound display = data.getCompound("tag").getCompound("display");
 			NBTCompound attributes = data.getCompound("tag").getCompound("ExtraAttributes");
 
@@ -66,11 +62,8 @@ public class Mystic {
 				int enchantLvl = enchantInfo.getInt("Level", -1);
 				enchantMap.put(enchant, enchantLvl);
 			}
-
-//			if(owner.prestige < 20 && enchantMap.containsKey(MysticEnchant.HIDDEN_JEWEL)) mysticList.add(this);
 		} catch(Exception ignored) {
-
-			ignored.printStackTrace();
+//			ignored.printStackTrace();
 		}
 	}
 

@@ -13,7 +13,6 @@ public class ResourceCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
 
@@ -32,8 +31,6 @@ public class ResourceCommand implements CommandExecutor {
                 AOutput.error(player, "&cCorrect usage: /resource toggle");
             }
         } else player.setResourcePack("https://cdn.discordapp.com/attachments/803483152630677524/903075400442314772/PitSim.zip");
-
-
 
         return false;
     }

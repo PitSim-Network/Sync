@@ -182,6 +182,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("disc").setExecutor(new DiscordCommand());
 		getCommand("captcha").setExecutor(new CaptchaCommand());
 		getCommand("ecitems").setExecutor(new EncerchestCommand());
+		getCommand("resource").setExecutor(new ResourceCommand());
 //		getCommand("togglestereo").setExecutor(new ToggleStereoCommand());
 	}
 
@@ -195,6 +196,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new AFKManager(), this);
 		getServer().getPluginManager().registerEvents(new EnchantManager(), this);
 		getServer().getPluginManager().registerEvents(new SpawnNPCs(), this);
+		getServer().getPluginManager().registerEvents(new ResourcePackManager(), this);
 	}
 
 	private void loadConfig() {

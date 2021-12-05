@@ -16,8 +16,6 @@ public class ResourcePackManager implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(event.getPlayer());
-
 		APlayer aPlayer = APlayerData.getPlayerData(event.getPlayer());
 		if(aPlayer.playerData.contains("promptPack")) {
 			if(aPlayer.playerData.getBoolean("promptPack")) {
