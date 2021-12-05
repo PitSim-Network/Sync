@@ -1,12 +1,12 @@
 package net.pitsim.sync.controllers.objects;
 
 import dev.kyro.arcticapi.data.APlayerData;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.enchants.Hearts;
 import net.pitsim.sync.enums.AChatColor;
 import net.pitsim.sync.events.HealEvent;
 import net.pitsim.sync.perks.NoPerk;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -36,6 +36,8 @@ public class PitPlayer {
 
 	public Map<Integer, ItemStack> enderchestMystics = new HashMap<>();
 	public Map<Integer, ItemStack> inventoryMystics = new HashMap<>();
+	public Map<Integer, ItemStack> savedEnderchest = new HashMap<>();
+	public Map<Integer, ItemStack> savedInventroy = new HashMap<>();
 
 	public PitPlayer(Player player) {
 		this.player = player;

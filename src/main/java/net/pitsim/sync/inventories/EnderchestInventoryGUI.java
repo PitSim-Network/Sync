@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -52,12 +53,45 @@ public class EnderchestInventoryGUI implements Listener, InventoryHolder {
 
 	@EventHandler
 	public void onOpen(InventoryOpenEvent event) {
-		Bukkit.broadcastMessage("1");
-		Bukkit.broadcastMessage(event.getInventory() + "");
-		Bukkit.broadcastMessage(inv + "");
 		if (event.getInventory().getHolder() != inv.getHolder()) return;
-		Bukkit.broadcastMessage("2");
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 
+		if(pitPlayer.savedEnderchest.size() > 0) {
+			event.getInventory().clear();
+			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.savedEnderchest.entrySet()) {
+				inv.setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
+			}
+		}
+
+		if(pitPlayer.savedInventroy.size() > 0) {
+			event.getPlayer().getInventory().clear();
+			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.savedInventroy.entrySet()) {
+				event.getPlayer().getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
+			}
+		} else {
+			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.inventoryMystics.entrySet()) {
+				event.getPlayer().getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
+			}
+		}
+
+	}
+
+	@EventHandler
+	public void onClose(InventoryCloseEvent event) {
+		if (event.getInventory().getHolder() != inv.getHolder()) return;
+
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer((Player) event.getPlayer());
+		pitPlayer.savedEnderchest.clear();
+		for(int i = 0; i < event.getInventory().getSize(); i++) {
+			pitPlayer.savedEnderchest.put(i, event.getInventory().getItem(i));
+		}
+
+		pitPlayer.savedInventroy.clear();
+		for(int i = 0; i < event.getPlayer().getInventory().getSize(); i++) {
+			pitPlayer.savedInventroy.put(i, event.getPlayer().getInventory().getItem(i));
+		}
+
+		event.getPlayer().getInventory().clear();
 
 
 	}

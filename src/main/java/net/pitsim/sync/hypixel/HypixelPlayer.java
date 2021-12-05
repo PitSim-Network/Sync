@@ -1,14 +1,12 @@
 package net.pitsim.sync.hypixel;
 
-import dev.kyro.arcticapi.misc.AUtil;
+import me.nullicorn.nedit.NBTReader;
+import me.nullicorn.nedit.type.NBTCompound;
+import me.nullicorn.nedit.type.NBTList;
 import net.pitsim.sync.commands.FreshCommand;
 import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
-import net.pitsim.sync.hypixel.Mystic;
-import me.nullicorn.nedit.NBTReader;
-import me.nullicorn.nedit.type.NBTCompound;
-import me.nullicorn.nedit.type.NBTList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -58,7 +56,7 @@ public class HypixelPlayer {
 		try {
 			this.playerObj = playerObj.getJSONObject("player");
 		} catch(Exception ignored) {
-
+			ignored.printStackTrace();
 		}
 		getStats();
 		setEchestItems();
@@ -99,10 +97,12 @@ public class HypixelPlayer {
 				i[0]++;
 				if(compound.isEmpty()) return;
 
-				Mystic mystic = new Mystic(this, compound);
-				if(!mystic.isMystic()) return;
-				enderchestMystics.put(i[0], mystic);
-
+				if(isMystic(compound)) {
+					Bukkit.broadcastMessage("isMystic");
+					Mystic mystic = new Mystic(this, compound);
+					if(!mystic.isMystic()) return;
+					enderchestMystics.put(i[0], mystic);
+				}
 			});
 
 
@@ -259,5 +259,12 @@ public class HypixelPlayer {
 				pitPlayer.inventoryMystics.put(item.getKey(), mystic);
 			}
 		}
+	}
+
+	public static boolean isMystic(NBTCompound data) {
+		if(!data.containsKey("tag")) return false;
+		if(!data.getCompound("tag").containsKey("ExtraAttributes")) return false;
+		NBTCompound attributes = data.getCompound("tag").getCompound("ExtraAttributes");
+		return attributes.containsKey("Nonce");
 	}
 }

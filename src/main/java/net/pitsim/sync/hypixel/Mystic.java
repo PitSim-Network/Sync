@@ -4,10 +4,6 @@ import me.nullicorn.nedit.type.NBTCompound;
 import net.pitsim.sync.enums.PantColor;
 import org.bukkit.Bukkit;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +70,7 @@ public class Mystic {
 //			if(owner.prestige < 20 && enchantMap.containsKey(MysticEnchant.HIDDEN_JEWEL)) mysticList.add(this);
 		} catch(Exception ignored) {
 
-//			ignored.printStackTrace();
+			ignored.printStackTrace();
 		}
 	}
 
