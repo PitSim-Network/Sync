@@ -1,5 +1,6 @@
 package net.pitsim.sync.controllers;
 
+import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -17,9 +18,9 @@ public class ResourcePackManager implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(event.getPlayer());
 
-		FileConfiguration playerData = APlayerData.getPlayerData(event.getPlayer());
-		if(playerData.contains("promptPack")) {
-			if(playerData.getBoolean("promptPack")) {
+		APlayer aPlayer = APlayerData.getPlayerData(event.getPlayer());
+		if(aPlayer.playerData.contains("promptPack")) {
+			if(aPlayer.playerData.getBoolean("promptPack")) {
 				event.getPlayer().setResourcePack("https://cdn.discordapp.com/attachments/803483152630677524/903075400442314772/PitSim.zip");
 			}
 		} else {
@@ -28,23 +29,21 @@ public class ResourcePackManager implements Listener {
 			click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/resource"));
 
 			nonClick.addExtra(click);
-
 			event.getPlayer().sendMessage(nonClick);
-
 		}
 	}
 
 	@EventHandler
 	public void onPrompt(PlayerResourcePackStatusEvent event) {
 		if(event.getStatus() == PlayerResourcePackStatusEvent.Status.ACCEPTED) {
-			FileConfiguration playerData = APlayerData.getPlayerData(event.getPlayer());
-			playerData.set("promptPack", true);
-			APlayerData.savePlayerData(event.getPlayer());
+			APlayer aPlayer = APlayerData.getPlayerData(event.getPlayer());
+			aPlayer.playerData.set("promptPack", true);
+			aPlayer.save();
 		}
 		if(event.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
-			FileConfiguration playerData = APlayerData.getPlayerData(event.getPlayer());
-			playerData.set("promptPack", false);
-			APlayerData.savePlayerData(event.getPlayer());
+			APlayer aPlayer = APlayerData.getPlayerData(event.getPlayer());
+			aPlayer.playerData.set("promptPack", false);
+			aPlayer.save();
 		}
 	}
 }

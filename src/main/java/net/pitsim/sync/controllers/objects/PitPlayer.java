@@ -1,5 +1,6 @@
 package net.pitsim.sync.controllers.objects;
 
+import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.pitsim.sync.PitSim;
@@ -42,24 +43,23 @@ public class PitPlayer {
 	public PitPlayer(Player player) {
 		this.player = player;
 
-			String message = "%luckperms_prefix%";
-			prefix = "";
+		String message = "%luckperms_prefix%";
+		prefix = "";
 
-			FileConfiguration playerData = APlayerData.getPlayerData(player);
+		APlayer aPlayer = APlayerData.getPlayerData(player);
 
-			for(int i = 0; i < pitPerks.length; i++) {
+		for(int i = 0; i < pitPerks.length; i++) {
 
-				String perkString = playerData.getString("perk-" + i);
-				PitPerk savedPerk = perkString != null ? PitPerk.getPitPerk(perkString) : NoPerk.INSTANCE;
+			String perkString = aPlayer.playerData.getString("perk-" + i);
+			PitPerk savedPerk = perkString != null ? PitPerk.getPitPerk(perkString) : NoPerk.INSTANCE;
 
-				pitPerks[i] = savedPerk != null ? savedPerk : NoPerk.INSTANCE;
-			}
+			pitPerks[i] = savedPerk != null ? savedPerk : NoPerk.INSTANCE;
+		}
 
-			String chatColorString = playerData.getString("chatcolor");
-			if(chatColorString != null) {
-				chatColor = AChatColor.valueOf(chatColorString);
-			}
-
+		String chatColorString = aPlayer.playerData.getString("chatcolor");
+		if(chatColorString != null) {
+			chatColor = AChatColor.valueOf(chatColorString);
+		}
 	}
 
 	public static PitPlayer getPitPlayer(Player player) {

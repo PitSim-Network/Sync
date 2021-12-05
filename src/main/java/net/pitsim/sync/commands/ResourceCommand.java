@@ -1,5 +1,6 @@
 package net.pitsim.sync.commands;
 
+import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
 import dev.kyro.arcticapi.misc.AOutput;
 import org.bukkit.command.Command;
@@ -18,16 +19,15 @@ public class ResourceCommand implements CommandExecutor {
 
         if(args.length > 0) {
             if(args[0].equals("toggle")) {
-                FileConfiguration playerData = APlayerData.getPlayerData(player);
-                if(playerData.getBoolean("promptPack")) {
-                    playerData.set("promptPack", false);
+                APlayer aPlayer = APlayerData.getPlayerData(player);
+                if(aPlayer.playerData.getBoolean("promptPack")) {
+                    aPlayer.playerData.set("promptPack", false);
                     AOutput.send(player, "&cYou will no longer automatically receive the resource pack on join.");
                 } else {
-                    playerData.set("promptPack", true);
+                    aPlayer.playerData.set("promptPack", true);
                     AOutput.send(player, "&aYou will now automatically receive the resource pack on join.");
                 }
-
-                APlayerData.savePlayerData(player);
+                aPlayer.save();
             } else {
                 AOutput.error(player, "&cCorrect usage: /resource toggle");
             }
