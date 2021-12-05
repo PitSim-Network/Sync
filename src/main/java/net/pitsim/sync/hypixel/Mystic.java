@@ -70,7 +70,7 @@ public class Mystic {
 //			if(owner.prestige < 20 && enchantMap.containsKey(MysticEnchant.HIDDEN_JEWEL)) mysticList.add(this);
 		} catch(Exception ignored) {
 
-			ignored.printStackTrace();
+//			ignored.printStackTrace();
 		}
 	}
 

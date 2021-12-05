@@ -6,7 +6,6 @@ import me.nullicorn.nedit.type.NBTList;
 import net.pitsim.sync.commands.FreshCommand;
 import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,11 +31,14 @@ public class HypixelPlayer {
 	public Map<Integer, Mystic> enderchestMystics = new HashMap<>();
 	public Map<Integer, Mystic> inventoryMystics = new HashMap<>();
 
+	public Map<Integer, ItemStack> enderchestItems = new HashMap<>();
+	public Map<Integer, ItemStack> inventoryItems = new HashMap<>();
+
 	public List<Integer> recentKills = new ArrayList<>();
 
-	public static HypixelPlayer getHypixelPlayer(Player player) {
+	public static HypixelPlayer getHypixelPlayer(UUID uuid) {
 		for(HypixelPlayer hypixelPlayer : hypixelPlayers) {
-			if(hypixelPlayer.name.equals(player.getName())) return hypixelPlayer;
+			if(hypixelPlayer.UUID == uuid) return hypixelPlayer;
 		}
 		return null;
 	}
@@ -61,6 +63,7 @@ public class HypixelPlayer {
 		getStats();
 		setEchestItems();
 		setInventoryMystics();
+		Bukkit.broadcastMessage(enderchestMystics.size() + "");
 	}
 
 	public void getStats() {
@@ -98,7 +101,6 @@ public class HypixelPlayer {
 				if(compound.isEmpty()) return;
 
 				if(isMystic(compound)) {
-					Bukkit.broadcastMessage("isMystic");
 					Mystic mystic = new Mystic(this, compound);
 					if(!mystic.isMystic()) return;
 					enderchestMystics.put(i[0], mystic);
@@ -185,11 +187,10 @@ public class HypixelPlayer {
 		Player player = null;
 
 		for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-			if(onlinePlayer.getName().equals(this.name)) player = onlinePlayer;
+			if(onlinePlayer.getUniqueId().equals(this.UUID)) player = onlinePlayer;
 		}
 
 		if(player == null) return;
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 
 		for(Map.Entry<Integer, Mystic> item : this.enderchestMystics.entrySet()) {
 
@@ -216,7 +217,7 @@ public class HypixelPlayer {
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-				pitPlayer.enderchestMystics.put(item.getKey(), mystic);
+				enderchestItems.put(item.getKey(), mystic);
 			}
 		}
 	}
@@ -225,11 +226,10 @@ public class HypixelPlayer {
 		Player player = null;
 
 		for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-			if(onlinePlayer.getName().equals(this.name)) player = onlinePlayer;
+			if(onlinePlayer.getUniqueId().equals(this.UUID)) player = onlinePlayer;
 		}
 
 		if(player == null) return;
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 
 		for(Map.Entry<Integer, Mystic> item : this.inventoryMystics.entrySet()) {
 
@@ -256,7 +256,7 @@ public class HypixelPlayer {
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-				pitPlayer.inventoryMystics.put(item.getKey(), mystic);
+				inventoryItems.put(item.getKey(), mystic);
 			}
 		}
 	}
