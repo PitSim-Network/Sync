@@ -27,6 +27,8 @@ public class PitPlayer {
 
 	public PitPerk[] pitPerks = new PitPerk[4];
 
+	public UUID dataUUID = null;
+
 	public Map<PitEnchant, Integer> enchantHits = new HashMap<>();
 	public Map<PitEnchant, Integer> enchantCharge = new HashMap<>();
 	public Map<UUID, Double> recentDamageMap = new HashMap<>();
@@ -35,8 +37,6 @@ public class PitPlayer {
 	public UUID lastHitUUID = null;
 	public ItemStack confirmedDrop = null;
 
-	public Map<Integer, ItemStack> enderchestMystics = new HashMap<>();
-	public Map<Integer, ItemStack> inventoryMystics = new HashMap<>();
 	public Map<Integer, ItemStack> savedEnderchest = new HashMap<>();
 	public Map<Integer, ItemStack> savedInventroy = new HashMap<>();
 

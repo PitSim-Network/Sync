@@ -7,9 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
 
 public class PitInventoryPanel extends AGUIPanel {
 	public PitInventoryPanel(AGUI gui) {
@@ -34,18 +31,6 @@ public class PitInventoryPanel extends AGUIPanel {
 	@Override
 	public void onOpen(InventoryOpenEvent event) {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer((Player) event.getPlayer());
-
-		for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.enderchestMystics.entrySet()) {
-			getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-
-		}
-
-		player.getInventory().clear();
-
-		for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.inventoryMystics.entrySet()) {
-			getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-			player.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-		}
 
 	}
 

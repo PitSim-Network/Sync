@@ -3,6 +3,7 @@ package net.pitsim.sync.inventories;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.InventoryManager;
 import net.pitsim.sync.controllers.objects.PitPlayer;
+import net.pitsim.sync.hypixel.HypixelPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public class EnderchestInventoryGUI implements Listener, InventoryHolder {
 		inv = Bukkit.createInventory(this, 54, "Enderchest");
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.enderchestMystics.entrySet()) {
+		for(Map.Entry<Integer, ItemStack> integerItemStackEntry : HypixelPlayer.getHypixelPlayer(pitPlayer.dataUUID).enderchestItems.entrySet()) {
 			inv.setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
 		}
 	}
@@ -69,7 +70,7 @@ public class EnderchestInventoryGUI implements Listener, InventoryHolder {
 				event.getPlayer().getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
 			}
 		} else {
-			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer.inventoryMystics.entrySet()) {
+			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : HypixelPlayer.getHypixelPlayer(pitPlayer.dataUUID).inventoryItems.entrySet()) {
 				event.getPlayer().getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
 			}
 		}

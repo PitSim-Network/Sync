@@ -1,13 +1,11 @@
 package net.pitsim.sync.controllers;
 
-import be.maximvdw.featherboard.api.FeatherBoardAPI;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.misc.AOutput;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.hypixel.Enchant;
 import net.pitsim.sync.hypixel.HypixelAPI;
 import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.misc.Misc;
@@ -156,6 +154,8 @@ public class PlayerManager implements Listener {
 
 		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(event.getPlayer().getUniqueId()));
 		HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
+
+		pitPlayer.dataUUID = hypixelPlayer.UUID;
 
 //		Enchant.sort();
 

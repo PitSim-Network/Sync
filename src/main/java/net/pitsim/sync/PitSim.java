@@ -3,28 +3,11 @@ package net.pitsim.sync;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.xxmicloxx.NoteBlockAPI.songplayer.EntitySongPlayer;
-import de.schlichtherle.key.passwd.swing.BasicUnknownKeyFeedback;
 import dev.kyro.arcticapi.ArcticAPI;
 import dev.kyro.arcticapi.commands.ABaseCommand;
 import dev.kyro.arcticapi.data.AData;
 import dev.kyro.arcticapi.hooks.AHook;
 import dev.kyro.arcticapi.misc.AOutput;
-import net.pitsim.sync.commands.*;
-import net.pitsim.sync.commands.admin.*;
-import net.pitsim.sync.controllers.*;
-import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.enchants.DiamondAllergy;
-import net.pitsim.sync.enchants.GoldBoost;
-import net.pitsim.sync.enchants.*;
-import net.pitsim.sync.enchants.useless.*;
-import net.pitsim.sync.enchants.useless.BottomlessQuiver;
-import net.pitsim.sync.enchants.useless.WolfPack;
-import net.pitsim.sync.hypixel.HypixelAPI;
-import net.pitsim.sync.hypixel.HypixelPlayer;
-import net.pitsim.sync.inventories.EnderchestInventoryGUI;
-import net.pitsim.sync.misc.*;
-import net.pitsim.sync.perks.*;
-import net.pitsim.sync.placeholders.*;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.luckperms.api.LuckPerms;
@@ -35,7 +18,13 @@ import net.pitsim.sync.commands.admin.BypassCommand;
 import net.pitsim.sync.commands.admin.LockdownCommand;
 import net.pitsim.sync.commands.admin.ReloadCommand;
 import net.pitsim.sync.controllers.*;
+import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
+import net.pitsim.sync.enchants.useless.BottomlessQuiver;
+import net.pitsim.sync.enchants.useless.WolfPack;
+import net.pitsim.sync.enchants.useless.*;
+import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
@@ -48,10 +37,7 @@ import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
@@ -136,7 +122,7 @@ public class PitSim extends JavaPlugin {
 		registerListeners();
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
-			HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(player.getUniqueId()));
+			HypixelPlayer hypixelPlayer = new HypixelPlayer(UUID.fromString("6d58658b-d138-45b1-afb5-6bad8e0899e1"));
 			HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
 		}
 	}
