@@ -157,7 +157,7 @@ public class PlayerManager implements Listener {
 		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(event.getPlayer().getUniqueId()));
 		HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
 
-		Enchant.sort();
+//		Enchant.sort();
 
 //		FeatherBoardAPI.resetDefaultScoreboard(event.getPlayer());
 //		FeatherBoardAPI.showScoreboard(event.getPlayer(), "default");

@@ -34,6 +34,9 @@ public class PitPlayer {
 	public UUID lastHitUUID = null;
 	public ItemStack confirmedDrop = null;
 
+	public Map<Integer, ItemStack> enderchestMystics = new HashMap<>();
+	public Map<Integer, ItemStack> inventoryMystics = new HashMap<>();
+
 	public PitPlayer(Player player) {
 		this.player = player;
 
