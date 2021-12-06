@@ -24,7 +24,7 @@ public class PlayerDataManager implements Listener {
 			if(loadout.uuid.equals(uuid)) return loadout;
 		}
 		Loadout loadout = new Loadout(uuid);
-//		loadouts.add(loadout);
+		loadouts.add(loadout);
 		return loadout;
 	}
 }

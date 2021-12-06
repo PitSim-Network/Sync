@@ -8,6 +8,7 @@ import net.pitsim.sync.enchants.Hearts;
 import net.pitsim.sync.enums.AChatColor;
 import net.pitsim.sync.events.HealEvent;
 import net.pitsim.sync.perks.NoPerk;
+import net.pitsim.sync.perks.Vampire;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class PitPlayer {
 	public Player player;
 	public String prefix;
 
-	public PitPerk[] pitPerks = new PitPerk[4];
+	public PitPerk[] pitPerks = new PitPerk[] { Vampire.INSTANCE, NoPerk.INSTANCE, NoPerk.INSTANCE, NoPerk.INSTANCE };
 
 	public UUID dataUUID = null;
 

@@ -93,7 +93,7 @@ public class Mystic {
 	}
 
 	public ItemStack getItemStack() {
-		String mysticString = type.displayName.equals("pants") ? color.refName : type.displayName;
+		String mysticString = type.displayName.equalsIgnoreCase("pants") ? color.refName : type.displayName;
 		ItemStack mystic = FreshCommand.getFreshItem(mysticString);
 		try {
 			for(Map.Entry<PitEnchant, Integer> newEnchant : enchantMap.entrySet()) {

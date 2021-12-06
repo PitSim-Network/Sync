@@ -11,6 +11,8 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.DuelManager;
 import net.pitsim.sync.controllers.RingCalc;
 import net.pitsim.sync.enums.PvpArena;
+import net.pitsim.sync.hypixel.Loadout;
+import net.pitsim.sync.hypixel.PlayerDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -21,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 public class Match implements Listener {
 
@@ -57,31 +60,26 @@ public class Match implements Listener {
         player1.getInventory().clear();
         player1.teleport(player1Spawn);
 
-//        if(pitPlayer1.savedInventroy.size() > 0) {
-//            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer1.savedInventroy.entrySet()) {
-//                player1.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-//            }
-//        } else {
-//            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : HypixelPlayer.getHypixelPlayer(pitPlayer1.dataUUID).inventoryItems.entrySet()) {
-//                player1.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-//            }
-//        }
+        Loadout player1Loadout = PlayerDataManager.getLoadout(player1.getUniqueId());
+
+        if(player1Loadout.inventoryItemMap.size() > 0) {
+            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : player1Loadout.inventoryItemMap.entrySet()) {
+                player1.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
+            }
+        }
 
 
         PitPlayer pitPlayer2 = PitPlayer.getPitPlayer(player2);
         player2.teleport(player2Spawn);
         player2.getInventory().clear();
 
-//        if(pitPlayer2.savedInventroy.size() > 0) {
-//            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : pitPlayer2.savedInventroy.entrySet()) {
-//                player2.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-//            }
-//        } else {
-//            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : HypixelPlayer.getHypixelPlayer(pitPlayer2.dataUUID).inventoryItems.entrySet()) {
-//                player2.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-//            }
-//        }
+        Loadout player2Loadout = PlayerDataManager.getLoadout(player2.getUniqueId());
 
+        if(player2Loadout.inventoryItemMap.size() > 0) {
+            for(Map.Entry<Integer, ItemStack> integerItemStackEntry : player2Loadout.inventoryItemMap.entrySet()) {
+                player2.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
+            }
+        }
     }
 
     public void onEnd(Player loser) {
