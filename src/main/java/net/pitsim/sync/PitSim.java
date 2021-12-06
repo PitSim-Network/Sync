@@ -156,6 +156,7 @@ public class PitSim extends JavaPlugin {
 		adminCommand.registerCommand(new BypassCommand("bypass"));
 		adminCommand.registerCommand(new LockdownCommand("lockdown"));
 
+
 		getCommand("atest").setExecutor(new ATestCommand());
 
 		getCommand("oof").setExecutor(new OofCommand());
@@ -168,6 +169,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("disc").setExecutor(new DiscordCommand());
 		getCommand("captcha").setExecutor(new CaptchaCommand());
 		getCommand("ecitems").setExecutor(new EncerchestCommand());
+		getCommand("duel").setExecutor(new DuelCommand());
 //		getCommand("togglestereo").setExecutor(new ToggleStereoCommand());
 	}
 
