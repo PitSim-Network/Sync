@@ -25,7 +25,7 @@ import net.pitsim.sync.enchants.*;
 import net.pitsim.sync.enchants.useless.BottomlessQuiver;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
-import net.pitsim.sync.hypixel.HypixelPlayer;
+import net.pitsim.sync.hypixel.PlayerDataManager;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
@@ -38,7 +38,10 @@ import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 //import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
@@ -123,8 +126,7 @@ public class PitSim extends JavaPlugin {
 		registerListeners();
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
-			HypixelPlayer hypixelPlayer = new HypixelPlayer(UUID.fromString("6d58658b-d138-45b1-afb5-6bad8e0899e1"));
-			HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
+			PlayerDataManager.getHypixelPlayer(player.getUniqueId());
 		}
 	}
 
@@ -195,6 +197,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new SpawnNPCs(), this);
 		getServer().getPluginManager().registerEvents(new DuelManager(), this);
 		getServer().getPluginManager().registerEvents(new ResourcePackManager(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
 	}
 
 	private void loadConfig() {

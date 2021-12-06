@@ -9,7 +9,6 @@ import net.pitsim.sync.enums.AChatColor;
 import net.pitsim.sync.events.HealEvent;
 import net.pitsim.sync.perks.NoPerk;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -36,9 +35,6 @@ public class PitPlayer {
 	public AChatColor chatColor = null;
 	public UUID lastHitUUID = null;
 	public ItemStack confirmedDrop = null;
-
-	public Map<Integer, ItemStack> savedEnderchest = new HashMap<>();
-	public Map<Integer, ItemStack> savedInventroy = new HashMap<>();
 
 	public PitPlayer(Player player) {
 		this.player = player;

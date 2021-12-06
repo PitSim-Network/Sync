@@ -4,10 +4,8 @@ import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Enchant {
 
@@ -181,12 +179,12 @@ public enum Enchant {
 	SYBLE("", "", true),
 	THINK_OF_THE_PEOPLE("Think of the People", "think_of_the_people", true);
 
-	private String displayName;
+	private String refName;
 	public String key;
 	public boolean isRare;
 
-	Enchant(String displayName, String key, boolean isRare) {
-		this.displayName = displayName;
+	Enchant(String refName, String key, boolean isRare) {
+		this.refName = refName;
 		this.key = key;
 		this.isRare = isRare;
 	}
@@ -200,9 +198,9 @@ public enum Enchant {
 		return null;
 	}
 
-	public String getDisplayName() {
+	public String getRefName() {
 
-		return (isRare ? "" : "") + displayName;
+		return (isRare ? "" : "") + refName;
 	}
 
 	public static void sort() {

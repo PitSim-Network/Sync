@@ -3,6 +3,8 @@ package net.pitsim.sync.commands;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import dev.kyro.arcticapi.data.APlayer;
+import dev.kyro.arcticapi.data.APlayerData;
 import dev.kyro.arcticapi.misc.AOutput;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.EnchantManager;
@@ -122,6 +124,13 @@ public class ATestCommand implements CommandExecutor {
 		if(!(sender instanceof Player)) return false;
 		Player player = (Player) sender;
 		if(!player.isOp()) return false;
+
+		APlayer aPlayer = APlayerData.getPlayerData(player);
+		aPlayer.playerData.set("loadout", null);
+		aPlayer.save();
+		AOutput.send(player, "Cleared!");
+
+		if(true) return false;
 
 		if(args.length < 1) {
 

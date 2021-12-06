@@ -6,8 +6,7 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.hypixel.HypixelAPI;
-import net.pitsim.sync.hypixel.HypixelPlayer;
+import net.pitsim.sync.hypixel.PlayerDataManager;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.Bukkit;
@@ -142,7 +141,6 @@ public class PlayerManager implements Listener {
 
 	@EventHandler
 	public void onAttack(AttackEvent.Apply attackEvent) {
-
 //		Arch chest
 		attackEvent.multiplier.add(0.85);
 	}
@@ -150,20 +148,8 @@ public class PlayerManager implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-
-		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(event.getPlayer().getUniqueId()));
-		HypixelPlayer.hypixelPlayers.add(hypixelPlayer);
-
-		pitPlayer.dataUUID = hypixelPlayer.UUID;
-
-//		Enchant.sort();
-
-//		FeatherBoardAPI.resetDefaultScoreboard(event.getPlayer());
-//		FeatherBoardAPI.showScoreboard(event.getPlayer(), "default");
+		PlayerDataManager.getHypixelPlayer(player.getUniqueId());
 	}
-
-
 
 	@EventHandler
 	public void onJoin(PlayerSpawnLocationEvent event) {
