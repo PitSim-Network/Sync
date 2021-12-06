@@ -103,6 +103,11 @@ public class Match implements Listener {
 
                 loadSchematic(new File("plugins/WorldEdit/schematics/clear.schematic"), new Location(Bukkit.getWorld("pvp"), arenaCoordinates.x, 80, arenaCoordinates.y));
                 DuelManager.matches.remove(thisMatch);
+
+                player1 = null;
+                player2  =  null;
+                arena = null;
+                arenaCoordinates = null;
             }
         }.runTaskLater(PitSim.INSTANCE, 5 * 20L);
     }
