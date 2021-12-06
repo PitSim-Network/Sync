@@ -7,15 +7,18 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
 import com.sk89q.worldedit.world.DataException;
+import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.DuelManager;
 import net.pitsim.sync.controllers.RingCalc;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.hypixel.HypixelPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,13 +86,31 @@ public class Match implements Listener {
 
     }
 
-    public void onEnd() {
-        loadSchematic(new File("plugins/WorldEdit/schematics/clear.schematic"), new Location(Bukkit.getWorld("pvp"), arenaCoordinates.x, 80, arenaCoordinates.y));
+    public void onEnd(Player loser) {
+        player1.getInventory().clear();
+        player2.getInventory().clear();
+
+        loser.setGameMode(GameMode.SPECTATOR);
+
+        Match thisMatch = this;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+
+                loser.setGameMode(GameMode.SURVIVAL);
+                player1.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+                player2.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+
+                loadSchematic(new File("plugins/WorldEdit/schematics/clear.schematic"), new Location(Bukkit.getWorld("pvp"), arenaCoordinates.x, 80, arenaCoordinates.y));
+                DuelManager.matches.remove(thisMatch);
+
+                player1 = null;
+                player2  =  null;
+                arena = null;
+                arenaCoordinates = null;
+            }
+        }.runTaskLater(PitSim.INSTANCE, 5 * 20L);
     }
-
-
-
-
 
     private void loadSchematic(File file, Location location) {
         WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");

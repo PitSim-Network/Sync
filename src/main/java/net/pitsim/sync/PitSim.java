@@ -18,6 +18,7 @@ import net.pitsim.sync.commands.admin.BypassCommand;
 import net.pitsim.sync.commands.admin.LockdownCommand;
 import net.pitsim.sync.commands.admin.ReloadCommand;
 import net.pitsim.sync.controllers.*;
+import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
@@ -141,6 +142,14 @@ public class PitSim extends JavaPlugin {
 			it.remove();
 		}
 
+		for(Match match : DuelManager.matches) {
+			match.onEnd(null);
+			match.player1 = null;
+			match.player2  =  null;
+			match.arena = null;
+			match.arenaCoordinates = null;
+		}
+
 	}
 
 	private void registerPerks() {
@@ -184,6 +193,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new AFKManager(), this);
 		getServer().getPluginManager().registerEvents(new EnchantManager(), this);
 		getServer().getPluginManager().registerEvents(new SpawnNPCs(), this);
+		getServer().getPluginManager().registerEvents(new DuelManager(), this);
 		getServer().getPluginManager().registerEvents(new ResourcePackManager(), this);
 	}
 
