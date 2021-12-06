@@ -169,15 +169,20 @@ public enum Enchant {
 //	HEARTRIPPER("Heartripper", "heartripper", true),
 
 	REGULARITY("regularity", "regularity", true),
-//	BREACHING_CHARGE("Combo: Breaching Charge", "breaching_charge", false),
 	HEIGH_HO("heighho", "heigh_ho", false),
 	REALLY_TOXIC("reallytoxic", "really_toxic", false),
 	NEW_DEAL("newdeal", "new_deal", false),
-//	DO_IT_LIKE_THE_FRENCH("Do it like the French", "do_it_like_the_french", false),
+
+	BREACHING_CHARGE("Combo: Breaching Charge", "breaching_charge", false),
+	DO_IT_LIKE_THE_FRENCH("Do it like the French", "do_it_like_the_french", false),
 
 //	Guess
-	SYBLE("", "", true),
-	THINK_OF_THE_PEOPLE("Think of the People", "think_of_the_people", true);
+//	TODO: Add below enchant classes and fetch keys
+	BRAKES("Brakes!", "", false),
+	SYBIL("Sybil", "", true),
+	ACE_OF_SPADES("Ace of Spades", "", false),
+	THINK_OF_THE_PEOPLE("Think of the People", "think_of_the_people", true),
+	DEAL_WITH_THE_DEVIL("Deal with the Devil", "gentlemen_agreement", true);
 
 	private String refName;
 	public String key;

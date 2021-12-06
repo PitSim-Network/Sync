@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +86,21 @@ public class DuelManager implements Listener{
 				return;
 			}
 		}
+	}
+
+	@EventHandler
+	public void onLeave(PlayerQuitEvent event) {
+		for(Match match : matches) {
+			if(match.player1 == event.getPlayer() || match.player2 == event.getPlayer()) {
+				match.onEnd(event.getPlayer());
+				return;
+			}
+		}
+	}
+
+	@EventHandler
+	public void onItemDamage(PlayerItemDamageEvent event) {
+		event.setCancelled(true);
 	}
 
 }

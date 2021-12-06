@@ -9,10 +9,7 @@ import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.hypixel.PlayerDataManager;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -149,6 +146,8 @@ public class PlayerManager implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		PlayerDataManager.getHypixelPlayer(player.getUniqueId());
+
+		event.getPlayer().setGameMode(GameMode.SURVIVAL);
 	}
 
 	@EventHandler
