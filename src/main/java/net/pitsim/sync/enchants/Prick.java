@@ -28,12 +28,10 @@ public class Prick extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Enemies hitting you receive", "&c" + Misc.getHearts(getDamage(enchantLvl)) + " &7true damage").getLore();
 	}
 
 	public double getDamage(int enchantLvl) {
-
 		return enchantLvl * 0.25 + 0.25;
 	}
 }

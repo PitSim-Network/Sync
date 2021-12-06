@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants;
+package net.pitsim.sync.enchants.needtoinspect;
 
 import com.xxmicloxx.NoteBlockAPI.model.RepeatMode;
 import com.xxmicloxx.NoteBlockAPI.model.Song;

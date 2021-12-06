@@ -28,17 +28,14 @@ public class PainFocus extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Deal &c+" + getDamage(enchantLvl) + "% &7damage per &c\u2764", "&7you're missing").getLore();
 	}
 
 	public int getDamage(int enchantLvl) {
-		if(enchantLvl == 1) return 1;
-		return enchantLvl * 2 - 2;
+		return (int) Math.floor(Math.pow(enchantLvl, 1.5));
 	}
 
 	public double getDamage(Player player, int enchantLvl) {
-
 		int missingHearts = (int) ((player.getMaxHealth() - player.getHealth()) / 2);
 		return missingHearts * getDamage(enchantLvl);
 	}

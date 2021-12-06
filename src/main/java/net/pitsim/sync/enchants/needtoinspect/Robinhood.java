@@ -1,11 +1,9 @@
-package net.pitsim.sync.enchants;
+package net.pitsim.sync.enchants.needtoinspect;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.PitSim;
-import net.pitsim.sync.controllers.Cooldown;
 import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.VolleyShootEvent;
@@ -19,7 +17,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Robinhood extends PitEnchant {
 	public static List<Arrow> robinMap = new ArrayList<>();
@@ -60,11 +61,6 @@ public class Robinhood extends PitEnchant {
 		if(enchantLvl == 0) return;
 		robinMap.add(arrow);
 
-		Cooldown cooldown = getCooldown(player, 60);
-		if(cooldown.isOnCooldown()) return; else cooldown.reset();
-
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -74,7 +70,7 @@ public class Robinhood extends PitEnchant {
 				}
 
 				Map.Entry<Player, Double> targetInfo = null;
-				for(Entity nearbyEntity : arrow.getWorld().getNearbyEntities(arrow.getLocation(), getRange(enchantLvl), getRange(enchantLvl), getRange(enchantLvl))) {
+				for(Entity nearbyEntity : arrow.getWorld().getNearbyEntities(arrow.getLocation(), 16, 16, 16)) {
 
 					if(!(nearbyEntity instanceof Player) || nearbyEntity.equals(player)) continue;
 					Player target = (Player) nearbyEntity;

@@ -19,7 +19,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -46,7 +45,7 @@ public class FasterThanTheirShadow extends PitEnchant implements Listener {
 		if(!HitCounter.hasReachedThreshold(pitPlayer.player, this, getStrikes(enchantLvl))) return;
 
 		Misc.applyPotionEffect(attackEvent.attacker, PotionEffectType.SPEED,
-				4 * 20, getSpeedAmplifier(enchantLvl) - 1, true, false);
+				4 * 20, getSpeedAmplifier(enchantLvl), true, false);
 	}
 
 	@EventHandler (priority = EventPriority.HIGHEST)
@@ -76,49 +75,39 @@ public class FasterThanTheirShadow extends PitEnchant implements Listener {
 		if(!(event.getEntity() instanceof Arrow || event.getEntity().getShooter() instanceof Player)) return;
 
 		net.minecraft.server.v1_8_R3.EntityArrow entityArrow = ((CraftArrow) event.getEntity()).getHandle();
-		Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) PitSim.INSTANCE, new Runnable() {
-			public void run() {
-				try {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(PitSim.INSTANCE, () -> {
+			try {
+				Field fieldX = net.minecraft.server.v1_8_R3.EntityArrow.class
+						.getDeclaredField("d");
+				Field fieldY = net.minecraft.server.v1_8_R3.EntityArrow.class
+						.getDeclaredField("e");
+				Field fieldZ = net.minecraft.server.v1_8_R3.EntityArrow.class
+						.getDeclaredField("f");
 
-					Field fieldX = net.minecraft.server.v1_8_R3.EntityArrow.class
-							.getDeclaredField("d");
-					Field fieldY = net.minecraft.server.v1_8_R3.EntityArrow.class
-							.getDeclaredField("e");
-					Field fieldZ = net.minecraft.server.v1_8_R3.EntityArrow.class
-							.getDeclaredField("f");
+				fieldX.setAccessible(true);
+				fieldY.setAccessible(true);
+				fieldZ.setAccessible(true);
 
-					fieldX.setAccessible(true);
-					fieldY.setAccessible(true);
-					fieldZ.setAccessible(true);
+				int x = fieldX.getInt(entityArrow);
+				int y = fieldY.getInt(entityArrow);
+				int z = fieldZ.getInt(entityArrow);
 
-					int x = fieldX.getInt(entityArrow);
-					int y = fieldY.getInt(entityArrow);
-					int z = fieldZ.getInt(entityArrow);
-
-					if (isValidBlock(y)) {
-						Block block = event.getEntity().getWorld().getBlockAt(x, y, z);
-						Bukkit.getServer()
-								.getPluginManager()
-								.callEvent(
-										new ArrowHitBlockEvent((Arrow) event.getEntity(), block));
-					} else {
-						Block block = event.getEntity().getWorld().getBlockAt(x, y, z);
-
-						if(block == null || event.getEntity() == null) return;
-						Bukkit.getServer()
-								.getPluginManager()
-								.callEvent(
-										new ArrowHitBlockEvent((Arrow) event.getEntity(), null));
-					}
-
-				} catch (NoSuchFieldException e1) {
-				} catch (SecurityException e1) {
-				} catch (IllegalArgumentException e1) {
-				} catch (IllegalAccessException e1) {
+				if (isValidBlock(y)) {
+					Block block = event.getEntity().getWorld().getBlockAt(x, y, z);
+					Bukkit.getServer()
+							.getPluginManager()
+							.callEvent(
+									new ArrowHitBlockEvent((Arrow) event.getEntity(), block));
+				} else {
+					Block block = event.getEntity().getWorld().getBlockAt(x, y, z);
+					if(block == null || event.getEntity() == null) return;
+					Bukkit.getServer()
+							.getPluginManager()
+							.callEvent(
+									new ArrowHitBlockEvent((Arrow) event.getEntity(), null));
 				}
-			}
+			} catch(NoSuchFieldException | IllegalAccessException | IllegalArgumentException | SecurityException ignored) { }
 		});
-
 	}
 	private boolean isValidBlock(int y) {
 		return y != -1;
@@ -127,40 +116,15 @@ public class FasterThanTheirShadow extends PitEnchant implements Listener {
 	@Override
 	public List<String> getDescription(int enchantLvl) {
 		return new ALoreBuilder("&7Hitting &f" + getStrikes(enchantLvl) + " &7shots without", "&7missing grants &eSpeed "
-				+ AUtil.toRoman(getSpeedAmplifier(enchantLvl)) + " &7(4s)").getLore();
+				+ AUtil.toRoman(getSpeedAmplifier(enchantLvl + 1)) + " &7(4s)").getLore();
 
-	}
-
-	public int getSlowDuration(int enchantLvl) {
-
-		return Misc.linearEnchant(enchantLvl, 0.5, 0) * 3;
 	}
 
 	public int getSpeedAmplifier(int enchantLvl) {
-
-		switch(enchantLvl) {
-			case 1:
-				return 2;
-			case 2:
-				return 3;
-			case 3:
-				return 4;
-
-		}
-		return 0;
+		return enchantLvl;
 	}
 
 	public int getStrikes(int enchantLvl) {
-
-		switch(enchantLvl) {
-			case 1:
-				return 3;
-			case 2:
-				return 2;
-			case 3:
-				return 2;
-
-		}
-		return 0;
+		return Math.max(3 - (int) (enchantLvl * 0.5), 1);
 	}
 }

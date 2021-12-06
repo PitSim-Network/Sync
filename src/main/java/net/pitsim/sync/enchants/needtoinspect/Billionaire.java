@@ -1,8 +1,7 @@
-package net.pitsim.sync.enchants;
+package net.pitsim.sync.enchants.needtoinspect;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Sounds;
@@ -25,8 +24,6 @@ public class Billionaire extends PitEnchant {
 		int enchantLvl = attackEvent.getAttackerEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(attackEvent.attacker);
-
 		attackEvent.multiplier.add(getDamageMultiplier(enchantLvl));
 //		attackEvent.increasePercent += getDamageIncrease(enchantLvl) / 100.0;
 		Sounds.BILLIONAIRE.play(attackEvent.attacker);
@@ -36,7 +33,7 @@ public class Billionaire extends PitEnchant {
 	public List<String> getDescription(int enchantLvl) {
 		DecimalFormat decimalFormat = new DecimalFormat("0.##");
 		return new ALoreBuilder("&7Hits with this sword deal &c" + getDamageMultiplier(enchantLvl) + "x",
-				"&cdamage &7but cost &6" + getGoldCost(enchantLvl) / 5 + "g &7against", "&7players and &6" + getGoldCost(enchantLvl) + "g &7against", "&7bots").getLore();
+				"&cdamage &7but cost &6" + getGoldCost(enchantLvl) + "g").getLore();
 	}
 
 //	public double getDamageIncrease(int enchantLvl) {
@@ -49,6 +46,7 @@ public class Billionaire extends PitEnchant {
 	}
 
 	public int getGoldCost(int enchantLvl) {
+
 		return (int) (Math.floor(Math.pow(enchantLvl, 1.75)) * 50 + 50);
 	}
 }

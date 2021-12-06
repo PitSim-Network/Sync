@@ -23,7 +23,6 @@ public class Hearts extends PitEnchant {
 			@Override
 			public void run() {
 				for(Player player : Bukkit.getOnlinePlayers()) {
-
 					PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 					pitPlayer.updateMaxHealth();
 				}
@@ -39,27 +38,22 @@ public class Hearts extends PitEnchant {
 
 	@EventHandler
 	public void onArmorEquip(AChangeEquipmentEvent event) {
-
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(event.getPlayer());
 		pitPlayer.updateMaxHealth();
 	}
 
-	public int getExtraHealth(PitPlayer pitPlayer) {
-
+	public double getExtraHealth(PitPlayer pitPlayer) {
 		int enchantLvl = EnchantManager.getEnchantLevel(pitPlayer.player, this);
-		if(enchantLvl == 0) return 0;
-
 		return getExtraHealth(enchantLvl);
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Increase your max health by &c" + Misc.getHearts(getExtraHealth(enchantLvl))).getLore();
 	}
 
-	public int getExtraHealth(int enchantLvl) {
-
-		return enchantLvl + 1;
+	public double getExtraHealth(int enchantLvl) {
+		if(enchantLvl == 1) return 0.5;
+		return enchantLvl;
 	}
 }

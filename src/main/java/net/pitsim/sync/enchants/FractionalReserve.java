@@ -1,7 +1,6 @@
 package net.pitsim.sync.enchants;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
-import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
@@ -25,18 +24,18 @@ public class FractionalReserve extends PitEnchant {
 		int enchantLvl = attackEvent.getDefenderEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
-		int reduction = Math.max((int) Math.log10(PitSim.VAULT.getBalance(attackEvent.defender)) + 1, 0);
-		attackEvent.multiplier.add(Misc.getReductionMultiplier(reduction * getReduction(enchantLvl)));
+//		int reduction = (int) Math.min(PitSim.VAULT.getBalance(attackEvent.attacker) / 10000, getMaxDamageReduction(enchantLvl));
+		int reduction = (int) getMaxDamageReduction(enchantLvl);
+		attackEvent.multiplier.add(Misc.getReductionMultiplier(reduction));
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-		return new ALoreBuilder("&7Receive &9-"+ getReduction(enchantLvl) + "% &7damage per",
-				"&6digit &7in your gold").getLore();
+		return new ALoreBuilder("&7Receive &9-1% damage per",
+				"&610,000g &7you have (&9-" + getMaxDamageReduction(enchantLvl) + "%", "&7max)").getLore();
 	}
 
-	public static int getReduction(int enchantLvl) {
-		return enchantLvl * 2;
+	public double getMaxDamageReduction(int enchantLvl) {
+		return (int) Math.max(Math.floor(Math.pow(enchantLvl, 1.65) * 3) + 12, 0);
 	}
 }

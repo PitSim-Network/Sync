@@ -38,13 +38,11 @@ public class Crush extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Strikes apply &cWeakness " + AUtil.toRoman(enchantLvl + 4), "&7(lasts " + (getDuration(enchantLvl) / 20D) +
 				"s, 2s cooldown)").getLore();
 	}
 
 	public int getDuration(int enchantLvl) {
-
 		return (int) (Math.floor(Math.pow(enchantLvl, 0.7) * 2 + enchantLvl / 2D) * 2);
 	}
 }

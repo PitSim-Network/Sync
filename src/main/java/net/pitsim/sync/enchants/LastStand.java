@@ -18,6 +18,7 @@ public class LastStand extends PitEnchant {
 	public LastStand() {
 		super("Last Stand", false, ApplyType.PANTS,
 				"laststand", "last", "last-stand", "resistance");
+		isUncommonEnchant = true;
 	}
 
 	@EventHandler
@@ -27,29 +28,22 @@ public class LastStand extends PitEnchant {
 		int enchantLvl = attackEvent.getDefenderEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
-		if(attackEvent.defender.getHealth() - attackEvent.event.getFinalDamage() <= getProcHealth()) {
+		if(attackEvent.defender.getHealth() - attackEvent.event.getFinalDamage() <= 6) {
 			Cooldown cooldown = getCooldown(attackEvent.defender, 10 * 20);
 			if(cooldown.isOnCooldown()) return; else cooldown.reset();
 			Sounds.LAST_STAND.play(attackEvent.defender);
 			Misc.applyPotionEffect(attackEvent.defender, PotionEffectType.DAMAGE_RESISTANCE, getSeconds(enchantLvl)
-					* 20, getAmplifier(enchantLvl) - 1, false, false);
+					* 20, getAmplifier(enchantLvl) - 1, true, false);
 		}
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Gain &9Resistance " + AUtil.toRoman(getAmplifier(enchantLvl)) + " &7("
-		+ getSeconds(enchantLvl) + " &7seconds)", "&7when reaching &c" + Misc.getHearts(getProcHealth()) + " &7(10s cooldown)").getLore();
-	}
-
-	public int getProcHealth() {
-
-		return 10;
+				+ getSeconds(enchantLvl) + " &7seconds)", "&7when reaching &c" + Misc.getHearts(6)).getLore();
 	}
 
 	public int getAmplifier(int enchantLvl) {
-
 		return enchantLvl;
 	}
 

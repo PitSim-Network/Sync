@@ -5,6 +5,7 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Misc;
+import net.pitsim.sync.misc.NumberFormatter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,25 +31,21 @@ public class Solitude extends PitEnchant {
 			if(!(nearby instanceof Player) || nearby == attackEvent.defender) continue;
 			nearbyPlayers++;
 		}
-
-		double reduction = Math.max(getDamageReduction(enchantLvl) - nearbyPlayers * getReductionPerPlayer(enchantLvl), 0);
-		attackEvent.multiplier.add(Misc.getReductionMultiplier(reduction));
+		if(nearbyPlayers > getMaxNearbyPlayers(enchantLvl)) return;
+		attackEvent.multiplier.add(Misc.getReductionMultiplier(getDamageReduction(enchantLvl)));
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-		return new ALoreBuilder("&7Receive &9-" + Misc.roundString(getDamageReduction(enchantLvl)) + "% &7damage, but",
-				"&7lose &9" + getReductionPerPlayer(enchantLvl) + "% &7reduction for every", "&7nearby player besides yourself").getLore();
+		return new ALoreBuilder("&7Receive &9-" + Misc.roundString(getDamageReduction(enchantLvl)) + "% &7damage when &9" +
+				NumberFormatter.convert(getMaxNearbyPlayers(enchantLvl)), "&7or less players are within 7", "&7blocks").getLore();
 	}
 
-	public int getReductionPerPlayer(int enchantLvl) {
-
-		return 12;
+	public int getMaxNearbyPlayers(int enchantLvl) {
+		return Misc.linearEnchant(enchantLvl, 0.5, 1);
 	}
 
 	public double getDamageReduction(int enchantLvl) {
-
 		return Math.min(30 + enchantLvl * 10, 100);
 	}
 }

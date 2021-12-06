@@ -16,7 +16,7 @@ public class Electrolytes extends PitEnchant {
 
 	public Electrolytes() {
 		super("Electrolytes", false, ApplyType.PANTS,
-				"electrolytes", "electrolyte", "electro", "elec", "lytes");
+				"electrolytes", "electrolyte", "electro", "elec");
 		isUncommonEnchant = true;
 	}
 
@@ -32,7 +32,6 @@ public class Electrolytes extends PitEnchant {
 			}
 		}
 		if(enchantLvl == 0) return;
-
 		attackEvent.multiplier.add(Misc.getReductionMultiplier(getMaxSeconds(enchantLvl)));
 	}
 
@@ -40,18 +39,11 @@ public class Electrolytes extends PitEnchant {
 	@EventHandler
 	public void onKill(KillEvent killEvent) {
 		int enchantLvl = killEvent.getKillerEnchantLevel(this);
-
 		if(killEvent.killer.hasPotionEffect(PotionEffectType.SPEED)) {
-
 			for(PotionEffect activePotionEffect : killEvent.killer.getActivePotionEffects()) {
-
 				if(activePotionEffect.getType().equals(PotionEffectType.SPEED)) {
-
-
 					if(activePotionEffect.getAmplifier() > 0) {
-
 						if(activePotionEffect.getDuration() + (getSeconds(enchantLvl) * 20) / 2> getMaxSeconds(enchantLvl) * 20) {
-
 						Misc.applyPotionEffect(killEvent.killer, PotionEffectType.SPEED,getMaxSeconds(enchantLvl) * 20,
 								activePotionEffect.getAmplifier(), false, false);
 						} else {
@@ -60,7 +52,6 @@ public class Electrolytes extends PitEnchant {
 						}
 					} else {
 						if(activePotionEffect.getDuration() + (getSeconds(enchantLvl) * 20) > getMaxSeconds(enchantLvl) * 20) {
-
 							Misc.applyPotionEffect(killEvent.killer, PotionEffectType.SPEED,getMaxSeconds(enchantLvl) * 20,
 									activePotionEffect.getAmplifier(), false, false);
 						} else {
@@ -76,18 +67,15 @@ public class Electrolytes extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7If you have &eSpeed &7on kill, add", "&e" + getSeconds(enchantLvl) +
 				" &7seconds to its duration.", "&7(Halved for Speed II+, Max " + getMaxSeconds(enchantLvl) + "s)").getLore();
 	}
 
 	public int getSeconds(int enchantLvl) {
-
 		return enchantLvl * 2;
 	}
 
 	public int getMaxSeconds(int enchantLvl) {
-
 		return 12 + (6 * enchantLvl);
 	}
 }

@@ -1,7 +1,6 @@
 package net.pitsim.sync.enchants;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
-import net.pitsim.sync.controllers.HitCounter;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
@@ -20,34 +19,23 @@ public class RingArmor extends PitEnchant {
 	public void onAttack(AttackEvent.Apply attackEvent) {
 		if(!canApply(attackEvent)) return;
 
-		int attackerEnchantLvl = attackEvent.getAttackerEnchantLevel(this);
-		int defenderEnchantLvl = attackEvent.getDefenderEnchantLevel(this);
+		int enchantLvl = attackEvent.getDefenderEnchantLevel(this);
+		if(enchantLvl == 0) return;
 
-		if(attackerEnchantLvl != 0 && attackEvent.arrow == null && HitCounter.getCharge(attackEvent.attacker, this) == 1) {
-			attackEvent.increasePercent += getDamageReduction(attackerEnchantLvl) / 100D;
-			HitCounter.setCharge(attackEvent.attacker, this, 0);
-		}
-
-		if(defenderEnchantLvl != 0 && attackEvent.arrow != null) {
-			HitCounter.setCharge(attackEvent.defender, this, 1);
-			attackEvent.multiplier.add(getDamageMultiplier(defenderEnchantLvl));
-		}
+		if(attackEvent.arrow == null) return;
+		attackEvent.multiplier.add(getDamageMultiplier(enchantLvl));
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-		return new ALoreBuilder("&7Receive &9-" + getDamageReduction(enchantLvl) + "% &7damage when",
-				"&7shot. Deal &c+" + getDamageReduction(enchantLvl) + "% &7damage on", "&7your next melee hit").getLore();
+		return new ALoreBuilder("&7Receive &9-" + getDamageReduction(enchantLvl) + "% &7damage from", "&7arrows").getLore();
 	}
 
 	public double getDamageMultiplier(int enchantLvl) {
-
 		return (100D - getDamageReduction(enchantLvl)) / 100;
 	}
 
 	public int getDamageReduction(int enchantLvl) {
-
-		return enchantLvl * 15 + 5;
+		return enchantLvl * 20;
 	}
 }

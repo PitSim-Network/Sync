@@ -33,17 +33,14 @@ public class DiamondAllergy extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Receive &9-" + getDamageReduction(enchantLvl) + "% &7damage from", "&7diamond weapons").getLore();
 	}
 
 	public double getDamageMultiplier(int enchantLvl) {
-
 		return Math.max(1 - ((double) enchantLvl / 10), 0);
 	}
 
 	public int getDamageReduction(int enchantLvl) {
-
 		return (int) (100 - getDamageMultiplier(enchantLvl) * 100);
 	}
 }

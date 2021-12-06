@@ -4,7 +4,6 @@ import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.misc.Misc;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
@@ -22,53 +21,32 @@ public class Mirror extends PitEnchant {
 	public void onAttack(AttackEvent.Apply attackEvent) {
 		if(!canApply(attackEvent)) return;
 
+		int attackerEnchantLvl = attackEvent.getAttackerEnchantLevel(this);
 		int defenderEnchantLvl = attackEvent.getDefenderEnchantLevel(this);
-		if(defenderEnchantLvl == 0) return;
-		attackEvent.trueDamage *= Misc.getReductionMultiplier(getReductionPercent(defenderEnchantLvl));
+		if(attackerEnchantLvl == 0 && defenderEnchantLvl == 0) return;
 
 //		If just opponent has mirror
-//		if(defenderEnchantLvl != 0) {
-//
-//			double trueDamage = attackEvent.trueDamage;
-//			trueDamage *= getReflectionPercent(defenderEnchantLvl) / 100;
-//			if(attackerEnchantLvl == 0) attackEvent.selfTrueDamage += trueDamage;
-//		}
-//
-//		attackEvent.selfTrueDamage = 0;
+		if(defenderEnchantLvl > 1 && attackerEnchantLvl == 0) {
+
+			double trueDamage = attackEvent.trueDamage;
+			trueDamage *= getReflectionPercent(defenderEnchantLvl) / 100.0;
+			attackEvent.selfTrueDamage += trueDamage;
+		}
+
+		if(attackerEnchantLvl != 0) attackEvent.selfTrueDamage = 0;
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-		if(enchantLvl >= 3) {
-
+		if(enchantLvl == 1) {
 			return new ALoreBuilder("&7You are immune to true damage").getLore();
 		} else {
-
-			return new ALoreBuilder("&7You take &9" + getReductionPercent(enchantLvl) + "% &7less true damage").getLore();
+			return new ALoreBuilder("&7You do not take true damage and",
+					"&7instead reflect &e" + getReflectionPercent(enchantLvl) + "% &7of it to", "&7your attacker").getLore();
 		}
 	}
 
-	public static int getReductionPercent(int enchantLvl) {
-		switch(enchantLvl) {
-			case 1:
-				return 20;
-			case 2:
-				return 50;
-		}
-		return 100;
-	}
-
-	public double getReflectionPercent(int enchantLvl) {
-		switch(enchantLvl) {
-			case 1:
-				return 0;
-			case 2:
-				return 25;
-			case 3:
-				return 50;
-
-		}
-		return 0;
+	public int getReflectionPercent(int enchantLvl) {
+		return enchantLvl * 25 - 25;
 	}
 }

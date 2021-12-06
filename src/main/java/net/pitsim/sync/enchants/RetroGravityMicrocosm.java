@@ -8,7 +8,6 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,22 +35,28 @@ public class RetroGravityMicrocosm extends PitEnchant {
 		int attackerEnchantLvl = attackEvent.getAttackerEnchantLevel(this);
 		int defenderEnchantLvl = attackEvent.getDefenderEnchantLevel(this);
 
-		if(attackerEnchantLvl != 0) {
+		if(attackerEnchantLvl >= 2) {
 
 			int charge = getCharge(attackEvent.attacker, attackEvent.defender);
-			attackEvent.increase += getDamagePerStack(attackerEnchantLvl) * Math.min(charge, getMaxStacks(attackerEnchantLvl));
+			attackEvent.increase += charge;
 		}
 		if(defenderEnchantLvl != 0) {
 			if(attackEvent.attacker.getLocation().add(0, -0.1, 0).getBlock().getType() != Material.AIR) return;
 
 			HitCounter.incrementCounter(attackEvent.defender, this);
-			if(!HitCounter.hasReachedThreshold(attackEvent.defender, this, getStrikes())) return;
+			if(!HitCounter.hasReachedThreshold(attackEvent.defender, this, 3)) return;
 
 			int charge = getCharge(attackEvent.defender, attackEvent.attacker);
 			setCharge(attackEvent.defender, attackEvent.attacker, ++charge);
 
-			PitPlayer pitDefender = PitPlayer.getPitPlayer(attackEvent.defender);
-			pitDefender.heal(getHealing(defenderEnchantLvl));
+			if(defenderEnchantLvl >= 1) {
+				PitPlayer pitDefender = PitPlayer.getPitPlayer(attackEvent.defender);
+				pitDefender.heal(2.5);
+			}
+			if(defenderEnchantLvl >= 3) {
+				attackEvent.selfTrueDamage += 0.5;
+			}
+
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -60,8 +65,7 @@ public class RetroGravityMicrocosm extends PitEnchant {
 				}
 			}.runTaskLater(PitSim.INSTANCE, 30 * 20);
 
-			AOutput.send(attackEvent.defender, "&d&lRGM!&7 Procced against " +
-					attackEvent.attacker.getName() + " &8(" + Math.min(charge, getMaxStacks(defenderEnchantLvl)) + "x)");
+			AOutput.send(attackEvent.defender, "&d&lRGM!&7 Procced against " + attackEvent.attacker.getName() + " &8(" + charge + "x)");
 			Sounds.RGM.play(attackEvent.defender);
 			Sounds.RGM.play(attackEvent.attacker);
 		}
@@ -89,24 +93,31 @@ public class RetroGravityMicrocosm extends PitEnchant {
 	@Override
 	public List<String> getDescription(int enchantLvl) {
 
-			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times&7:",
-					"&7You heal &c" + Misc.getHearts(getHealing(enchantLvl)), "&7Gain &c" + Misc.getHearts(getDamagePerStack(enchantLvl)) + " &7damage vs them for 30s",
-					"&7Can have up to &6" + getMaxStacks(enchantLvl) + " &7stacks at a time").getLore();
+		if(enchantLvl == 1) {
+			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:",
+					"&7You heal &c1.25\u2764").getLore();
+		}
+		if(enchantLvl == 2) {
+			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:",
+					"&7You heal &c1.25\u2764", "&7Gain &c+1.5\u2764 &7damage vs them for 30s").getLore();
+		}
+		if(enchantLvl == 3) {
+			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:",
+					"&7You heal &c1.25\u2764", "&7Gain &c+1.5\u2764 &7damage vs them for 30s",
+					"&7They take &c0.5\u2764 &7true damage").getLore();
+		} else {
+			return null;
+		}
+
 	}
 
-	public double getDamagePerStack(int enchantLvl) {
-		return enchantLvl * 0.4;
+	public float getHealing(int enchantLvl) {
+
+		return 0.2F;
 	}
 
-	public int getMaxStacks(int enchantLvl) {
-		return 5;
-	}
+	public double getDamageReduction(int enchantLvl) {
 
-	public double getHealing(int enchantLvl) {
-		return enchantLvl;
-	}
-
-	public int getStrikes() {
-		return 3;
+		return (int) Math.floor(Math.pow(enchantLvl, 1.3) * 2) + 2;
 	}
 }

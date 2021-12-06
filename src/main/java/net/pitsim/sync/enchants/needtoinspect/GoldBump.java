@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants;
+package net.pitsim.sync.enchants.needtoinspect;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -8,11 +8,11 @@ import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
-public class Moctezuma extends PitEnchant {
+public class GoldBump extends PitEnchant {
 
-	public Moctezuma() {
-		super("Moctezuma", false, ApplyType.ALL,
-				"moctezuma", "moct", "moc");
+	public GoldBump() {
+		super("Gold Bump", false, ApplyType.ALL,
+				"goldbump", "gold-bump", "bump", "gbump");
 		levelStacks = true;
 	}
 
@@ -28,11 +28,11 @@ public class Moctezuma extends PitEnchant {
 	@Override
 	public List<String> getDescription(int enchantLvl) {
 
-		return new ALoreBuilder("&7Earn &6+" + getGoldIncrease(enchantLvl) + "g &7on kill (assists", "&7excluded)").getLore();
+		return new ALoreBuilder("&7Earn &6+" + getGoldIncrease(enchantLvl) + "g &7per kill").getLore();
 	}
 
 	public int getGoldIncrease(int enchantLvl) {
 
-		return enchantLvl * 6;
+		return enchantLvl * 4;
 	}
 }

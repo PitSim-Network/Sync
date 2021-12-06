@@ -3,7 +3,6 @@ package net.pitsim.sync.enchants;
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.misc.AUtil;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Misc;
@@ -28,19 +27,15 @@ public class Wasp extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 		Misc.applyPotionEffect(attackEvent.defender, PotionEffectType.WEAKNESS, getDuration(enchantLvl) * 20, enchantLvl, true, false);
-
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(attackEvent.attacker);
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Apply &cWeakness " + AUtil.toRoman(enchantLvl + 1) + " &7(" +
 				getDuration(enchantLvl) + "s) on hit").getLore();
 	}
 
 	public int getDuration(int enchantLvl) {
-
 		return enchantLvl * 5 + 1;
 	}
 }

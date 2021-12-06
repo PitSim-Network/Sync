@@ -31,12 +31,10 @@ public class GoldAndBoosted extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Deal &c+" + getDamage(enchantLvl) + "% &7damage when you have", "&7absorption hearts").getLore();
 	}
 
 	public int getDamage(int enchantLvl) {
-
-		return enchantLvl * 7;
+		return (int) (Math.floor(Math.pow(enchantLvl, 1.15) * 4) + 1);
 	}
 }

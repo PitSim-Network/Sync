@@ -5,8 +5,8 @@ import dev.kyro.arcticapi.misc.AUtil;
 import net.pitsim.sync.controllers.Cooldown;
 import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.enchants.needtoinspect.ComboVenom;
 import net.pitsim.sync.enums.ApplyType;
-import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Misc;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -24,23 +24,17 @@ public class MegaLongBow extends PitEnchant {
 				"megalongbow", "mega-longbow", "mlb", "mega");
 	}
 
-	@EventHandler
-	public void onAttack(AttackEvent.Apply attackEvent) {
-		if(!canApply(attackEvent)) return;
-	}
-
 	@EventHandler(priority = EventPriority.LOW)
 	public void onBowShoot(EntityShootBowEvent event) {
-
 		if(!(event.getEntity() instanceof Player) || !(event.getProjectile() instanceof Arrow)) return;
 		Player player = ((Player) event.getEntity()).getPlayer();
 		Arrow arrow = (Arrow) event.getProjectile();
 
 		int enchantLvl = EnchantManager.getEnchantLevel(player, this);
 		if(enchantLvl == 0) return;
+		if(ComboVenom.isVenomed(player)) return;
 
 //		if(event instanceof VolleyShootEvent) {
-//
 //			critArrow(player, arrow);
 //			return;
 //		}
@@ -53,20 +47,17 @@ public class MegaLongBow extends PitEnchant {
 	}
 
 	public static void critArrow(Player player, Arrow arrow) {
-
 		arrow.setCritical(true);
 		arrow.setVelocity(player.getLocation().getDirection().multiply(2.95));
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7One shot per second, this bow is",
 				"&7automatically fully drawn and", "&7grants &aJump Boost " + AUtil.toRoman(getJumpMultiplier(enchantLvl) + 1) + " &7(2s)").getLore();
 	}
 
 	public int getJumpMultiplier(int enchantLvl) {
-
 		return enchantLvl;
 	}
 }

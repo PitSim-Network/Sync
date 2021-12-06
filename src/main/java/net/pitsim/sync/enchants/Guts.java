@@ -15,11 +15,11 @@ public class Guts extends PitEnchant {
 	public Guts() {
 		super("Guts", false, ApplyType.SWORDS,
 				"guts", "gut");
+		isUncommonEnchant = true;
 	}
 
 	@EventHandler
 	public void onAttack(KillEvent killEvent) {
-
 		int enchantLvl = killEvent.getKillerEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
@@ -34,6 +34,7 @@ public class Guts extends PitEnchant {
 	}
 
 	public double getHealing(int enchantLvl) {
-		return enchantLvl * 0.5 + 0.5;
+		if(enchantLvl == 1) return 0.5;
+		return enchantLvl;
 	}
 }

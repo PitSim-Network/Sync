@@ -22,16 +22,12 @@ public class CriticallyFunky extends PitEnchant {
 	public void onAttack(AttackEvent.Apply attackEvent) {
 		if(!canApply(attackEvent)) return;
 
-
 		int attackerEnchantLvl = attackEvent.getAttackerEnchantLevel(this);
 		int defenderEnchantLvl = attackEvent.getDefenderEnchantLevel(this);
-
-
 
 		if(defenderEnchantLvl != 0 && Misc.isCritical(attackEvent.attacker)) {
 			HitCounter.setCharge(attackEvent.defender, this, 1);
 			attackEvent.multiplier.add(Misc.getReductionMultiplier(getReduction(defenderEnchantLvl)));
-
 		}
 
 		if(attackerEnchantLvl != 0 && HitCounter.getCharge(attackEvent.attacker, this) == 1) {
@@ -42,12 +38,10 @@ public class CriticallyFunky extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		if(enchantLvl == 1) {
 			return new ALoreBuilder("&7Critical hits against you deal ", "&9" +
 					Misc.roundString(100 - getReduction(enchantLvl)) + "% &7of the damage they",
 					"&7normally would").getLore();
-
 		} else {
 			return new ALoreBuilder("&7Critical hits against you deal ", "&9" +
 					Misc.roundString(100 - getReduction(enchantLvl)) + "% &7of the damage they",
@@ -57,7 +51,6 @@ public class CriticallyFunky extends PitEnchant {
 	}
 
 	public double getReduction(int enchantLvl) {
-
 		switch(enchantLvl) {
 			case 1:
 			case 2:
@@ -70,6 +63,14 @@ public class CriticallyFunky extends PitEnchant {
 	}
 
     public double getDamage(int enchantLvl) {
+		switch(enchantLvl) {
+			case 1:
+				return 0;
+			case 2:
+				return 14;
+			case 3:
+				return 30;
+		}
 		return enchantLvl * 15 - 15;
     }
 }

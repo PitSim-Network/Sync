@@ -20,8 +20,9 @@ import net.pitsim.sync.commands.admin.ReloadCommand;
 import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
+import net.pitsim.sync.enchants.needtoinspect.*;
+import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.useless.BottomlessQuiver;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
@@ -271,7 +272,6 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new Solitude());
 
 		EnchantManager.registerEnchant(new Mirror());
-		EnchantManager.registerEnchant(new Sufferance());
 		EnchantManager.registerEnchant(new CriticallyFunky());
 		EnchantManager.registerEnchant(new FractionalReserve());
 		EnchantManager.registerEnchant(new NotGladiator());

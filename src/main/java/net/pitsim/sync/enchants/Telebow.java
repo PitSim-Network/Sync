@@ -2,12 +2,11 @@ package net.pitsim.sync.enchants;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.PitSim;
-import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.Cooldown;
 import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.SpawnManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
+import net.pitsim.sync.enchants.needtoinspect.ComboVenom;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Misc;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Telebow extends PitEnchant {
-
 	public static List<Arrow> teleShots = new ArrayList<>();
 
 	public Telebow() {
@@ -74,7 +72,6 @@ public class Telebow extends PitEnchant {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onBowShoot(EntityShootBowEvent event) {
-
 		if(!(event.getEntity() instanceof Player) || !(event.getProjectile() instanceof Arrow)) return;
 
 		Player player = ((Player) event.getEntity()).getPlayer();
@@ -82,14 +79,11 @@ public class Telebow extends PitEnchant {
 
 		int enchantLvl = EnchantManager.getEnchantLevel(player, this);
 		if(enchantLvl == 0 || !player.isSneaking()) return;
-
+		if(ComboVenom.isVenomed(player)) return;
 
 		Cooldown cooldown = getCooldown(player, getCooldown(enchantLvl) * 20);
 		if(cooldown.isOnCooldown()) {
-
-
 			if(player.isSneaking()) Misc.sendActionBar(player, "&eTelebow: &c" + cooldown.getTicksLeft() / 20 + "&cs cooldown!");
-
 			return;
 		}
 		if(cooldown.isOnCooldown()) return; else cooldown.reset();
@@ -116,13 +110,10 @@ public class Telebow extends PitEnchant {
 						teleportLoc.setYaw(-teleArrow.getLocation().getYaw());
 						teleportLoc.setPitch(-teleArrow.getLocation().getPitch());
 
-
 						player.teleport(teleportLoc);
 						Sounds.TELEBOW.play(teleArrow.getLocation());
 
 						teleShots.remove(teleShot);
-
-						PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 						return;
 					}
 				}
@@ -137,7 +128,6 @@ public class Telebow extends PitEnchant {
 	}
 
 	public static int getCooldown(int enchantLvl) {
-
 		switch(enchantLvl) {
 			case 1:
 				return 90;
@@ -152,7 +142,6 @@ public class Telebow extends PitEnchant {
 			case 6:
 				return 1;
 		}
-
 		return 0;
 	}
 }

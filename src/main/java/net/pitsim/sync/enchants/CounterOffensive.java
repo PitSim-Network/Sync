@@ -16,6 +16,7 @@ public class CounterOffensive extends PitEnchant {
 	public CounterOffensive() {
 		super("Counter-Offensive", false, ApplyType.PANTS,
 				"counteroffensive", "counter-offensive", "co", "offensive");
+		isUncommonEnchant = true;
 	}
 
 	@EventHandler
@@ -38,21 +39,10 @@ public class CounterOffensive extends PitEnchant {
 	}
 
 	public int getCombo(int enchantLvl) {
-
-		switch(enchantLvl) {
-			case 1:
-				return 4;
-			case 2:
-				return 3;
-			case 3:
-				return 2;
-
-		}
-		return 0;
+		return Math.max(5 - enchantLvl, 1);
 	}
 
 	public int getDuration(int enchantLvl) {
-
-		return 1 + (enchantLvl * 2);
+		return enchantLvl * 2 + 1;
 	}
 }

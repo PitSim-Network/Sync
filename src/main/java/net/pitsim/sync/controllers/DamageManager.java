@@ -10,7 +10,7 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enchants.Regularity;
 import net.pitsim.sync.enchants.Telebow;
-import net.pitsim.sync.enchants.WolfPack;
+import net.pitsim.sync.enchants.needtoinspect.WolfPack;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.KillEvent;
@@ -96,7 +96,6 @@ public class DamageManager implements Listener {
 		if(nonHitCooldownList.contains(defender) && !Regularity.toReg.contains(defender.getUniqueId()) &&
 				!(event.getDamager() instanceof Arrow)) {
 			event.setCancelled(true);
-			Bukkit.broadcastMessage("1");
 			return;
 		}
 //		Regular player to player hit
@@ -106,7 +105,6 @@ public class DamageManager implements Listener {
 
 		if(Regularity.regCooldown.contains(defender.getUniqueId()) && !Regularity.toReg.contains(defender.getUniqueId())) {
 			event.setCancelled(true);
-			Bukkit.broadcastMessage("3");
 			return;
 		}
 
@@ -201,7 +199,7 @@ public class DamageManager implements Listener {
 				return;
 			} else {
 				attackEvent.attacker.setHealth(Math.max(finalHealth, 0));
-//				attackEvent.attacker.damage(0);
+				attackEvent.attacker.damage(0);
 			}
 		}
 

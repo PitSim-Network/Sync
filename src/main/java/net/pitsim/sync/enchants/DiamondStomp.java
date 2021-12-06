@@ -35,13 +35,11 @@ public class DiamondStomp extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Deal &c+" + getDamage(enchantLvl) + "% &7damage vs. players",
 				"&7wearing diamond armor").getLore();
 	}
 
 	public int getDamage(int enchantLvl) {
-
 		return (int) (Math.pow(enchantLvl, 2.15) * 2 + 4);
 	}
 }

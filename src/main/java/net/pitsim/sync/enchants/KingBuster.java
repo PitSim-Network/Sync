@@ -28,12 +28,10 @@ public class KingBuster extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7Deal &c+" + getDamage(enchantLvl) + "% &7damage vs. players", "&7above 50% HP").getLore();
 	}
 
 	public int getDamage(int enchantLvl) {
-
 		return (int) (Math.floor(Math.pow(enchantLvl, 1.5) * 3.2) + 4);
 	}
 }

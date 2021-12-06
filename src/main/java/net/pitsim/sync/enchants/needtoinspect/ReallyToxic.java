@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants;
+package net.pitsim.sync.enchants.needtoinspect;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.misc.AOutput;

@@ -40,7 +40,6 @@ public class Lifesteal extends PitEnchant {
 
 	public double getHealing(int enchantLvl) {
 
-//		return (int) (Math.pow(enchantLvl, 1.1) * 4);
-		return enchantLvl * 3 + 1;
+		return (int) (Math.pow(enchantLvl, 1.1) * 4);
 	}
 }

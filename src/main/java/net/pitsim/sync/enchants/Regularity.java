@@ -24,7 +24,6 @@ public class Regularity extends PitEnchant {
 	public Regularity() {
 		super("Regularity", true, ApplyType.PANTS,
 				"regularity", "reg");
-
 		meleOnly = true;
 		INSTANCE = this;
 	}
@@ -54,7 +53,6 @@ public class Regularity extends PitEnchant {
 				attackEvent.defender.damage(damage * secondHitDamage(enchantLvl) / 100, attackEvent.attacker);
 			}
 		}.runTaskLater(PitSim.INSTANCE, 3L);
-
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -74,35 +72,18 @@ public class Regularity extends PitEnchant {
 		return toReg.contains(defender.getUniqueId());
 	}
 
-	//	Only really used for gamble is a bit weird and not exactly correct to call it this
-	public static boolean reduceDamage(int enchantLvl) {
-		if(enchantLvl == 0) return true;
-		return Math.random() * 100 > secondHitDamage(enchantLvl);
-	}
-
-	public static boolean skipIncrement(int enchantLvl) {
-		if(enchantLvl == 0) return true;
-		return Math.random() * 100 > secondComboChance(enchantLvl);
-	}
-
 	public static int secondHitDamage(int enchantLvl) {
 		return enchantLvl * 15 + 30;
 	}
 
-	public static int secondComboChance(int enchantLvl) {
-		return enchantLvl * 15 + 15;
-	}
-
 	public static double maxFinalDamage(int enchantLvl) {
-		return enchantLvl * 0.4 + 1.2;
+		return enchantLvl * 0.4 + 1.8;
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-		return new ALoreBuilder("&7If your strike deals less than &c" + Misc.getHearts(maxFinalDamage(enchantLvl)),
-				"&7final damage, &astrike again &7for &c" + secondHitDamage(enchantLvl) + "%",
-				"&7damage. &7(Combo enchants have a", "&e" + secondComboChance(enchantLvl) + "% &7of incrementing the combo",
-				"&7on the second hit)").getLore();
+		return new ALoreBuilder("&7If the final damage of your strike", "&7deals less than &c" +
+				Misc.getHearts(maxFinalDamage(enchantLvl)) + " &7damage,",
+				"&7strike again in &a0.1s &7for &c" + secondHitDamage(enchantLvl) + "%", "&7damage").getLore();
 	}
 }

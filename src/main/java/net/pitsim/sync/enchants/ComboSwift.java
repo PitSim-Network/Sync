@@ -2,14 +2,14 @@ package net.pitsim.sync.enchants;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.misc.AUtil;
+import net.pitsim.sync.controllers.HitCounter;
+import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Misc;
 import org.bukkit.event.EventHandler;
 import org.bukkit.potion.PotionEffectType;
-import net.pitsim.sync.controllers.HitCounter;
-import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 
 import java.util.List;
 
@@ -27,9 +27,6 @@ public class ComboSwift extends PitEnchant {
 
 		int enchantLvl = attackEvent.getAttackerEnchantLevel(this);
 		if(enchantLvl == 0) return;
-
-		int regLvl = attackEvent.getAttackerEnchantLevel(Regularity.INSTANCE);
-		if(Regularity.isRegHit(attackEvent.defender) && Regularity.skipIncrement(regLvl)) return;
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(attackEvent.attacker);
 		HitCounter.incrementCounter(pitPlayer.player, this);

@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants;
+package net.pitsim.sync.enchants.needtoinspect;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -8,11 +8,11 @@ import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
-public class GoldBump extends PitEnchant {
+public class XpBump extends PitEnchant {
 
-	public GoldBump() {
-		super("Gold Bump", false, ApplyType.ALL,
-				"goldbump", "gold-bump", "bump", "gbump");
+	public XpBump() {
+		super("XP Bump", false, ApplyType.ALL,
+				"xpbump", "xpb", "xp-bump");
 		levelStacks = true;
 	}
 
@@ -22,17 +22,17 @@ public class GoldBump extends PitEnchant {
 		int enchantLvl = killEvent.getKillerEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
-		killEvent.goldReward += getGoldIncrease(enchantLvl);
+		killEvent.xpReward += enchantLvl;
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
 
-		return new ALoreBuilder("&7Earn &6+" + getGoldIncrease(enchantLvl) + "g &7per kill").getLore();
+		return new ALoreBuilder("&7Earn &b+" + getXpIncrease(enchantLvl) + "&bXP &7from kills").getLore();
 	}
 
-	public int getGoldIncrease(int enchantLvl) {
+	public int getXpIncrease(int enchantLvl) {
 
-		return enchantLvl * 4;
+		return enchantLvl * 2;
 	}
 }

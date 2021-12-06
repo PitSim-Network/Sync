@@ -26,7 +26,7 @@ public class NewDeal extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 		PitEnchant bill = EnchantManager.getEnchant("billionaire");
-		int billLevel = attackEvent.getAttackerEnchantLevel(bill);
+		attackEvent.getAttackerEnchantMap().remove(bill);
 	}
 
 	@EventHandler
@@ -36,29 +36,24 @@ public class NewDeal extends PitEnchant {
 		int enchantLvl = attackEvent.getDefenderEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
-//		attackEvent.multiplier.add(Misc.getReductionMultiplier(getDamageReduction(enchantLvl)));
-		attackEvent.veryTrueDamage += getTrueDamage(enchantLvl);
+		attackEvent.multiplier.add(Misc.getReductionMultiplier(getDamageReduction(enchantLvl)));
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-//		if(enchantLvl == 1) {
-			return new ALoreBuilder("&7You are immune to &6Billionaire&7,",
-					"&7but take &c" + Misc.getHearts(getTrueDamage(enchantLvl)) + " &7very true", "&7damage when hit").getLore();
-//		} else {
-//			return new ALoreBuilder("&7Receive &9-" + Misc.roundString(getDamageReduction(enchantLvl)) + "% &7damage and you are",
-//					"&7immune to &6Billionaire").getLore();
-//		}
+		if(enchantLvl == 1) {
+			return new ALoreBuilder("&7You are immune to &6Billionaire").getLore();
+		} else {
+			return new ALoreBuilder("&7Receive &9-" + Misc.roundString(getDamageReduction(enchantLvl)) + "% &7damage and you are",
+					"&7immune to &6Billionaire").getLore();
+		}
 	}
 
 	public double getDamageReduction(int enchantLvl) {
-
 		return (enchantLvl - 1) * 4;
 	}
 
 	public double getTrueDamage(int enchantLvl) {
-
 		return Math.max(1.2 - enchantLvl * 0.2, 0);
 	}
 }
