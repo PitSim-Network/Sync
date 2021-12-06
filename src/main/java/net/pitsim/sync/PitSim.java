@@ -183,6 +183,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new AFKManager(), this);
 		getServer().getPluginManager().registerEvents(new EnchantManager(), this);
 		getServer().getPluginManager().registerEvents(new SpawnNPCs(), this);
+		getServer().getPluginManager().registerEvents(new DuelManager(), this);
 	}
 
 	private void loadConfig() {

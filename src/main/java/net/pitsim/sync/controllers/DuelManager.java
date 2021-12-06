@@ -3,13 +3,16 @@ package net.pitsim.sync.controllers;
 import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.events.KillEvent;
+import net.pitsim.sync.events.OofEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DuelManager {
+public class DuelManager implements Listener{
 	public static List<Match> matches = new ArrayList<>();
 
 	public static void createDuel(Player player1, Player player2, PvpArena arena)  {
@@ -46,9 +49,41 @@ public class DuelManager {
 
 	}
 
+	public static Match getMatch(Player player) {
+		for(Match match : matches) {
+			if(match.player1 == player.getPlayer() || match.player2 == player) return match;
+		}
+		return null;
+	}
+
 	@EventHandler
 	public void onDeath(KillEvent event) {
+		for(Match match : matches) {
+			if(match.player1 == event.dead || match.player2 == event.dead) {
+				match.onEnd(event.dead);
+				return;
+			}
+		}
+	}
 
+	@EventHandler
+	public void onOof(OofEvent event) {
+		for(Match match : matches) {
+			if(match.player1 == event.getPlayer() || match.player2 == event.getPlayer()) {
+				match.onEnd(event.getPlayer());
+				return;
+			}
+		}
+	}
+
+	@EventHandler
+	public void onDeath(PlayerDeathEvent event) {
+		for(Match match : matches) {
+			if(match.player1 == event.getEntity() || match.player2 == event.getEntity()) {
+				match.onEnd(event.getEntity());
+				return;
+			}
+		}
 	}
 
 }

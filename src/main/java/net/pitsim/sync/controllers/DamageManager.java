@@ -2,7 +2,10 @@ package net.pitsim.sync.controllers;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.misc.AOutput;
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.pitsim.sync.PitSim;
+import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enchants.Regularity;
@@ -11,9 +14,6 @@ import net.pitsim.sync.enchants.WolfPack;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.KillEvent;
-import net.pitsim.sync.misc.*;
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.Bukkit;
@@ -255,7 +255,7 @@ public class DamageManager implements Listener {
 		Misc.multiKill(killer);
 
 		Location spawnLoc = Bukkit.getWorld("lobby").getSpawnLocation();
-		dead.teleport(spawnLoc);
+		if(DuelManager.getMatch(dead) == null) dead.teleport(spawnLoc);
 		for(PotionEffect potionEffect : dead.getActivePotionEffects()) {
 			dead.removePotionEffect(potionEffect.getType());
 		}
@@ -302,7 +302,15 @@ public class DamageManager implements Listener {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(dead);
 
 		Location spawnLoc = Bukkit.getWorld("lobby").getSpawnLocation();
-		dead.teleport(spawnLoc);
+		if(DuelManager.getMatch(dead) == null)  dead.teleport(spawnLoc);
+
+		for(Match match : DuelManager.matches) {
+			if(match.player1 == dead || match.player2 == dead) {
+				match.onEnd(dead);
+				if(dead.getLocation().getY() < 40) dead.teleport(new Location(Bukkit.getWorld("pvp"), match.arenaCoordinates.x, 64, match.arenaCoordinates.y));
+				break;
+			}
+		}
 
 		PitPlayer pitDefender = PitPlayer.getPitPlayer(dead);
 
