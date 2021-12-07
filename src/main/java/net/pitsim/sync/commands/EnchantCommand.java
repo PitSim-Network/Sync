@@ -87,8 +87,6 @@ public class EnchantCommand implements CommandExecutor {
 			} else if(exception instanceof MaxEnchantsExceededException) {
 
 				AOutput.error(player, "You cannot have more than 3 enchants on an item");
-			} else if(exception instanceof IsJewelException) {
-				AOutput.error(player, "You cannot modify a jewel enchant");
 			} else if(exception instanceof NoCommonEnchantException) {
 				AOutput.error(player, "You must have at least one common enchant on an item");
 			} else {

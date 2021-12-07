@@ -102,6 +102,11 @@ public class Mystic {
 		} catch(Exception ignored) { }
 		NBTItem nbtItem = new NBTItem(mystic);
 		nbtItem.setString(NBTTag.PIT_NONCE.getRef(), nonce);
+		nbtItem.setInteger(NBTTag.CURRENT_LIVES.getRef(), lives);
+		nbtItem.setInteger(NBTTag.MAX_LIVES.getRef(), maxLives);
+		nbtItem.setBoolean(NBTTag.IS_GEMMED.getRef(), isGemmed);
+
+		EnchantManager.setItemLore(nbtItem.getItem());
 		return nbtItem.getItem();
 	}
 }

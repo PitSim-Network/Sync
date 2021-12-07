@@ -8,17 +8,12 @@ import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.misc.AUtil;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.enums.MysticType;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.enums.PantColor;
 import net.pitsim.sync.exceptions.*;
-import net.pitsim.sync.misc.Constant;
 import net.pitsim.sync.misc.Misc;
-import net.pitsim.sync.misc.Sounds;
-import net.pitsim.sync.exceptions.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -86,14 +81,10 @@ public class EnchantManager implements Listener {
 		if(!jewel && safe) {
 			if(!EnchantManager.canTypeApply(itemStack, applyEnchant)) {
 				throw new MismatchedEnchantException();
-			} else if(isJewel(itemStack) && !isJewelComplete(itemStack)) {
-				throw new IsJewelException();
 			} else if(applyLvl > 3) {
 				throw new InvalidEnchantLevelException(true);
 			} else if(applyLvl < 0) {
 				throw new InvalidEnchantLevelException(false);
-			} else if(currentLvl == applyLvl) {
-//			throw new InvalidEnchantLevelException(false);
 			} else if(applyLvl - currentLvl + tokenNum > 8) {
 				throw new MaxTokensExceededException(false);
 			} else if(applyEnchant.isRare && applyLvl - currentLvl + rTokenNum > 4) {
@@ -102,11 +93,8 @@ public class EnchantManager implements Listener {
 				throw new MaxEnchantsExceededException();
 			}
 		}
-		if(nbtItem.getString(NBTTag.ITEM_JEWEL_ENCHANT.getRef()).equals(applyEnchant.refNames.get(0))) jewel = true;
-		if(jewel && (safe || applyLvl == 0)) {
-			throw new IsJewelException();
-		}
-		if(enchantNum == 2 && safe && !isJewel(itemStack)) {
+
+		if(enchantNum == 2 && safe) {
 			boolean hasCommonEnchant = false;
 			for(String enchantString : enchantOrder) {
 				PitEnchant pitEnchant = EnchantManager.getEnchant(enchantString);
@@ -139,7 +127,6 @@ public class EnchantManager implements Listener {
 
 		tokenNum += applyLvl - currentLvl;
 		if(applyEnchant.isRare && !jewel) rTokenNum += applyLvl - currentLvl;
-		if(jewel) nbtItem.setString(NBTTag.ITEM_JEWEL_ENCHANT.getRef(), applyEnchant.refNames.get(0));
 		nbtItem.setInteger(NBTTag.ITEM_ENCHANTS.getRef(), enchantNum);
 		nbtItem.setInteger(NBTTag.ITEM_TOKENS.getRef(), tokenNum);
 		nbtItem.setInteger(NBTTag.ITEM_RTOKENS.getRef(), rTokenNum);
@@ -177,7 +164,7 @@ public class EnchantManager implements Listener {
 			hasCommonEnchant = true;
 			break;
 		}
-		return !hasCommonEnchant && enchantNum == 3 && !isJewel(itemStack);
+		return !hasCommonEnchant && enchantNum == 3;
 	}
 
 	public static void setItemLore(ItemStack itemStack) {
@@ -185,115 +172,41 @@ public class EnchantManager implements Listener {
 		NBTItem nbtItem = new NBTItem(itemStack);
 		NBTList<String> enchantOrder = nbtItem.getStringList(NBTTag.PIT_ENCHANT_ORDER.getRef());
 		NBTCompound itemEnchants = nbtItem.getCompound(NBTTag.PIT_ENCHANTS.getRef());
-		int playerKills = nbtItem.getInteger(NBTTag.PLAYER_KILLS.getRef());
-		int botKills = nbtItem.getInteger(NBTTag.BOT_KILLS.getRef());
+//		int playerKills = nbtItem.getInteger(NBTTag.PLAYER_KILLS.getRef());
+//		int botKills = nbtItem.getInteger(NBTTag.BOT_KILLS.getRef());
 		int currentLives = nbtItem.getInteger(NBTTag.CURRENT_LIVES.getRef());
 		int maxLives = nbtItem.getInteger(NBTTag.MAX_LIVES.getRef());
-		int jewelKills = nbtItem.getInteger(NBTTag.JEWEL_KILLS.getRef());
-		boolean isJewel = isJewel(itemStack);
-		char c = 'a';
+		boolean isGemmed = nbtItem.getBoolean(NBTTag.IS_GEMMED.getRef());
 
 		ALoreBuilder loreBuilder = new ALoreBuilder();
 
-		if(nbtItem.hasKey(NBTTag.ITEM_JEWEL_ENCHANT.getRef()) && nbtItem.hasKey(NBTTag.MAX_LIVES.getRef())) {
-			if(currentLives <= 3) c = 'c';
-			else c = 'a';
-			String lives = "&7Lives: &" + c + currentLives + "&7/" + maxLives;
-			if(nbtItem.hasKey(NBTTag.IS_GEMMED.getRef())) lives += " &a\u2666";
-			loreBuilder.addLore(lives);
-		} else {
-//			loreBuilder.addLore("&7Kills: &a" + Misc.getFormattedKills(playerKills) + "&7/" + Misc.getFormattedKills(botKills));
-		}
+		char color = currentLives <= 3 ? 'c' : 'a';
+		loreBuilder.addLore("&7Kills: &" + color + currentLives + "&7/" + maxLives + (isGemmed ? " &a\u2666" : ""));
 		ItemMeta itemMeta = itemStack.getItemMeta();
-		if(isJewel && !isJewelComplete(itemStack)) {
 
-			if(getMysticType(itemStack) == "Pants") {
-				itemMeta.setDisplayName(ChatColor.DARK_AQUA + "Hidden Jewel Pants");
-				loreBuilder.addLore("&7");
-				loreBuilder.addLore("&7Kill &c" + Constant.JEWEL_KILLS + " &7players to recycle");
-				loreBuilder.addLore("&7into Tier I pants with a Tier III");
-				loreBuilder.addLore("&7enchant");
-				loreBuilder.addLore("&7Kills: &3" + jewelKills);
-			}
-			if(getMysticType(itemStack) == "Sword") {
-				itemMeta.setDisplayName(ChatColor.YELLOW + "Hidden Jewel Sword");
-				loreBuilder.addLore("&7");
-				loreBuilder.addLore("&7Kill &c" + Constant.JEWEL_KILLS + " &7players to recycle");
-				loreBuilder.addLore("&7into a Tier I sword with a Tier");
-				loreBuilder.addLore("&7III enchant");
-				loreBuilder.addLore("&7Kills: &3" + jewelKills);
-			}
-			if(getMysticType(itemStack) == "Bow") {
-				itemMeta.setDisplayName(ChatColor.AQUA + "Hidden Jewel Bow");
-				loreBuilder.addLore("&7");
-				loreBuilder.addLore("&7Kill &c" + Constant.JEWEL_KILLS + " &7players to recycle");
-				loreBuilder.addLore("&7into a Tier I bow with a Tier");
-				loreBuilder.addLore("&7III enchant");
-				loreBuilder.addLore("&7Kills: &3" + jewelKills);
-			}
-
-		} else {
-			if(nbtItem.getBoolean(NBTTag.IS_VENOM.getRef())) {
-				itemMeta.setDisplayName(ChatColor.DARK_PURPLE + "Tier II Evil Pants");
-				loreBuilder.getLore().clear();
-				loreBuilder.addLore("&7Lives: &a140&7/140", "&7", "&9Somber", "&7You are unaffected by mystical", "&7enchantments.");
-				if(itemMeta instanceof LeatherArmorMeta) ((LeatherArmorMeta) itemMeta).setColor(Color.fromRGB(PantColor.DARK.hexColor));
-			}
-
-			for(String key : enchantOrder) {
-
-				PitEnchant enchant = EnchantManager.getEnchant(key);
-				Integer enchantLvl = itemEnchants.getInteger(key);
-				if(enchant == null) continue;
-				loreBuilder.addLore("&f");
-				loreBuilder.addLore(enchant.getDisplayName() + enchantLevelToRoman(enchantLvl));
-				loreBuilder.addLore(enchant.getDescription(enchantLvl));
-			}
-			if(isJewel) {
-				PitEnchant jewelEnchant = getEnchant(nbtItem.getString(NBTTag.ITEM_JEWEL_ENCHANT.getRef()));
-				assert jewelEnchant != null;
-				loreBuilder.addLore("&f");
-				loreBuilder.addLore("&3JEWEL!&9 " + jewelEnchant.getDisplayName());
-			}
-			if(nbtItem.getBoolean(NBTTag.IS_VENOM.getRef())) {
-				loreBuilder.addLore("&7", "&5Enchants require heresy", "&5As strong as leather");
-			}
+		if(nbtItem.getBoolean(NBTTag.IS_VENOM.getRef())) {
+			itemMeta.setDisplayName(ChatColor.DARK_PURPLE + "Tier II Evil Pants");
+			loreBuilder.getLore().clear();
+			loreBuilder.addLore("&7Lives: &a140&7/140", "&7", "&9Somber", "&7You are unaffected by mystical", "&7enchantments.");
+			if(itemMeta instanceof LeatherArmorMeta) ((LeatherArmorMeta) itemMeta).setColor(Color.fromRGB(PantColor.DARK.hexColor));
 		}
 
-
-		itemMeta.setLore(loreBuilder.getLore());
-		itemStack.setItemMeta(itemMeta);
-	}
-
-	public static void setDisplayItemLore(ItemStack itemStack) {
-
-		NBTItem nbtItem = new NBTItem(itemStack);
-		NBTList<String> enchantOrder = nbtItem.getStringList(NBTTag.PIT_ENCHANT_ORDER.getRef());
-		NBTCompound itemEnchants = nbtItem.getCompound(NBTTag.PIT_ENCHANTS.getRef());
-		boolean isGemmed = isGemmed(itemStack);
-
-		ALoreBuilder loreBuilder = new ALoreBuilder();
-		loreBuilder.addLore("&7&m------------------");
 		for(String key : enchantOrder) {
 
 			PitEnchant enchant = EnchantManager.getEnchant(key);
 			Integer enchantLvl = itemEnchants.getInteger(key);
-			assert enchant != null;
+			if(enchant == null) continue;
+			loreBuilder.addLore("&f");
 			loreBuilder.addLore(enchant.getDisplayName() + enchantLevelToRoman(enchantLvl));
+			loreBuilder.addLore(enchant.getDescription(enchantLvl));
 		}
-		loreBuilder.addLore("&7&m------------------");
-		if(isGemmed) loreBuilder.addLore("&aGEMMED!");
 
-		ItemMeta itemMeta = itemStack.getItemMeta();
+		if(nbtItem.getBoolean(NBTTag.IS_VENOM.getRef())) {
+			loreBuilder.addLore("&7", "&5Enchants require heresy", "&5As strong as leather");
+		}
+
 		itemMeta.setLore(loreBuilder.getLore());
 		itemStack.setItemMeta(itemMeta);
-	}
-
-	public static boolean isJewel(ItemStack itemStack) {
-
-		if(Misc.isAirOrNull(itemStack)) return false;
-		NBTItem nbtItem = new NBTItem(itemStack);
-		return nbtItem.getBoolean(NBTTag.IS_JEWEL.getRef());
 	}
 
 	public static boolean isGemmed(ItemStack itemStack) {
@@ -302,68 +215,6 @@ public class EnchantManager implements Listener {
 		NBTItem nbtItem = new NBTItem(itemStack);
 		return nbtItem.getBoolean(NBTTag.IS_GEMMED.getRef());
 	}
-
-	public static boolean isJewelComplete(ItemStack itemStack) {
-
-		if(!isJewel(itemStack)) return false;
-		NBTItem nbtItem = new NBTItem(itemStack);
-		return nbtItem.getInteger(NBTTag.JEWEL_KILLS.getRef()) >= Constant.JEWEL_KILLS;
-	}
-
-	public static ItemStack completeJewel(Player player, ItemStack itemStack) {
-		if(Misc.isAirOrNull(itemStack) || !isJewel(itemStack)) return null;
-		NBTItem nbtItem = new NBTItem(itemStack);
-		String jewelString = nbtItem.getString(NBTTag.ITEM_JEWEL_ENCHANT.getRef());
-		int jewelKills = nbtItem.getInteger(NBTTag.JEWEL_KILLS.getRef());
-		if(jewelKills < Constant.JEWEL_KILLS || !jewelString.isEmpty()) return null;
-
-		List<PitEnchant> enchantList = EnchantManager.getEnchants(MysticType.getMysticType(itemStack));
-		List<PitEnchant> weightedEnchantList = new ArrayList<>();
-
-		for(PitEnchant pitEnchant : enchantList) {
-
-			weightedEnchantList.add(pitEnchant);
-			if(pitEnchant.isRare) continue;
-			weightedEnchantList.add(pitEnchant);
-			weightedEnchantList.add(pitEnchant);
-			if(pitEnchant.isUncommonEnchant) continue;
-			weightedEnchantList.add(pitEnchant);
-			weightedEnchantList.add(pitEnchant);
-			weightedEnchantList.add(pitEnchant);
-			weightedEnchantList.add(pitEnchant);
-		}
-		Collections.shuffle(weightedEnchantList);
-		PitEnchant jewelEnchant = weightedEnchantList.get(0);
-
-//		Collections.shuffle(enchantList);
-//		double rand = Math.random();
-//		EnchantRarity enchantRarity = EnchantRarity.COMMON;
-//		if(rand < 0.1) enchantRarity = EnchantRarity.RARE; else if(rand < 0.35) enchantRarity = EnchantRarity.UNCOMMON;
-//
-//		PitEnchant jewelEnchant;
-//		for(int i = 0;; i++) {
-//
-//			if(enchantRarity != enchantList.get(i).getRarity()) continue;
-//			jewelEnchant = enchantList.get(i);
-//			break;
-//		}
-
-		PantColor.setPantColor(nbtItem.getItem(), PantColor.getNormalRandom());
-		int maxLives = Math.random() > 0.01 ? (int) (Math.random() * 50 + 10) : 100;
-		nbtItem.setInteger(NBTTag.MAX_LIVES.getRef(), maxLives);
-		nbtItem.setInteger(NBTTag.CURRENT_LIVES.getRef(), maxLives);
-		Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes(
-				'&', "&3&lJEWEL!&7 " + player.getDisplayName() + " &7found " + jewelEnchant.getDisplayName()));
-		Sounds.JEWEL_FIND.play(player);
-
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-
-		try {
-			return EnchantManager.addEnchant(nbtItem.getItem(), jewelEnchant, 3, false, true, -1);
-		} catch(Exception ignored) { }
-		return null;
-	}
-
 
 	public static PitEnchant getEnchant(String refName) {
 
