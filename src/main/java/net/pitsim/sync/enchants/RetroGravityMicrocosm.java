@@ -9,7 +9,6 @@ import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Sounds;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,7 +40,8 @@ public class RetroGravityMicrocosm extends PitEnchant {
 			attackEvent.increase += charge * 3;
 		}
 		if(defenderEnchantLvl != 0) {
-			if(attackEvent.attacker.getLocation().add(0, -0.1, 0).getBlock().getType() != Material.AIR) return;
+//			if(attackEvent.attacker.getLocation().add(0, -0.1, 0).getBlock().getType() != Material.AIR) return;
+			if(attackEvent.attacker.isOnGround()) return;
 
 			HitCounter.incrementCounter(attackEvent.defender, this);
 			if(!HitCounter.hasReachedThreshold(attackEvent.defender, this, 3)) return;

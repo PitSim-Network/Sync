@@ -6,9 +6,9 @@ import net.pitsim.sync.enums.ApplyType;
 
 import java.util.List;
 
-public class XpBump extends PitEnchant {
+public class XPBump extends PitEnchant {
 
-	public XpBump() {
+	public XPBump() {
 		super("XP Bump", false, ApplyType.ALL,
 				"xpbump", "xpb", "xp-bump");
 		levelStacks = true;

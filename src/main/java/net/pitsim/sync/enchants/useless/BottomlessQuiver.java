@@ -15,7 +15,6 @@ public class BottomlessQuiver extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7More useless than Minikloon").getLore();
 	}
 }

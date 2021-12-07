@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,7 +15,11 @@ public class Negotiator extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Earn &6+" + getIncrease(enchantLvl) + " gold &7from contracts").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getIncrease(int enchantLvl) {
+		if(enchantLvl == 1) return 20;
+		return enchantLvl * 40 - 20;
 	}
 }

@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -9,13 +9,17 @@ import java.util.List;
 public class CounterJanitor extends PitEnchant {
 
 	public CounterJanitor() {
-		super("Counter Janitor", false, ApplyType.SWORDS,
+		super("Counter-Janitor", false, ApplyType.SWORDS,
 				"counterjanitor");
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Gain &eResistance I &7(" + getSeconds(enchantLvl) + "s) on").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getSeconds(int enchantLvl) {
+		if(enchantLvl == 1) return 2;
+		return enchantLvl * 2 - 1;
 	}
 }

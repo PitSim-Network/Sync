@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,7 +15,11 @@ public class BountyReaper extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Deal &c+" + getDamage(enchantLvl) + "% &7damage vs. players", "&7with a bounty").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getDamage(int enchantLvl) {
+		if(enchantLvl == 1) return 7;
+		return enchantLvl * 10 - 5;
 	}
 }

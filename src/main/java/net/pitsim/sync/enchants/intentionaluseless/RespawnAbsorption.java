@@ -1,8 +1,9 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
+import net.pitsim.sync.misc.Misc;
 
 import java.util.List;
 
@@ -16,7 +17,10 @@ public class RespawnAbsorption extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Spawn with &6" + Misc.getHearts(getAbsorption(enchantLvl)) + " &7absorption").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getAbsorption(int enchantLvl) {
+		return enchantLvl * 10;
 	}
 }

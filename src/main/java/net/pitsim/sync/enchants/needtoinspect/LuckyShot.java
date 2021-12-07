@@ -2,15 +2,14 @@ package net.pitsim.sync.enchants.needtoinspect;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.misc.AOutput;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
-import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LuckyShot extends PitEnchant {
-
 	public List<Arrow> luckyShots = new ArrayList<>();
 
 	public LuckyShot() {
@@ -65,8 +63,6 @@ public class LuckyShot extends PitEnchant {
 
 		if(chanceCalculation <= enchantChance) {
 			luckyShots.add((Arrow) event.getProjectile());
-
-			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 		}
 	}
 

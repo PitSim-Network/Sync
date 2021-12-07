@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,7 +15,11 @@ public class SpeedyKill extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Gain &eSpeed I &7(" + getSeconds(enchantLvl) + "s) on kill").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getSeconds(int enchantLvl) {
+		if(enchantLvl == 1) return 4;
+		return enchantLvl * 5 - 3;
 	}
 }

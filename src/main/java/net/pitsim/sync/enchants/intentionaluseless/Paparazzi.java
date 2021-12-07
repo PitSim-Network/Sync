@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,7 +15,11 @@ public class Paparazzi extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Earn &d+" + getRewards(enchantLvl) + " major event &7bonus",
+				"&7rewards. Consume &c2 lives &of", "&7this item per event.").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getRewards(int enchantLvl) {
+		return enchantLvl * 50;
 	}
 }

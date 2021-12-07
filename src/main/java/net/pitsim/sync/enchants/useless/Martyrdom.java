@@ -15,7 +15,6 @@ public class Martyrdom extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
 		return new ALoreBuilder("&7pov your ericka").getLore();
 	}
 }

@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -10,12 +10,15 @@ public class DivineMiracle extends PitEnchant {
 
 	public DivineMiracle() {
 		super("Divine Miracle", true, ApplyType.PANTS,
-				"divinemiracle");
+				"divinemiracle", "divine");
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&b" + getChance(enchantLvl) + "% chance &7to retain the lives", "&7on your items on death").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getChance(int enchantLvl) {
+		return enchantLvl * 15;
 	}
 }

@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -16,7 +16,15 @@ public class PitMBA extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
+		return new ALoreBuilder("&7Receive &6+" + getGold(enchantLvl) + "% gold &7and &b+" + getXP(enchantLvl) + "%",
+				"&bXP &on kill when there are at", "&7least 5 players within 15 blocks").getLore();
+	}
 
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+	public int getGold(int enchantLvl) {
+		return enchantLvl * 20 - 10;
+	}
+
+	public int getXP(int enchantLvl) {
+		return enchantLvl * 10;
 	}
 }

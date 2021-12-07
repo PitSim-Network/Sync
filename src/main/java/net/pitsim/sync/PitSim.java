@@ -22,7 +22,9 @@ import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
+import net.pitsim.sync.enchants.intentionaluseless.*;
 import net.pitsim.sync.enchants.needtoinspect.*;
+import net.pitsim.sync.enchants.newcheck.*;
 import net.pitsim.sync.enchants.useless.BottomlessQuiver;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
@@ -297,7 +299,7 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new GoldBoost());
 
 //		EnchantManager.registerEnchant(new Sweaty());
-		EnchantManager.registerEnchant(new XpBump());
+		EnchantManager.registerEnchant(new XPBump());
 
 
 
