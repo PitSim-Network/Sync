@@ -45,13 +45,11 @@ public class PitPlayer {
 
 		APlayer aPlayer = APlayerData.getPlayerData(player);
 
-		for(int i = 0; i < pitPerks.length; i++) {
-
-			String perkString = aPlayer.playerData.getString("perk-" + i);
-			PitPerk savedPerk = perkString != null ? PitPerk.getPitPerk(perkString) : NoPerk.INSTANCE;
-
-			pitPerks[i] = savedPerk != null ? savedPerk : NoPerk.INSTANCE;
-		}
+//		for(int i = 0; i < pitPerks.length; i++) {
+//			String perkString = aPlayer.playerData.getString("perk-" + i);
+//			PitPerk savedPerk = perkString != null ? PitPerk.getPitPerk(perkString) : NoPerk.INSTANCE;
+//			pitPerks[i] = savedPerk != null ? savedPerk : NoPerk.INSTANCE;
+//		}
 
 		String chatColorString = aPlayer.playerData.getString("chatcolor");
 		if(chatColorString != null) {

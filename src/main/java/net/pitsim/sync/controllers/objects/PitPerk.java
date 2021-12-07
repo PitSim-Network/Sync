@@ -36,10 +36,8 @@ public abstract class PitPerk implements Listener {
     public abstract List<String> getDescription();
 
     public boolean playerHasUpgrade(Player player) {
-
         PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
         for(PitPerk pitPerk : pitPlayer.pitPerks) {
-
             if(pitPerk == this) return true;
         }
         return false;
