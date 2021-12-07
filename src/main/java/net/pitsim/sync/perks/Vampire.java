@@ -14,7 +14,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 
 public class Vampire extends PitPerk {
-
 	public static Vampire INSTANCE;
 
 	public Vampire() {
