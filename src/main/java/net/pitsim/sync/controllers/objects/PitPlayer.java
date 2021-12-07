@@ -127,11 +127,8 @@ public class PitPlayer {
 		return false;
 	}
 
-
-
 	public void updateMaxHealth() {
-
-		int maxHealth = 24;
+		int maxHealth = 28;
 		if(Hearts.INSTANCE != null) maxHealth += Hearts.INSTANCE.getExtraHealth(this);
 
 		if(player.getMaxHealth() == maxHealth) return;
