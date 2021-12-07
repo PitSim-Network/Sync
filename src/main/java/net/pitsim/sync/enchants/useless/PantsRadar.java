@@ -9,7 +9,7 @@ import java.util.List;
 public class PantsRadar extends PitEnchant {
 
 	public PantsRadar() {
-		super("Pants Radar", false, ApplyType.PANTS,
+		super("Pants Radar", false, ApplyType.ALL,
 				"pantsradar");
 		isUncommonEnchant = true;
 	}
