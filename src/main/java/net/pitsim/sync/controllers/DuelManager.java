@@ -46,8 +46,6 @@ public class DuelManager implements Listener{
 		}
 
 		return max + 1;
-
-
 	}
 
 	public static Match getMatch(Player player) {
@@ -101,5 +99,4 @@ public class DuelManager implements Listener{
 	public void onItemDamage(PlayerItemDamageEvent event) {
 		event.setCancelled(true);
 	}
-
 }
