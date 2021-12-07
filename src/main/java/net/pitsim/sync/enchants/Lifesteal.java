@@ -5,7 +5,6 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.events.HealEvent;
 import net.pitsim.sync.misc.Misc;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,7 +28,7 @@ public class Lifesteal extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 		double damage = attackEvent.getFinalDamageIncrease();
-		HealEvent healEvent = pitAttacker.heal(damage * (getHealing(enchantLvl) / 100D) * (attackEvent.fakeHit ? 0.5 : 1));
+		pitAttacker.heal(damage * (getHealing(enchantLvl) / 100D) * (attackEvent.fakeHit ? 0.5 : 1));
 	}
 
 	@Override
