@@ -15,7 +15,6 @@ import net.pitsim.sync.controllers.RingCalc;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.PlayerDataManager;
-import net.pitsim.sync.misc.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -113,12 +112,17 @@ public class Match implements Listener {
                 loadSchematic(new File("plugins/WorldEdit/schematics/clear.schematic"), new Location(Bukkit.getWorld("pvp"), arenaCoordinates.x, 80, arenaCoordinates.y));
                 DuelManager.matches.remove(thisMatch);
 
-                player1 = null;
-                player2  =  null;
-                arena = null;
-                arenaCoordinates = null;
             }
         }.runTaskLater(PitSim.INSTANCE, 5 * 20L);
+    }
+
+    public void onPluginDisable() {
+        clearInventory(player1);
+        clearInventory(player2);
+        player1.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+        player2.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+
+        DuelManager.matches.remove(this);
     }
 
     private void loadSchematic(File file, Location location) {
@@ -170,19 +174,7 @@ public class Match implements Listener {
     }
 
     public void startMessages(Player player1, Player player2)  {
-        final int[] i = {0};
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if(i[0] > 5) this.cancel();
-
-                Misc.sendSubTitle(player1, "&c&l" + (i[0] + 1), 20);
-                Misc.sendSubTitle(player2, "&c&l" + (i[0] + 1), 20);
-
-                i[0]++;
-            }
-        }.runTaskTimer(PitSim.INSTANCE, 0L, 1L);
     }
 
 

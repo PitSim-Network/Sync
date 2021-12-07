@@ -20,9 +20,9 @@ import net.pitsim.sync.commands.admin.ReloadCommand;
 import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
 import net.pitsim.sync.enchants.needtoinspect.*;
-import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.useless.BottomlessQuiver;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
@@ -146,13 +146,8 @@ public class PitSim extends JavaPlugin {
 		}
 
 		for(Match match : DuelManager.matches) {
-			match.onEnd(null);
-			match.player1 = null;
-			match.player2  =  null;
-			match.arena = null;
-			match.arenaCoordinates = null;
+			match.onPluginDisable();
 		}
-
 	}
 
 	private void registerPerks() {
