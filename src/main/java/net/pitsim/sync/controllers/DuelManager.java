@@ -23,7 +23,6 @@ public class DuelManager implements Listener{
 		newMatch.onStart();
 	}
 
-
 	public static int getLowestPosition() {
 		List<Integer> positions = new ArrayList<>();
 

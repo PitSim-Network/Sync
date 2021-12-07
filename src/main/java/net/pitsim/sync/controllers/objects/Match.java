@@ -59,8 +59,9 @@ public class Match implements Listener {
         Location player2Spawn = new Location(Bukkit.getWorld("pvp"),arenaCoordinates.x + arena.player2Spawn.getX(), 60 + arena.player2Spawn.getY(),
                 arenaCoordinates.y + arena.player2Spawn.getZ(), arena.player2Spawn.getPitch(), arena.player2Spawn.getYaw());
 
-        
-        
+        player1.setHealth(player1.getMaxHealth());
+        player2.setHealth(player2.getMaxHealth());
+
         PitPlayer pitPlayer1 = PitPlayer.getPitPlayer(player1);
         player1.teleport(player1Spawn);
         clearInventory(player1);

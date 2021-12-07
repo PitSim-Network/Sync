@@ -34,7 +34,6 @@ public class Vampire extends PitPerk {
 	@EventHandler
 	public void onKill(KillEvent killEvent) {
 		if(!playerHasUpgrade(killEvent.killer)) return;
-
 		Misc.applyPotionEffect(killEvent.killer, PotionEffectType.REGENERATION, 160, 0, true, false);
 	}
 

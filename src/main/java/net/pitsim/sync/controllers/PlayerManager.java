@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
@@ -41,6 +42,11 @@ public class PlayerManager implements Listener {
 				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) ((CraftPlayer) onlinePlayer).getHandle().getDataWatcher().watch(9, (byte) 0);
 			}
 		}.runTaskTimer(PitSim.INSTANCE, 0L, 20L);
+	}
+
+	@EventHandler
+	public void onHungerLoss(FoodLevelChangeEvent event) {
+		event.setCancelled(true);
 	}
 
 	public static List<UUID> pantsSwapCooldown = new ArrayList<>();
