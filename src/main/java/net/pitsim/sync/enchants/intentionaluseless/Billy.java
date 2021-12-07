@@ -15,6 +15,11 @@ public class Billy extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Receive &9-" + getReduction(enchantLvl) + "% &7damage per",
+				"&61,000g bounty").getLore();
+	}
+
+	public int getReduction(int enchantLvl) {
+		return enchantLvl + 1;
 	}
 }
