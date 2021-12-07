@@ -12,7 +12,7 @@ public class KingBuster extends PitEnchant {
 
 	public KingBuster() {
 		super("King Buster", false, ApplyType.SWORDS,
-				"kb", "kingbuster", "kbuster", "king-buster");
+				"kb", "kingbuster", "kbuster", "king-buster", "king");
 	}
 
 	@EventHandler
