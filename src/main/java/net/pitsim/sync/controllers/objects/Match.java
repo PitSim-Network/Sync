@@ -193,8 +193,6 @@ public class Match implements Listener {
     Match thisMatch = this;
 
     public void startMessages(Player player1, Player player2)  {
-        player1.setPassenger(player1);
-        player2.setPassenger(player2);
         isStarting = true;
         new Countdown(5, PitSim.INSTANCE) {
 

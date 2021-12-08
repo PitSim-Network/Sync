@@ -161,7 +161,7 @@ public class DuelManager implements Listener{
 					requestArenas.remove(requester);
 				}
 			}
-		}.runTaskLater(PitSim.INSTANCE, 10 * 20L);
+		}.runTaskLater(PitSim.INSTANCE, 15 * 20L);
 
 
 	}
