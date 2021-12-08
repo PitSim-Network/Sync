@@ -9,6 +9,7 @@ import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.KillEvent;
+import net.pitsim.sync.misc.Sounds;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -151,6 +152,9 @@ public class DuelManager implements Listener{
 
 		AOutput.send(challenged, PlaceholderAPI.setPlaceholders(requester, requesterName) + " &ehas challenged you to a duel on &a" + arena.refName);
 		challenged.sendMessage(clickAccept);
+		Sounds.BOOSTER_REMIND.play(challenged);
+
+		AOutput.send(requester, "&aDuel request sent to " + PlaceholderAPI.setPlaceholders(challenged, challengedName));
 
 		new BukkitRunnable() {
 			@Override
