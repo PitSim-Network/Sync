@@ -25,7 +25,6 @@ import net.pitsim.sync.enchants.*;
 import net.pitsim.sync.enchants.intentionaluseless.*;
 import net.pitsim.sync.enchants.needtoinspect.*;
 import net.pitsim.sync.enchants.newcheck.*;
-import net.pitsim.sync.enchants.useless.BottomlessQuiver;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
 import net.pitsim.sync.hypixel.PlayerDataManager;
@@ -299,13 +298,11 @@ public class PitSim extends JavaPlugin {
 //		EnchantManager.registerEnchant(new Sweaty());
 		EnchantManager.registerEnchant(new XPBump());
 
-
-
 //		Fake Enchants
 		EnchantManager.registerEnchant(new ArrowArmory());
 		EnchantManager.registerEnchant(new Assassin());
 		EnchantManager.registerEnchant(new Berserker());
-		EnchantManager.registerEnchant(new Billy());
+		EnchantManager.registerEnchant(new Billionaire());
 		EnchantManager.registerEnchant(new BottomlessQuiver());
 		EnchantManager.registerEnchant(new BountyReaper());
 		EnchantManager.registerEnchant(new Bruiser());
