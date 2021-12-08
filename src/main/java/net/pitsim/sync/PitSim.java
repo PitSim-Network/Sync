@@ -22,8 +22,9 @@ import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
+import net.pitsim.sync.enchants.intentionaluseless.*;
 import net.pitsim.sync.enchants.needtoinspect.*;
-import net.pitsim.sync.enchants.useless.BottomlessQuiver;
+import net.pitsim.sync.enchants.newcheck.*;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
 import net.pitsim.sync.hypixel.PlayerDataManager;
@@ -218,7 +219,6 @@ public class PitSim extends JavaPlugin {
 	private void registerEnchants() {
 		EnchantManager.registerEnchant(new ComboVenom());
 //		EnchantManager.registerEnchant(new aCPLEnchant());
-//		EnchantManager.registerEnchant(new SelfCheckout());
 
 		EnchantManager.registerEnchant(new Billionaire());
 		EnchantManager.registerEnchant(new ComboPerun());
@@ -261,7 +261,6 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new Parasite());
 		EnchantManager.registerEnchant(new Chipping());
 		EnchantManager.registerEnchant(new Fletching());
-//		EnchantManager.registerEnchant(new BottomlessQuiver());
 
 		EnchantManager.registerEnchant(new RetroGravityMicrocosm());
 		EnchantManager.registerEnchant(new Regularity());
@@ -298,15 +297,13 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new GoldBoost());
 
 //		EnchantManager.registerEnchant(new Sweaty());
-		EnchantManager.registerEnchant(new XpBump());
-
-
+		EnchantManager.registerEnchant(new XPBump());
 
 //		Fake Enchants
 		EnchantManager.registerEnchant(new ArrowArmory());
 		EnchantManager.registerEnchant(new Assassin());
 		EnchantManager.registerEnchant(new Berserker());
-		EnchantManager.registerEnchant(new Billy());
+		EnchantManager.registerEnchant(new Billionaire());
 		EnchantManager.registerEnchant(new BottomlessQuiver());
 		EnchantManager.registerEnchant(new BountyReaper());
 		EnchantManager.registerEnchant(new Bruiser());
