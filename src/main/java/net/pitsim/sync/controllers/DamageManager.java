@@ -274,15 +274,15 @@ public class DamageManager implements Listener {
 		}.runTaskLater(PitSim.INSTANCE, 1L);
 
 		double finalDamage = 0;
-		for(Map.Entry<UUID, Double> entry : pitDefender.recentDamageMap.entrySet()) {
-
-			finalDamage += entry.getValue();
-
-
-			pitDefender.recentDamageMap.clear();
-
-			String message = "%luckperms_prefix%";
-		}
+//		for(Map.Entry<UUID, Double> entry : pitDefender.recentDamageMap.entrySet()) {
+//
+//			finalDamage += entry.getValue();
+//
+//
+//			pitDefender.recentDamageMap.clear();
+//
+//			String message = "%luckperms_prefix%";
+//		}
 	}
 
 	public static void death(Player dead) {

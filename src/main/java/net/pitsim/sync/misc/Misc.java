@@ -1,7 +1,7 @@
 package net.pitsim.sync.misc;
 
-import net.pitsim.sync.PitSim;
 import net.minecraft.server.v1_8_R3.*;
+import net.pitsim.sync.PitSim;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -202,4 +202,15 @@ public class Misc {
 		}
 		return new File(resource.toURI());
 	}
+
+	public static double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
+
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;
+	}
+
+
 }

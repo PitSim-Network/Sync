@@ -194,6 +194,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DuelManager(), this);
 		getServer().getPluginManager().registerEvents(new ResourcePackManager(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
+		getServer().getPluginManager().registerEvents(new PortalManager(), this);
 	}
 
 	private void loadConfig() {
@@ -286,7 +287,7 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new GottaGoFast());
 		EnchantManager.registerEnchant(new CounterOffensive());
 		EnchantManager.registerEnchant(new LastStand());
-		EnchantManager.registerEnchant(new Stereo());
+//		EnchantManager.registerEnchant(new Stereo());
 //		EnchantManager.registerEnchant(new DiamondAllergy());
 //		EnchantManager.registerEnchant(new PitBlob());
 //		EnchantManager.registerEnchant(new WolfPack());

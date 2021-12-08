@@ -13,7 +13,7 @@ import java.util.List;
 public class Sounds {
 
 //	General
-	public static final SoundEffect SUCCESS = new SoundEffect(Sound.NOTE_PLING, 1, 2);
+	public static final SoundEffect SUCCESS = new SoundEffect(Sound.NOTE_PLING, 2, 2);
 	public static final SoundEffect ERROR = new SoundEffect(Sound.ENDERMAN_TELEPORT, 1, 0.5);
 	public static final SoundEffect NO = new SoundEffect(Sound.VILLAGER_NO, 1, 1);
 	public static final SoundEffect WARNING_LOUD = new SoundEffect(Sound.NOTE_PLING, 1000, 1);
@@ -86,7 +86,7 @@ public class Sounds {
 	public static final SoundEffect HELMET_DOWNGRADE = new SoundEffect(Sound.ANVIL_BREAK, 1, 2);
 	public static final SoundEffect HELMET_ACTIVATE = new SoundEffect(Sound.NOTE_PLING, 1.3, 2);
 	public static final SoundEffect HELMET_DEPOSIT_GOLD = new SoundEffect(Sound.ZOMBIE_METAL, 1, 2);
-	public static final SoundEffect HELMET_TICK = new SoundEffect(Sound.NOTE_STICKS, 2, 1.5);
+	public static final SoundEffect TIMER_TICK = new SoundEffect(Sound.NOTE_STICKS, 2, 1.5);
 	public static final SoundEffect GOLD_RUSH = new SoundEffect(Sound.ORB_PICKUP, 1, 0.9);
 	public static final SoundEffect LEAP = new SoundEffect(Sound.BAT_TAKEOFF, 1, 1);
 	public static final SoundEffect PHOENIX = new SoundEffect()
