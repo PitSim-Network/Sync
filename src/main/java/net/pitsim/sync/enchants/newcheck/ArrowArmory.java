@@ -95,13 +95,13 @@ public class ArrowArmory extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7Deals &c+" + getIncrease(enchantLvl) + "&7damage but uses &f" + getArrows(enchantLvl),
+		return new ALoreBuilder("&7Deals &c+" + getIncrease(enchantLvl) + "% &7damage but uses &f" + getArrows(enchantLvl),
 				"&farrows &7per shot, if available").getLore();
 	}
 
 	public int getIncrease(int enchantLvl) {
 		if(enchantLvl == 1) return 12;
-		return enchantLvl * 35 - 35;
+		return enchantLvl * 35 - 45;
 	}
 
 	public int getArrows(int enchantLvl) {

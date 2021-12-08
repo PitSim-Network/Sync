@@ -8,6 +8,7 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
+import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -92,23 +93,11 @@ public class RetroGravityMicrocosm extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-
-		if(enchantLvl == 1) {
-			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:",
-					"&7You heal &c1.25\u2764").getLore();
-		}
-		if(enchantLvl == 2) {
-			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:",
-					"&7You heal &c1.25\u2764", "&7Gain &c+1.5\u2764 &7damage vs them for 30s").getLore();
-		}
-		if(enchantLvl == 3) {
-			return new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:",
-					"&7You heal &c1.25\u2764", "&7Gain &c+1.5\u2764 &7damage vs them for 30s",
-					"&7They take &c0.5\u2764 &7true damage").getLore();
-		} else {
-			return null;
-		}
-
+		ALoreBuilder loreBuilder = new ALoreBuilder("&7When a player hits you from", "&7above ground &e3 times &7in a row:");
+		if(enchantLvl >= 1) loreBuilder.addLore("&7You heal &c" + Misc.getHearts(2.5));
+		if(enchantLvl >= 2) loreBuilder.addLore("&7Gain &c+" + Misc.getHearts(3));
+		if(enchantLvl >= 3) loreBuilder.addLore("&7They take &c" + Misc.getHearts(1) + " &7true damage");
+		return loreBuilder.getLore();
 	}
 
 	public float getHealing(int enchantLvl) {

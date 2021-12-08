@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,6 +15,11 @@ public class Revengeance extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Deal &c+ " + getDamage(enchantLvl) + "% &7damage vs. the last", "&7player who killed you").getLore();
+	}
+
+	public int getDamage(int enchantLvl) {
+		if(enchantLvl == 1) return 8;
+		return enchantLvl * 10 - 5;
 	}
 }

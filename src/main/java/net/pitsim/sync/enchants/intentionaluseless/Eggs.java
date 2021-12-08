@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -16,6 +16,11 @@ public class Eggs extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Spawn with &a8 eggs&7. Gain &a+" + getEggs(enchantLvl), "&aeggs &7on kill").getLore();
+	}
+
+	public int getEggs(int enchantLvl) {
+		if(enchantLvl == 1) return 4;
+		return enchantLvl * 8 - 8;
 	}
 }

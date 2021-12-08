@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -16,6 +16,10 @@ public class Excess extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Can hol &a+" + getHealingItemIncrease(enchantLvl) + " healing &7item").getLore();
+	}
+
+	public int getHealingItemIncrease(int enchantLvl) {
+		return enchantLvl;
 	}
 }

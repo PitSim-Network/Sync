@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,6 +15,10 @@ public class Knockback extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Increases knockback taken by", "&7enemies by &f" + getBlocks(enchantLvl) + " blocks").getLore();
+	}
+
+	public int getBlocks(int enchantLvl) {
+		return enchantLvl * 3;
 	}
 }

@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,6 +15,10 @@ public class StrikeGold extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Earn &6+" + getGold(enchantLvl) + "g &7per hit (1s cooldown)").getLore();
+	}
+
+	public int getGold(int enchantLvl) {
+		return enchantLvl;
 	}
 }

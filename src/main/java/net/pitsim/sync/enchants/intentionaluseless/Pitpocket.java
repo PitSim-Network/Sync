@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -16,6 +16,15 @@ public class Pitpocket extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		return new ALoreBuilder("&7Steal &6" + getGold(enchantLvl) + "g &7on melee hit (" + getCooldown(enchantLvl) + "s", "&7cooldown)").getLore();
+	}
+
+	public int getGold(int enchantLvl) {
+		return enchantLvl * 5 + 10;
+	}
+
+	public int getCooldown(int enchantLvl) {
+		if(enchantLvl == 1) return 25;
+		return Math.max(34 - enchantLvl * 7, 0);
 	}
 }

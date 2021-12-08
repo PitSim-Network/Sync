@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.useless;
+package net.pitsim.sync.enchants.intentionaluseless;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -15,6 +15,8 @@ public class DevilChicks extends PitEnchant {
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7More useless than Minikloon").getLore();
+		if(enchantLvl == 1) return new ALoreBuilder("&7Arrows spawn an explosive chicken").getLore();
+		if(enchantLvl == 2) return new ALoreBuilder("&7Arrows spawn many explosive", "&7chickens").getLore();
+		return new ALoreBuilder("&7Arrows spawn too many explosive", "&7chickens").getLore();
 	}
 }
