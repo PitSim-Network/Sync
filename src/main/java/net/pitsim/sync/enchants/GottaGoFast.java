@@ -62,6 +62,6 @@ public class GottaGoFast extends PitEnchant {
 	}
 
 	public float getWalkSpeedLore(int enchantLvl) {
-		return (int) (Math.pow(enchantLvl, 2.6) * 1.3 + 3);
+		return (int) (Math.pow(enchantLvl, 2.3) * 1.43 + 3);
 	}
 }
