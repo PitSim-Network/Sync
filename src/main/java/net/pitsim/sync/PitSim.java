@@ -13,10 +13,7 @@ import net.citizensnpcs.api.npc.NPC;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 import net.pitsim.sync.commands.*;
-import net.pitsim.sync.commands.admin.BaseAdminCommand;
-import net.pitsim.sync.commands.admin.BypassCommand;
-import net.pitsim.sync.commands.admin.LockdownCommand;
-import net.pitsim.sync.commands.admin.ReloadCommand;
+import net.pitsim.sync.commands.admin.*;
 import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.objects.Match;
 import net.pitsim.sync.controllers.objects.PitEnchant;
@@ -27,7 +24,8 @@ import net.pitsim.sync.enchants.needtoinspect.*;
 import net.pitsim.sync.enchants.newcheck.*;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
-import net.pitsim.sync.hypixel.PlayerDataManager;
+import net.pitsim.sync.hypixel.LoadoutManager;
+import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
@@ -128,7 +126,8 @@ public class PitSim extends JavaPlugin {
 		registerListeners();
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
-			PlayerDataManager.getHypixelPlayer(player.getUniqueId());
+//			LoadoutManager.getHypixelPlayer(player.getUniqueId());
+			LoadoutManager.getLoadout(Misc.getUUID(player.getUniqueId()));
 		}
 	}
 
@@ -160,10 +159,10 @@ public class PitSim extends JavaPlugin {
 
 		ABaseCommand adminCommand = new BaseAdminCommand("pitsim");
 		getCommand("ps").setExecutor(adminCommand);
+		adminCommand.registerCommand(new HopperCommand("hopper"));
 		adminCommand.registerCommand(new ReloadCommand("reload"));
 		adminCommand.registerCommand(new BypassCommand("bypass"));
 		adminCommand.registerCommand(new LockdownCommand("lockdown"));
-
 
 		getCommand("atest").setExecutor(new ATestCommand());
 
@@ -179,6 +178,8 @@ public class PitSim extends JavaPlugin {
 		getCommand("ecitems").setExecutor(new EncerchestCommand());
 		getCommand("resource").setExecutor(new ResourceCommand());
 		getCommand("duel").setExecutor(new DuelCommand());
+		getCommand("stash").setExecutor(new StashCommand());
+		getCommand("unstash").setExecutor(new StashCommand());
 //		getCommand("togglestereo").setExecutor(new ToggleStereoCommand());
 	}
 
@@ -194,8 +195,9 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new SpawnNPCs(), this);
 		getServer().getPluginManager().registerEvents(new DuelManager(), this);
 		getServer().getPluginManager().registerEvents(new ResourcePackManager(), this);
-		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
+		getServer().getPluginManager().registerEvents(new LoadoutManager(), this);
 		getServer().getPluginManager().registerEvents(new PortalManager(), this);
+		getServer().getPluginManager().registerEvents(new HopperManager(), this);
 	}
 
 	private void loadConfig() {
