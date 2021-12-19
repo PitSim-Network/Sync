@@ -3,7 +3,8 @@ package net.pitsim.sync.controllers;
 import net.pitsim.sync.events.KillEvent;
 import net.pitsim.sync.events.OofEvent;
 import net.pitsim.sync.hypixel.Loadout;
-import net.pitsim.sync.hypixel.PlayerDataManager;
+import net.pitsim.sync.hypixel.LoadoutManager;
+import net.pitsim.sync.misc.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,15 +23,21 @@ public class PortalManager implements Listener {
 	public void onPortal(PlayerPortalEvent event) {
 		event.getPlayer().teleport(Bukkit.getWorld("ffa").getSpawnLocation());
 
-		Loadout player2Loadout = PlayerDataManager.getLoadout(event.getPlayer().getUniqueId());
+		Loadout loadout = LoadoutManager.getLoadout(Misc.getUUID(event.getPlayer().getUniqueId()));
 		giveDiamond(event.getPlayer());
 
-		if(player2Loadout.inventoryItemMap.size() > 0) {
-			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : player2Loadout.inventoryItemMap.entrySet()) {
+		if(loadout.inventoryItemMap.size() > 0) {
+			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : loadout.inventoryItemMap.entrySet()) {
 				event.getPlayer().getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
 			}
 		}
-
+//		System.out.println(loadout.armorItemMap.toString());
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println(loadout.stash.toString());
 	}
 
 	@EventHandler

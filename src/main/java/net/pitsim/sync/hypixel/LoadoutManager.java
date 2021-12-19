@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class PlayerDataManager implements Listener {
+public class LoadoutManager implements Listener {
 	public static List<HypixelPlayer> hypixelPlayers = new ArrayList<>();
 	public static List<Loadout> loadouts = new ArrayList<>();
 

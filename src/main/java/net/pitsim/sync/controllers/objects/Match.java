@@ -7,7 +7,7 @@ import net.pitsim.sync.controllers.DuelManager;
 import net.pitsim.sync.controllers.RingCalc;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.hypixel.Loadout;
-import net.pitsim.sync.hypixel.PlayerDataManager;
+import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Countdown;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.SchematicPaste;
@@ -62,7 +62,7 @@ public class Match implements Listener {
         player1.teleport(player1Spawn);
         clearInventory(player1);
 
-        Loadout player1Loadout = PlayerDataManager.getLoadout(player1.getUniqueId());
+        Loadout player1Loadout = LoadoutManager.getLoadout(Misc.getUUID(player1.getUniqueId()));
         giveDiamond(player1);
 
         if(player1Loadout.inventoryItemMap.size() > 0) {
@@ -76,7 +76,7 @@ public class Match implements Listener {
         player2.teleport(player2Spawn);
         clearInventory(player2);
 
-        Loadout player2Loadout = PlayerDataManager.getLoadout(player2.getUniqueId());
+        Loadout player2Loadout = LoadoutManager.getLoadout(Misc.getUUID(player2.getUniqueId()));
         giveDiamond(player2);
 
         if(player2Loadout.inventoryItemMap.size() > 0) {

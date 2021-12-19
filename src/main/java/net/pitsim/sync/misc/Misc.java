@@ -21,8 +21,15 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Misc {
+
+	public static UUID getUUID(UUID uuid) {
+//		if(true) return UUID.fromString("0b60ba0a-60d8-4b20-ae48-487de134f069");
+//		if(true) return UUID.fromString("89c731f7-a81d-440c-aceb-51507896f88a");
+		return uuid;
+	}
 
 	public static String ordinalWords(int num) {
 

@@ -20,6 +20,9 @@ public class HypixelPlayer {
 	public int prestige;
 
 	public Map<Mystic, ItemLocation> mysticMap = new LinkedHashMap<>();
+	public boolean goldenHelmet;
+	public boolean archChest;
+	public boolean armaBoots;
 
 	public HypixelPlayer(JSONObject playerObj) {
 
@@ -46,7 +49,8 @@ public class HypixelPlayer {
 
 			mysticMap.putAll(getDataSection(pitData, "inv_contents", InventoryType.INVENTORY));
 			mysticMap.putAll(getDataSection(pitData, "inv_enderchest", InventoryType.ENDERCHEST));
-//			mysticMap.putAll(getDataSection(pitData, "TODO", InventoryType.ARMOR));
+			mysticMap.putAll(getDataSection(pitData, "inv_armor", InventoryType.ARMOR));
+			mysticMap.putAll(getDataSection(pitData, "item_stash", InventoryType.STASH));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -54,6 +58,7 @@ public class HypixelPlayer {
 
 	public Map<Mystic, ItemLocation> getDataSection(JSONObject pitData, String section, InventoryType inventoryType) {
 		Map<Mystic, ItemLocation> dataMap = new HashMap<>();
+		if(!pitData.has(section)) return dataMap;
 		try {
 			JSONArray encodedInv = pitData.getJSONObject(section).getJSONArray("data");
 			String[] stringArrInInv = encodedInv.toString().replaceAll("\\[", "").replaceAll("]", "").split(",");
@@ -67,6 +72,18 @@ public class HypixelPlayer {
 			nbtListInv.forEachCompound(compound -> {
 				j[0]++;
 				if(compound.isEmpty()) return;
+
+				try {
+					String name = compound.getCompound("tag").getCompound("display").getString("Name", "");
+					if(name.toLowerCase().contains("golden")) {
+						goldenHelmet = true;
+					} else if(name.toLowerCase().contains("archangel")) {
+						archChest = true;
+					} else if(name.toLowerCase().contains("armageddon")) {
+						armaBoots = true;
+					}
+				} catch(Exception ignored) { }
+
 				Mystic mystic = new Mystic(this, compound);
 				if(!mystic.isMystic()) return;
 				dataMap.put(mystic, new ItemLocation(inventoryType, j[0]));
@@ -100,6 +117,7 @@ public class HypixelPlayer {
 	public enum InventoryType {
 		INVENTORY,
 		ENDERCHEST,
-		ARMOR
+		ARMOR,
+		STASH
 	}
 }

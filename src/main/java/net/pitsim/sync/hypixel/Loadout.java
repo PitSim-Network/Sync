@@ -17,13 +17,18 @@ public class Loadout {
 	public Map<Integer, ItemStack> inventoryItemMap = new HashMap<>();
 	public Map<Integer, ItemStack> enderchestItemMap = new HashMap<>();
 	public Map<Integer, ItemStack> armorItemMap = new HashMap<>();
+	public List<ItemStack> stash = new ArrayList<>();
 
 //	For new items that already have a saved loadout location
 	public List<ItemStack> conflictItems = new ArrayList<>();
 
+	public boolean goldenHelmet;
+	public boolean archChest;
+	public boolean armaBoots;
+
 	public Loadout(UUID uuid) {
 		this.uuid = uuid;
-		this.hypixelPlayer = PlayerDataManager.getHypixelPlayer(uuid);
+		this.hypixelPlayer = LoadoutManager.getHypixelPlayer(uuid);
 		update();
 	}
 
@@ -69,6 +74,10 @@ public class Loadout {
 		ConfigurationSection playerData = aPlayer.playerData.getConfigurationSection("loadout");
 		Map<Mystic, HypixelPlayer.ItemLocation> mysticMap = new LinkedHashMap<>(hypixelPlayer.mysticMap);
 
+		goldenHelmet = hypixelPlayer.goldenHelmet;
+		archChest = hypixelPlayer.archChest;
+		armaBoots = hypixelPlayer.armaBoots;
+
 		List<Mystic> toRemove = new ArrayList<>();
 		if(playerData != null) {
 			if(playerData.contains("inventory")) {
@@ -101,6 +110,22 @@ public class Loadout {
 					enderchestItemMap.put(slot, mystic.getItemStack());
 				}
 			}
+			for(Mystic mystic : toRemove) mysticMap.remove(mystic);
+			toRemove.clear();
+			if(playerData.contains("armor")) {
+				for(String nonce : playerData.getConfigurationSection("armor").getKeys(false)) {
+					String key = "armor." + nonce;
+					int slot = playerData.getInt(key);
+
+					Mystic mystic = getMystic(mysticMap, nonce);
+					if(mystic == null) {
+						playerData.set(key, null);
+						continue;
+					}
+					toRemove.add(mystic);
+					armorItemMap.put(slot, mystic.getItemStack());
+				}
+			}
 			aPlayer.save();
 		}
 
@@ -116,6 +141,8 @@ public class Loadout {
 				attemptAdd(mystic, enderchestItemMap, slot);
 			} else if(inventoryType == HypixelPlayer.InventoryType.ARMOR) {
 				attemptAdd(mystic, armorItemMap, slot);
+			} else if(inventoryType == HypixelPlayer.InventoryType.STASH) {
+				stash.add(mystic.getItemStack());
 			}
 		}
 	}
@@ -125,7 +152,7 @@ public class Loadout {
 			map.put(slot, mystic.getItemStack());
 		} else {
 //			TODO: Re-enable
-//			conflictItems.add(mystic.getItemStack());
+			conflictItems.add(mystic.getItemStack());
 		}
 	}
 

@@ -6,7 +6,7 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.hypixel.PlayerDataManager;
+import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.*;
@@ -151,7 +151,7 @@ public class PlayerManager implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		PlayerDataManager.getHypixelPlayer(player.getUniqueId());
+		LoadoutManager.getHypixelPlayer(player.getUniqueId());
 
 		event.getPlayer().setGameMode(GameMode.SURVIVAL);
 	}
