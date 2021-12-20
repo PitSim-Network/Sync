@@ -30,7 +30,6 @@ public class SpawnManager implements Listener {
     public static List<Arrow> arrowList = new ArrayList<>();
     public static boolean postMajor = false;
 
-
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {
         if(!(event.getEntity() instanceof Player)) return;
