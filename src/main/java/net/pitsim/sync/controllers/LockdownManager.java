@@ -41,12 +41,12 @@ public class LockdownManager implements Listener {
 					if(SpawnManager.isInSpawn(player.getLocation())) continue;
 					if(requireVerification && !isVerified(player)) {
 						AOutput.error(player, verificationMessage);
-						player.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+						player.teleport(MapManager.getLobbySpawn());
 						continue;
 					}
 					if(requireCaptcha && !isCaptcha(player)) {
 						sendCaptchaMessage(player);
-						player.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+						player.teleport(MapManager.getLobbySpawn());
 					}
 				}
 			}

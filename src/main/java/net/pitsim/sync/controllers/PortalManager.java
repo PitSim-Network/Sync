@@ -5,7 +5,6 @@ import net.pitsim.sync.events.OofEvent;
 import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +20,7 @@ public class PortalManager implements Listener {
 
 	@EventHandler
 	public void onPortal(PlayerPortalEvent event) {
-		event.getPlayer().teleport(Bukkit.getWorld("ffa").getSpawnLocation());
+		event.getPlayer().teleport(MapManager.getFFASpawn());
 
 		Loadout loadout = LoadoutManager.getLoadout(Misc.getUUID(event.getPlayer().getUniqueId()));
 		giveDiamond(event.getPlayer());
@@ -44,14 +43,14 @@ public class PortalManager implements Listener {
 	public void onDeath(KillEvent event) {
 		if(DuelManager.getMatch(event.dead) != null) return;
 			clearInventory(event.dead);
-			event.dead.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+			event.dead.teleport(MapManager.getLobbySpawn());
 	}
 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		if(DuelManager.getMatch(event.getEntity()) != null) return;
 			clearInventory(event.getEntity());
-			event.getEntity().teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+			event.getEntity().teleport(MapManager.getLobbySpawn());
 
 	}
 
@@ -59,14 +58,14 @@ public class PortalManager implements Listener {
 	public void onDeath(OofEvent event) {
 		if(DuelManager.getMatch(event.getPlayer()) != null) return;
 		clearInventory(event.getPlayer());
-		event.getPlayer().teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+		event.getPlayer().teleport(MapManager.getLobbySpawn());
 	}
 
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		if(DuelManager.getMatch(event.getPlayer()) != null) return;
 			clearInventory(event.getPlayer());
-			event.getPlayer().teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+			event.getPlayer().teleport(MapManager.getLobbySpawn());
 	}
 
 	public void clearInventory(Player player) {

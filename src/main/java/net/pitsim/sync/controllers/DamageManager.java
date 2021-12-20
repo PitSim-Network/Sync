@@ -252,7 +252,7 @@ public class DamageManager implements Listener {
 
 		Misc.multiKill(killer);
 
-		Location spawnLoc = Bukkit.getWorld("lobby").getSpawnLocation();
+		Location spawnLoc = MapManager.getLobbySpawn();
 		if(DuelManager.getMatch(dead) == null) dead.teleport(spawnLoc);
 		for(PotionEffect potionEffect : dead.getActivePotionEffects()) {
 			dead.removePotionEffect(potionEffect.getType());
@@ -299,13 +299,13 @@ public class DamageManager implements Listener {
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(dead);
 
-		Location spawnLoc = Bukkit.getWorld("lobby").getSpawnLocation();
+		Location spawnLoc = MapManager.getLobbySpawn();
 		if(DuelManager.getMatch(dead) == null)  dead.teleport(spawnLoc);
 
 		for(Match match : DuelManager.matches) {
 			if(match.player1 == dead || match.player2 == dead) {
 				match.onEnd(dead);
-				if(dead.getLocation().getY() < 40) dead.teleport(new Location(Bukkit.getWorld("pvp"), match.arenaCoordinates.x, 64, match.arenaCoordinates.y));
+				if(dead.getLocation().getY() < 40) dead.teleport(new Location(MapManager.getPvP(), match.arenaCoordinates.x, 64, match.arenaCoordinates.y));
 				break;
 			}
 		}

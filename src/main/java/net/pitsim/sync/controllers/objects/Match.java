@@ -4,6 +4,7 @@ import dev.kyro.arcticapi.misc.AOutput;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.DuelManager;
+import net.pitsim.sync.controllers.MapManager;
 import net.pitsim.sync.controllers.RingCalc;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.hypixel.Loadout;
@@ -46,13 +47,13 @@ public class Match implements Listener {
     }
 
     public void onStart() {
-        SchematicPaste.loadSchematic(new File("plugins/WorldEdit/schematics/clear.schematic"), new Location(Bukkit.getWorld("pvp"), arenaCoordinates.x, 80, arenaCoordinates.y));
-        SchematicPaste.loadSchematic(new File(arena.schematicName), new Location(Bukkit.getWorld("pvp"), arenaCoordinates.x, 60, arenaCoordinates.y));
+        SchematicPaste.loadSchematic(new File("plugins/WorldEdit/schematics/clear.schematic"), new Location(MapManager.getPvP(), arenaCoordinates.x, 80, arenaCoordinates.y));
+        SchematicPaste.loadSchematic(new File(arena.schematicName), new Location(MapManager.getPvP(), arenaCoordinates.x, 60, arenaCoordinates.y));
 
-        Location player1Spawn = new Location(Bukkit.getWorld("pvp"),arenaCoordinates.x + arena.player1Spawn.getX(), 60 + arena.player1Spawn.getY(),
+        Location player1Spawn = new Location(MapManager.getPvP(),arenaCoordinates.x + arena.player1Spawn.getX(), 60 + arena.player1Spawn.getY(),
                 arenaCoordinates.y + arena.player1Spawn.getZ(), arena.player1Spawn.getPitch(), arena.player1Spawn.getYaw());
 
-        Location player2Spawn = new Location(Bukkit.getWorld("pvp"),arenaCoordinates.x + arena.player2Spawn.getX(), 60 + arena.player2Spawn.getY(),
+        Location player2Spawn = new Location(MapManager.getPvP(),arenaCoordinates.x + arena.player2Spawn.getX(), 60 + arena.player2Spawn.getY(),
                 arenaCoordinates.y + arena.player2Spawn.getZ(), arena.player2Spawn.getPitch(), arena.player2Spawn.getYaw());
 
         player1.setHealth(player1.getMaxHealth());
@@ -109,8 +110,8 @@ public class Match implements Listener {
             public void run() {
 
                 loser.setGameMode(GameMode.SURVIVAL);
-                player1.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
-                player2.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+                player1.teleport(MapManager.getLobbySpawn());
+                player2.teleport(MapManager.getLobbySpawn());
 
                 Misc.sendSubTitle(winner, "", 10);
                 Misc.sendSubTitle(loser, "", 10);
@@ -125,8 +126,8 @@ public class Match implements Listener {
     public void onPluginDisable() {
         if(player1 != null) clearInventory(player1);
         if(player2 != null) clearInventory(player2);
-        if(player1 != null) player1.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
-        if(player2 != null) player2.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+        if(player1 != null) player1.teleport(MapManager.getLobbySpawn());
+        if(player2 != null) player2.teleport(MapManager.getLobbySpawn());
 
         DuelManager.matches.remove(this);
     }
@@ -145,7 +146,7 @@ public class Match implements Listener {
 
         Sounds.CTF_FLAG_CAPTURED.play(loser);
         Sounds.LEVEL_UP.play(winner);
-        winner.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+        winner.teleport(MapManager.getLobbySpawn());
         DuelManager.matches.remove(this);
         player1 = null;
         player2 = null;

@@ -1,6 +1,6 @@
 package net.pitsim.sync.commands;
 
-import org.bukkit.Bukkit;
+import net.pitsim.sync.controllers.MapManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,7 @@ public class SpawnCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         Player player = (Player) sender;
-        player.teleport(Bukkit.getWorld("lobby").getSpawnLocation());
+        player.teleport(MapManager.getLobbySpawn());
 
         return false;
     }

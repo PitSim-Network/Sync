@@ -198,6 +198,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new LoadoutManager(), this);
 		getServer().getPluginManager().registerEvents(new PortalManager(), this);
 		getServer().getPluginManager().registerEvents(new HopperManager(), this);
+		getServer().getPluginManager().registerEvents(new MapManager(), this);
 	}
 
 	private void loadConfig() {
