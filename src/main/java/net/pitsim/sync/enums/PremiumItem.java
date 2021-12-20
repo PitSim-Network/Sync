@@ -1,0 +1,110 @@
+package net.pitsim.sync.enums;
+
+import net.pitsim.sync.controllers.EnchantManager;
+import net.pitsim.sync.controllers.objects.PitEnchant;
+
+import java.util.*;
+
+public class PremiumItem {
+	public List<PremiumItem> itemList = new ArrayList<>();
+
+	static {
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 0.7, new Enchant("bill", 2));
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 4, new Enchant("bill", 3));
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 12, new Enchant("bill", 3), new Enchant("sharp", 3));
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 30, new Enchant("bill", 3), new Enchant("cd", 3));
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 10, new Enchant("bill", 3), new Enchant("pf", 2));
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 40, new Enchant("bill", 3), new Enchant("pf", 3));
+		new PremiumItem(PremiumType.DAMAGE_SWORD, 70, new Enchant("bill", 3), new Enchant("stomp", 3));
+
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 2, new Enchant("perun", 2));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 3, new Enchant("perun", 2), new Enchant("stomp", 3));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 4, new Enchant("perun", 3));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 10, new Enchant("perun", 3), new Enchant("sharp", 3));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 10, new Enchant("perun", 3), new Enchant("cd", 3));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 20, new Enchant("perun", 3), new Enchant("stomp", 3));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 70, new Enchant("perun", 3), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 90, new Enchant("perun", 3), new Enchant("bill", 1));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 90, new Enchant("perun", 2), new Enchant("gamble", 1));
+
+		new PremiumItem(PremiumType.HEALING_SWORD, 0.5, new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 3, new Enchant("cd", 3), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 3, new Enchant("stomp", 3), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 18, new Enchant("pf", 3), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 25, new Enchant("ch", 3), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 25, new Enchant("bill", 1), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 120, new Enchant("bill", 2), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 700, new Enchant("bill", 3), new Enchant("ls", 3));
+
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 1, new Enchant("cf", 3));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 2, new Enchant("soli", 3));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 2, new Enchant("pero", 3), new Enchant("mirror", 1));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 9, new Enchant("cf", 3), new Enchant("mirror", 1));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 15, new Enchant("cf", 3), new Enchant("pero", 3));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 10, new Enchant("newdeal", 3), new Enchant("mirror", 1));
+
+		new PremiumItem(PremiumType.REGULARITY_PANTS, 1.5, new Enchant("regularity", 2));
+		new PremiumItem(PremiumType.REGULARITY_PANTS, 6, new Enchant("regularity", 3));
+		new PremiumItem(PremiumType.REGULARITY_PANTS, 15, new Enchant("regularity", 3), new Enchant("pero", 3));
+		new PremiumItem(PremiumType.REGULARITY_PANTS, 50, new Enchant("regularity", 3), new Enchant("gtgf", 3));
+		new PremiumItem(PremiumType.REGULARITY_PANTS, 60, new Enchant("regularity", 3), new Enchant("cf", 3));
+		new PremiumItem(PremiumType.REGULARITY_PANTS, 75, new Enchant("regularity", 3), new Enchant("mirror", 1));
+
+		new PremiumItem(PremiumType.RGM_PANTS, 2, new Enchant("rgm", 2));
+		new PremiumItem(PremiumType.RGM_PANTS, 4, new Enchant("rgm", 2), new Enchant("prot", 3));
+		new PremiumItem(PremiumType.RGM_PANTS, 10, new Enchant("rgm", 2), new Enchant("pero", 3));
+		new PremiumItem(PremiumType.RGM_PANTS, 50, new Enchant("rgm", 2), new Enchant("cf", 3));
+		new PremiumItem(PremiumType.RGM_PANTS, 100, new Enchant("rgm", 2), new Enchant("mirror", 1));
+
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 0.7, new Enchant("volley", 3));
+//		new PremiumItem(PremiumType.VOLLEY_BOWS, 8, new Enchant("volley", 1), new Enchant("wasp", 3));
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 8, new Enchant("volley", 3), new Enchant("wasp", 3));
+//		new PremiumItem(PremiumType.VOLLEY_BOWS, 6, new Enchant("volley", 1), new Enchant("drain", 3));
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 10, new Enchant("volley", 3), new Enchant("drain", 3));
+//		new PremiumItem(PremiumType.VOLLEY_BOWS, 6, new Enchant("volley", 1), new Enchant("pin", 3));
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 10, new Enchant("volley", 3), new Enchant("pin", 3));
+//		new PremiumItem(PremiumType.VOLLEY_BOWS, 5, new Enchant("volley", 1), new Enchant("ftts", 3));
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 10, new Enchant("volley", 3), new Enchant("ftts", 3));
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 20, new Enchant("volley", 1), new Enchant("para", 3));
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 80, new Enchant("volley", 3), new Enchant("para", 3));
+
+		new PremiumItem(PremiumType.MLB_BOWS, 4, new Enchant("mlb", 3));
+		new PremiumItem(PremiumType.MLB_BOWS, 8, new Enchant("mlb", 1), new Enchant("wasp", 2));
+		new PremiumItem(PremiumType.MLB_BOWS, 35, new Enchant("mlb", 1), new Enchant("wasp", 3));
+		new PremiumItem(PremiumType.MLB_BOWS, 6, new Enchant("mlb", 1), new Enchant("drain", 2));
+		new PremiumItem(PremiumType.MLB_BOWS, 70, new Enchant("mlb", 1), new Enchant("drain", 3));
+		new PremiumItem(PremiumType.MLB_BOWS, 6, new Enchant("mlb", 1), new Enchant("pin", 2));
+		new PremiumItem(PremiumType.MLB_BOWS, 20, new Enchant("mlb", 1), new Enchant("pin", 3));
+		new PremiumItem(PremiumType.MLB_BOWS, 5, new Enchant("mlb", 1), new Enchant("ftts", 2));
+		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("ftts", 3));
+
+		new PremiumItem(PremiumType.MISC, 15, new Enchant("mlb", 1));
+	}
+
+	public PremiumType premiumType;
+	public double cost;
+	public List<Enchant> enchants;
+
+	PremiumItem(PremiumType premiumType, double cost, Enchant... enchants) {
+		this.premiumType = premiumType;
+		this.cost = cost;
+		this.enchants = Arrays.asList(enchants);
+		itemList.add(this);
+	}
+
+	public Map<PitEnchant, Integer> getEnchants() {
+		Map<PitEnchant, Integer> enchantMap = new LinkedHashMap<>();
+		for(Enchant enchant : enchants) enchantMap.put(enchant.pitEnchant, enchant.enchantLevel);
+		return enchantMap;
+	}
+
+	private static class Enchant {
+		public PitEnchant pitEnchant;
+		public int enchantLevel;
+
+		public Enchant(String refName, int enchantLevel) {
+			this.pitEnchant = EnchantManager.getEnchant(refName);
+			this.enchantLevel = enchantLevel;
+		}
+	}
+}
