@@ -2,7 +2,6 @@ package net.pitsim.sync;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.xxmicloxx.NoteBlockAPI.songplayer.EntitySongPlayer;
 import dev.kyro.arcticapi.ArcticAPI;
 import dev.kyro.arcticapi.commands.ABaseCommand;
 import dev.kyro.arcticapi.data.AData;
@@ -39,9 +38,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 //import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
@@ -137,13 +134,13 @@ public class PitSim extends JavaPlugin {
 
 		for(PitEnchant pitEnchant : EnchantManager.pitEnchants) pitEnchant.onDisable();
 
-		Iterator<Map.Entry<Player, EntitySongPlayer>> it = StereoManager.playerMusic.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry<Player, EntitySongPlayer> pair = it.next();
-			EntitySongPlayer esp = pair.getValue();
-			esp.destroy();
-			it.remove();
-		}
+//		Iterator<Map.Entry<Player, EntitySongPlayer>> it = StereoManager.playerMusic.entrySet().iterator();
+//		while(it.hasNext()) {
+//			Map.Entry<Player, EntitySongPlayer> pair = it.next();
+//			EntitySongPlayer esp = pair.getValue();
+//			esp.destroy();
+//			it.remove();
+//		}
 
 		for(Match match : DuelManager.matches) {
 			match.onPluginDisable();

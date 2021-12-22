@@ -25,6 +25,14 @@ import java.util.UUID;
 
 public class Misc {
 
+	public static String getFormattedName(Player player) {
+		return getFormattedName(player.getName());
+	}
+
+	public static String getFormattedName(String name) {
+		return name.endsWith("s") ? name + "'" : name + "'s";
+	}
+
 	public static UUID getUUID(UUID uuid) {
 //		if(true) return UUID.fromString("0b60ba0a-60d8-4b20-ae48-487de134f069");
 //		if(true) return UUID.fromString("89c731f7-a81d-440c-aceb-51507896f88a");
@@ -219,5 +227,18 @@ public class Misc {
 		return (double) tmp / factor;
 	}
 
+	public static void clearInventory(Player player) {
+		player.getInventory().clear();
+		player.getInventory().setHelmet(null);
+		player.getInventory().setChestplate(null);
+		player.getInventory().setLeggings(null);
+		player.getInventory().setBoots(null);
+	}
 
+	public static void giveDiamond(Player player) {
+		if(isAirOrNull(player.getEquipment().getHelmet())) player.getEquipment().setHelmet(new ItemStack(Material.IRON_HELMET));
+		if(isAirOrNull(player.getEquipment().getChestplate())) player.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+		if(isAirOrNull(player.getEquipment().getLeggings())) player.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+		if(isAirOrNull(player.getEquipment().getBoots())) player.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+	}
 }

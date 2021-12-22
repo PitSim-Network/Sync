@@ -1,7 +1,7 @@
 package net.pitsim.sync.commands;
 
-import lombok.SneakyThrows;
-import net.pitsim.sync.controllers.InventoryManager;
+import dev.kyro.arcticapi.misc.AOutput;
+import net.pitsim.sync.controllers.objects.PitPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,14 +9,23 @@ import org.bukkit.entity.Player;
 
 public class EncerchestCommand implements CommandExecutor {
 
-    @SneakyThrows
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
 
-        InventoryManager.getInventory(player).openInventory();
+        PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+        if(pitPlayer.loadout == null) {
+            AOutput.error(player, "For some reason you do not have anything loaded");
+            return false;
+        } else if(pitPlayer.loadout.loadoutGUI == null) {
+            AOutput.error(player, "You can only make changes to your own layout");
+            return false;
+        }
+
+        pitPlayer.loadout.loadoutGUI.open();
+
+//        InventoryManager.getInventory(player).openInventory();
         return false;
     }
 }

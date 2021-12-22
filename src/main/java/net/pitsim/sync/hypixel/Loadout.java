@@ -3,9 +3,13 @@ package net.pitsim.sync.hypixel;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
+import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
+import net.pitsim.sync.inventories.loadout.LoadoutGUI;
 import net.pitsim.sync.misc.Misc;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -13,6 +17,8 @@ import java.util.*;
 public class Loadout {
 	public UUID uuid;
 	public HypixelPlayer hypixelPlayer;
+
+	public LoadoutGUI loadoutGUI;
 
 	public Map<Integer, ItemStack> inventoryItemMap = new HashMap<>();
 	public Map<Integer, ItemStack> enderchestItemMap = new HashMap<>();
@@ -22,17 +28,75 @@ public class Loadout {
 //	For new items that already have a saved loadout location
 	public List<ItemStack> conflictItems = new ArrayList<>();
 
-	public boolean goldenHelmet;
-	public boolean archChest;
-	public boolean armaBoots;
-
 	public Loadout(UUID uuid) {
 		this.uuid = uuid;
 		this.hypixelPlayer = LoadoutManager.getHypixelPlayer(uuid);
 		update();
 	}
 
+//	Loads all information and editing gui to a player
+	public void fullLoad(Player player) {
+		loadoutGUI = new LoadoutGUI(player, this);
+
+		partialLoad(player);
+	}
+
+//	Loads all information to a player
+	public void partialLoad(Player player) {
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		pitPlayer.loadout = this;
+
+		for(Map.Entry<Integer, ItemStack> integerItemStackEntry : inventoryItemMap.entrySet()) {
+			player.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
+		}
+
+		for(int i = 0; i < 4; i++) {
+			if(!armorItemMap.containsKey(i)) continue;
+			ItemStack itemStack = armorItemMap.get(i);
+			if(i == 0) player.getEquipment().setBoots(itemStack);
+			if(i == 1) player.getEquipment().setLeggings(itemStack);
+			if(i == 2) player.getEquipment().setChestplate(itemStack);
+			if(i == 3) player.getEquipment().setHelmet(itemStack);
+		}
+	}
+
 	public void save() {
+		if(loadoutGUI == null) return;
+		Player player = loadoutGUI.player;
+
+		inventoryItemMap.clear();
+		for(int i = 0; i < 36; i++) {
+			ItemStack itemStack = player.getInventory().getItem(i);
+//			TODO: Check if it is a mystic
+			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+			if(!shouldSave(itemStack)) {
+				player.getInventory().setItem(i, new ItemStack(Material.AIR));
+				continue;
+			}
+			inventoryItemMap.put(i, itemStack);
+		}
+		enderchestItemMap.clear();
+		for(int i = 0; i < loadoutGUI.enderchestPanel.getInventory().getSize(); i++) {
+			ItemStack itemStack = loadoutGUI.enderchestPanel.getInventory().getItem(i);
+//			TODO: Check if it is a mystic
+			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+			if(!shouldSave(itemStack)) {
+				loadoutGUI.enderchestPanel.getInventory().setItem(i, new ItemStack(Material.AIR));
+				continue;
+			}
+			enderchestItemMap.put(i, itemStack);
+		}
+		armorItemMap.clear();
+		for(int i = 0; i < player.getEquipment().getArmorContents().length; i++) {
+			ItemStack itemStack = player.getEquipment().getArmorContents()[i];
+			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+			if(!shouldSave(itemStack)) {
+				player.getInventory().setItem(i, new ItemStack(Material.AIR));
+				continue;
+			}
+			armorItemMap.put(i, itemStack);
+		}
+
 		clean(inventoryItemMap);
 		clean(enderchestItemMap);
 		clean(armorItemMap);
@@ -73,10 +137,6 @@ public class Loadout {
 		APlayer aPlayer = APlayerData.getPlayerData(uuid);
 		ConfigurationSection playerData = aPlayer.playerData.getConfigurationSection("loadout");
 		Map<Mystic, HypixelPlayer.ItemLocation> mysticMap = new LinkedHashMap<>(hypixelPlayer.mysticMap);
-
-		goldenHelmet = hypixelPlayer.goldenHelmet;
-		archChest = hypixelPlayer.archChest;
-		armaBoots = hypixelPlayer.armaBoots;
 
 		List<Mystic> toRemove = new ArrayList<>();
 		if(playerData != null) {
@@ -161,5 +221,31 @@ public class Loadout {
 			if(entry.getKey().nonce.equalsIgnoreCase(nonce)) return entry.getKey();
 		}
 		return null;
+	}
+
+	public boolean isOwner(Player player) {
+		return player.getUniqueId().equals(uuid);
+	}
+
+	public boolean shouldSave(ItemStack itemStack) {
+		if(Misc.isAirOrNull(itemStack)) return false;
+		NBTItem nbtItem = new NBTItem(itemStack);
+		String nonce = nbtItem.getString(NBTTag.PIT_NONCE.getRef());
+		for(ItemStack conflictItem : conflictItems) {
+			NBTItem testNBTItem = new NBTItem(conflictItem);
+			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
+			if(testNonce.equals(nonce)) return false;
+		}
+		for(ItemStack conflictItem : stash) {
+			NBTItem testNBTItem = new NBTItem(conflictItem);
+			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
+			if(testNonce.equals(nonce)) return false;
+		}
+		for(Map.Entry<Integer, ItemStack> entry : armorItemMap.entrySet()) {
+			NBTItem testNBTItem = new NBTItem(entry.getValue());
+			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
+			if(testNonce.equals(nonce)) return false;
+		}
+		return nbtItem.hasKey(NBTTag.PIT_NONCE.getRef());
 	}
 }

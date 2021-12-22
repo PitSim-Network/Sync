@@ -1,14 +1,11 @@
 package net.pitsim.sync.inventories;
 
-import de.tr7zw.nbtapi.NBTItem;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.InventoryManager;
-import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -74,56 +71,31 @@ public class EnderchestInventoryGUI implements Listener, InventoryHolder {
 		if(event.getInventory().getHolder() != this) return;
 		Player player = (Player) event.getPlayer();
 
-		loadout.inventoryItemMap.clear();
-		for(int i = 0; i < 36; i++) {
-			ItemStack itemStack = player.getInventory().getItem(i);
-//			TODO: Check if it is a mystic
-			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
-			if(!shouldSave(itemStack)) {
-				player.getInventory().setItem(i, new ItemStack(Material.AIR));
-				continue;
-			}
-			loadout.inventoryItemMap.put(i, itemStack);
-		}
-		loadout.enderchestItemMap.clear();
-		for(int i = 0; i < event.getInventory().getSize(); i++) {
-			ItemStack itemStack = event.getInventory().getItem(i);
-//			TODO: Check if it is a mystic
-			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
-			if(!shouldSave(itemStack)) {
-				event.getInventory().setItem(i, new ItemStack(Material.AIR));
-				continue;
-			}
-			loadout.enderchestItemMap.put(i, itemStack);
-		}
-
-//		TODO: Armor
-		loadout.save();
+//		loadout.inventoryItemMap.clear();
+//		for(int i = 0; i < 36; i++) {
+//			ItemStack itemStack = player.getInventory().getItem(i);
+////			TODO: Check if it is a mystic
+//			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+//			if(!shouldSave(itemStack)) {
+//				player.getInventory().setItem(i, new ItemStack(Material.AIR));
+//				continue;
+//			}
+//			loadout.inventoryItemMap.put(i, itemStack);
+//		}
+//		loadout.enderchestItemMap.clear();
+//		for(int i = 0; i < event.getInventory().getSize(); i++) {
+//			ItemStack itemStack = event.getInventory().getItem(i);
+////			TODO: Check if it is a mystic
+//			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+//			if(!shouldSave(itemStack)) {
+//				event.getInventory().setItem(i, new ItemStack(Material.AIR));
+//				continue;
+//			}
+//			loadout.enderchestItemMap.put(i, itemStack);
+//		}
 
 		player.getInventory().clear();
 		player.updateInventory();
-	}
-
-	public boolean shouldSave(ItemStack itemStack) {
-		if(Misc.isAirOrNull(itemStack)) return false;
-		NBTItem nbtItem = new NBTItem(itemStack);
-		String nonce = nbtItem.getString(NBTTag.PIT_NONCE.getRef());
-		for(ItemStack conflictItem : loadout.conflictItems) {
-			NBTItem testNBTItem = new NBTItem(conflictItem);
-			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
-			if(testNonce.equals(nonce)) return false;
-		}
-		for(ItemStack conflictItem : loadout.stash) {
-			NBTItem testNBTItem = new NBTItem(conflictItem);
-			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
-			if(testNonce.equals(nonce)) return false;
-		}
-		for(Map.Entry<Integer, ItemStack> entry : loadout.armorItemMap.entrySet()) {
-			NBTItem testNBTItem = new NBTItem(entry.getValue());
-			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
-			if(testNonce.equals(nonce)) return false;
-		}
-		return nbtItem.hasKey(NBTTag.PIT_NONCE.getRef());
 	}
 
 	// Check for clicks on items

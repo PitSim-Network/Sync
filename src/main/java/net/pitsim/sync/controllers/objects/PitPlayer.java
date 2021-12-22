@@ -7,6 +7,7 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.enchants.Hearts;
 import net.pitsim.sync.enums.AChatColor;
 import net.pitsim.sync.events.HealEvent;
+import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
 import org.bukkit.Bukkit;
@@ -27,8 +28,6 @@ public class PitPlayer {
 
 	public PitPerk[] pitPerks = new PitPerk[] { Vampire.INSTANCE, NoPerk.INSTANCE, NoPerk.INSTANCE, NoPerk.INSTANCE };
 
-	public UUID dataUUID = null;
-
 	public Map<PitEnchant, Integer> enchantHits = new HashMap<>();
 	public Map<PitEnchant, Integer> enchantCharge = new HashMap<>();
 	public Map<UUID, Double> recentDamageMap = new HashMap<>();
@@ -36,6 +35,8 @@ public class PitPlayer {
 	public AChatColor chatColor = null;
 	public UUID lastHitUUID = null;
 	public ItemStack confirmedDrop = null;
+
+	public Loadout loadout;
 
 	public PitPlayer(Player player) {
 		this.player = player;
@@ -126,8 +127,10 @@ public class PitPlayer {
 	}
 
 	public void updateMaxHealth() {
-		int maxHealth = 28;
+		int maxHealth = 24;
 		if(Hearts.INSTANCE != null) maxHealth += Hearts.INSTANCE.getExtraHealth(this);
+
+		if(loadout != null && loadout.hypixelPlayer.hasThick) maxHealth += 4;
 
 		if(player.getMaxHealth() == maxHealth) return;
 		player.setMaxHealth(maxHealth);

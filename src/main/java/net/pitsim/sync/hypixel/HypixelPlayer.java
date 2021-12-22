@@ -3,14 +3,12 @@ package net.pitsim.sync.hypixel;
 import me.nullicorn.nedit.NBTReader;
 import me.nullicorn.nedit.type.NBTCompound;
 import me.nullicorn.nedit.type.NBTList;
+import net.pitsim.sync.enums.SpecialItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class HypixelPlayer {
 	public JSONObject playerObj;
@@ -19,10 +17,11 @@ public class HypixelPlayer {
 	public String name;
 	public int prestige;
 
+	public int enderchestRows = 6;
+	public boolean hasThick = true;
+
 	public Map<Mystic, ItemLocation> mysticMap = new LinkedHashMap<>();
-	public boolean goldenHelmet;
-	public boolean archChest;
-	public boolean armaBoots;
+	public List<SpecialItem> specialItems = new ArrayList<>();
 
 	public HypixelPlayer(JSONObject playerObj) {
 
@@ -76,11 +75,11 @@ public class HypixelPlayer {
 				try {
 					String name = compound.getCompound("tag").getCompound("display").getString("Name", "");
 					if(name.toLowerCase().contains("golden")) {
-						goldenHelmet = true;
+//						goldenHelmet = true;
 					} else if(name.toLowerCase().contains("archangel")) {
-						archChest = true;
+//						archChest = true;
 					} else if(name.toLowerCase().contains("armageddon")) {
-						armaBoots = true;
+//						armaBoots = true;
 					}
 				} catch(Exception ignored) { }
 
