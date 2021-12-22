@@ -37,16 +37,18 @@ public class DuelCommand implements CommandExecutor {
             for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if(onlinePlayer.getName().equalsIgnoreCase(playerString)) duelPlayer = onlinePlayer;
             }
+            String duelPlayerName = "%luckperms_prefix%" + duelPlayer.getName();
             for(Map.Entry<Player, Player> playerPlayerEntry : DuelManager.requests.entrySet()) {
                 if(playerPlayerEntry.getKey() == duelPlayer && playerPlayerEntry.getValue() == player) {
                     DuelManager.requests.remove(player);
                     DuelManager.requests.remove(duelPlayer);
                     DuelManager.requestArenas.remove(duelPlayer);
                     AOutput.send(duelPlayer, PlaceholderAPI.setPlaceholders(player, playerName) + " &chas declined your duel request!");
+                    AOutput.send(player, "&aYou declined " + PlaceholderAPI.setPlaceholders(player, playerName) + "&a's duel request!");
                     return false;
                 }
             }
-            AOutput.error(player, "You do not have a pending duel request from this person. Maybe it has expired?");
+            AOutput.error(player, "&cYou do not have a pending duel request from this person. Maybe it has expired?");
             return false;
         }
 
@@ -74,7 +76,7 @@ public class DuelCommand implements CommandExecutor {
                     return false;
                 }
             }
-            AOutput.error(player, "You do not have a pending duel request from this person. Maybe it has expired?");
+            AOutput.error(player, "&cYou do not have a pending duel request from this person. Maybe it has expired?");
             return false;
         }
 
