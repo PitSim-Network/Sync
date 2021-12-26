@@ -24,9 +24,10 @@ public class Loadout {
 	public Map<Integer, ItemStack> enderchestItemMap = new HashMap<>();
 	public Map<Integer, ItemStack> armorItemMap = new HashMap<>();
 	public List<ItemStack> stash = new ArrayList<>();
+	public List<String> voidNonceList = new ArrayList<>();
 
 //	For new items that already have a saved loadout location
-	public List<ItemStack> conflictItems = new ArrayList<>();
+//	public List<ItemStack> conflictItems = new ArrayList<>();
 
 	public Loadout(UUID uuid) {
 		this.uuid = uuid;
@@ -103,6 +104,11 @@ public class Loadout {
 		write(inventoryItemMap, "inventory");
 		write(enderchestItemMap, "enderchest");
 		write(armorItemMap, "armor");
+
+		APlayer aPlayer = APlayerData.getPlayerData(uuid);
+		ConfigurationSection playerData = aPlayer.playerData;
+		playerData.set("loadout.void", voidNonceList);
+		aPlayer.save();
 	}
 
 	public void write(Map<Integer, ItemStack> map, String path) {
@@ -126,7 +132,8 @@ public class Loadout {
 		for(Map.Entry<Integer, ItemStack> entry : map.entrySet()) {
 			if(Misc.isAirOrNull(entry.getValue())) toRemove.add(entry.getKey());
 			NBTItem nbtItem = new NBTItem(entry.getValue());
-			if(!nbtItem.hasKey(NBTTag.PIT_NONCE.getRef())) toRemove.add(entry.getKey());
+			if(!nbtItem.hasKey(NBTTag.PIT_NONCE.getRef()) && !nbtItem.hasKey(NBTTag.IS_SPECIAL.getRef())) toRemove.add(entry.getKey());
+			if(voidNonceList.contains(nbtItem.getString(NBTTag.PIT_NONCE.getRef()))) toRemove.add(entry.getKey());
 		}
 		for(int slot : toRemove) {
 			map.remove(slot);
@@ -140,13 +147,20 @@ public class Loadout {
 
 		List<Mystic> toRemove = new ArrayList<>();
 		if(playerData != null) {
+			voidNonceList = playerData.getStringList("void");
+			for(Map.Entry<Mystic, HypixelPlayer.ItemLocation> entry : mysticMap.entrySet()) {
+				if(voidNonceList.contains(entry.getKey().nonce)) toRemove.add(entry.getKey());
+			}
+			for(Mystic mystic : toRemove) mysticMap.remove(mystic);
+			toRemove.clear();
+
 			if(playerData.contains("inventory")) {
 				for(String nonce : playerData.getConfigurationSection("inventory").getKeys(false)) {
 					String key = "inventory." + nonce;
 					int slot = playerData.getInt(key);
 
 					Mystic mystic = getMystic(mysticMap, nonce);
-					if(mystic == null) {
+					if(mystic == null || voidNonceList.contains(mystic.nonce)) {
 						playerData.set(key, null);
 						continue;
 					}
@@ -162,7 +176,7 @@ public class Loadout {
 					int slot = playerData.getInt(key);
 
 					Mystic mystic = getMystic(mysticMap, nonce);
-					if(mystic == null) {
+					if(mystic == null || voidNonceList.contains(mystic.nonce)) {
 						playerData.set(key, null);
 						continue;
 					}
@@ -178,7 +192,7 @@ public class Loadout {
 					int slot = playerData.getInt(key);
 
 					Mystic mystic = getMystic(mysticMap, nonce);
-					if(mystic == null) {
+					if(mystic == null || voidNonceList.contains(mystic.nonce)) {
 						playerData.set(key, null);
 						continue;
 					}
@@ -211,8 +225,7 @@ public class Loadout {
 		if(!map.containsKey(slot)) {
 			map.put(slot, mystic.getItemStack());
 		} else {
-//			TODO: Re-enable
-			conflictItems.add(mystic.getItemStack());
+			stash.add(mystic.getItemStack());
 		}
 	}
 
@@ -231,11 +244,11 @@ public class Loadout {
 		if(Misc.isAirOrNull(itemStack)) return false;
 		NBTItem nbtItem = new NBTItem(itemStack);
 		String nonce = nbtItem.getString(NBTTag.PIT_NONCE.getRef());
-		for(ItemStack conflictItem : conflictItems) {
-			NBTItem testNBTItem = new NBTItem(conflictItem);
-			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
-			if(testNonce.equals(nonce)) return false;
-		}
+//		for(ItemStack conflictItem : conflictItems) {
+//			NBTItem testNBTItem = new NBTItem(conflictItem);
+//			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
+//			if(testNonce.equals(nonce)) return false;
+//		}
 		for(ItemStack conflictItem : stash) {
 			NBTItem testNBTItem = new NBTItem(conflictItem);
 			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
@@ -246,6 +259,6 @@ public class Loadout {
 			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
 			if(testNonce.equals(nonce)) return false;
 		}
-		return nbtItem.hasKey(NBTTag.PIT_NONCE.getRef());
+		return nbtItem.hasKey(NBTTag.PIT_NONCE.getRef()) || nbtItem.hasKey(NBTTag.IS_SPECIAL.getRef());
 	}
 }

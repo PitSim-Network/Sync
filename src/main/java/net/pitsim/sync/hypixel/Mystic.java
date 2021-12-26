@@ -7,6 +7,7 @@ import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.enums.PantColor;
+import net.pitsim.sync.enums.SpecialItem;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -18,16 +19,25 @@ public class Mystic {
 	public NBTCompound data;
 
 	public HypixelPlayer owner;
+	public String nonce;
+
 	public MysticType type;
 	public String name;
 	public List<String> lore = new ArrayList<>();
-	public String nonce;
 	public int tier;
 	public int lives;
 	public PantColor color;
 	public int maxLives;
 	public boolean isGemmed;
 	public Map<PitEnchant, Integer> enchantMap = new LinkedHashMap<>();
+
+	public SpecialItem specialItem;
+
+	public Mystic(HypixelPlayer owner, SpecialItem specialItem) {
+		this.owner = owner;
+		this.specialItem = specialItem;
+		this.nonce = specialItem.refName;
+	}
 
 	public Mystic(HypixelPlayer owner, NBTCompound data) {
 		this.owner = owner;
@@ -93,6 +103,8 @@ public class Mystic {
 	}
 
 	public ItemStack getItemStack() {
+		if(specialItem != null) return specialItem.getItem();
+
 		String mysticString = type.displayName.equalsIgnoreCase("pants") ? color.refName : type.displayName;
 		ItemStack mystic = FreshCommand.getFreshItem(mysticString);
 		try {

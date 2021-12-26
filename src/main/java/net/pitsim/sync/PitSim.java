@@ -24,7 +24,6 @@ import net.pitsim.sync.enchants.newcheck.*;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
 import net.pitsim.sync.hypixel.LoadoutManager;
-import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
@@ -123,8 +122,7 @@ public class PitSim extends JavaPlugin {
 		registerListeners();
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
-//			LoadoutManager.getHypixelPlayer(player.getUniqueId());
-			LoadoutManager.getLoadout(Misc.getUUID(player.getUniqueId()));
+			LoadoutManager.load(player);
 		}
 	}
 
@@ -172,7 +170,8 @@ public class PitSim extends JavaPlugin {
 		getCommand("discord").setExecutor(new DiscordCommand());
 		getCommand("disc").setExecutor(new DiscordCommand());
 		getCommand("captcha").setExecutor(new CaptchaCommand());
-		getCommand("ecitems").setExecutor(new EncerchestCommand());
+		getCommand("ecitems").setExecutor(new EnderchestCommand());
+		getCommand("void").setExecutor(new VoidCommand());
 		getCommand("resource").setExecutor(new ResourceCommand());
 		getCommand("duel").setExecutor(new DuelCommand());
 		getCommand("stash").setExecutor(new StashCommand());

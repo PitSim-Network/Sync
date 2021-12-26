@@ -172,11 +172,50 @@ public class EnchantManager implements Listener {
 		NBTItem nbtItem = new NBTItem(itemStack);
 		NBTList<String> enchantOrder = nbtItem.getStringList(NBTTag.PIT_ENCHANT_ORDER.getRef());
 		NBTCompound itemEnchants = nbtItem.getCompound(NBTTag.PIT_ENCHANTS.getRef());
-//		int playerKills = nbtItem.getInteger(NBTTag.PLAYER_KILLS.getRef());
-//		int botKills = nbtItem.getInteger(NBTTag.BOT_KILLS.getRef());
 		int currentLives = nbtItem.getInteger(NBTTag.CURRENT_LIVES.getRef());
 		int maxLives = nbtItem.getInteger(NBTTag.MAX_LIVES.getRef());
 		boolean isGemmed = nbtItem.getBoolean(NBTTag.IS_GEMMED.getRef());
+
+		if(nbtItem.hasKey(NBTTag.IS_GHELM.getRef())) {
+			new AItemStackBuilder(itemStack)
+					.setName("&6Golden Helmet")
+					.setLore(new ALoreBuilder(
+							"&7Special Item",
+							"",
+							"&9Royalty",
+							"&7Earn &b+10% XP &7from kills",
+							"",
+							"&6As strong as diamond"
+					));
+			return;
+		} else if(nbtItem.hasKey(NBTTag.IS_ARCH.getRef())) {
+			new AItemStackBuilder(itemStack)
+					.setName("&bArchangel Chestplate")
+					.setLore(new ALoreBuilder(
+							"&7Special Item",
+							"",
+							"&9Guardian",
+							"&7Receive &9-10% &7damage",
+							"",
+							"&bAngel Faction Reward"
+					));
+			return;
+		} else if(nbtItem.hasKey(NBTTag.IS_ARMAS.getRef())) {
+			new AItemStackBuilder(itemStack)
+					.setName("&cArmageddon Boots")
+					.setLore(new ALoreBuilder(
+							"&7Special Item",
+							"",
+							"&9Evil Within",
+							"&7Your hits ignore Somber",
+							"",
+							"&cDemon Faction Reward"
+					));
+			LeatherArmorMeta armasMeta = (LeatherArmorMeta) itemStack.getItemMeta();
+			armasMeta.setColor(Color.RED);
+			itemStack.setItemMeta(armasMeta);
+			return;
+		}
 
 		ALoreBuilder loreBuilder = new ALoreBuilder();
 

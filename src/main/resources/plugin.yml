@@ -19,7 +19,6 @@ commands:
   atest:
   enchant:
   fresh:
-  non:
   show:
   perks:
   jewel:
@@ -35,7 +34,6 @@ commands:
   crategive:
   cg:
   afk:
-  pitreload:
   setvalue:
   check:
   ecitems:
@@ -43,12 +41,10 @@ commands:
   store:
   discord:
   disc:
-  booster:
-  boostergive:
-  fps:
   resource:
   lightning:
   duel:
   captcha:
   stash:
   unstash:
+  void:

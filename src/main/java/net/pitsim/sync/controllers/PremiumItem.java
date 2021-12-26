@@ -1,7 +1,7 @@
-package net.pitsim.sync.enums;
+package net.pitsim.sync.controllers;
 
-import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.enums.PremiumType;
 
 import java.util.*;
 

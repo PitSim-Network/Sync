@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Map;
 
 public class EnderchestPanel extends AGUIPanel {
-	LoadoutGUI loadoutGUI;
+	public LoadoutGUI loadoutGUI;
 
 	public EnderchestPanel(AGUI gui) {
 		super(gui);

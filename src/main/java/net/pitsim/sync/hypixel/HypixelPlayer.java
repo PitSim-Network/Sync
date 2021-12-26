@@ -75,11 +75,17 @@ public class HypixelPlayer {
 				try {
 					String name = compound.getCompound("tag").getCompound("display").getString("Name", "");
 					if(name.toLowerCase().contains("golden")) {
-//						goldenHelmet = true;
+						for(Map.Entry<Mystic, ItemLocation> entry : dataMap.entrySet())
+								if(entry.getKey().specialItem != null && entry.getKey().specialItem == SpecialItem.GHELM) return;
+						dataMap.put(new Mystic(this, SpecialItem.GHELM), new ItemLocation(inventoryType, j[0]));
 					} else if(name.toLowerCase().contains("archangel")) {
-//						archChest = true;
+						for(Map.Entry<Mystic, ItemLocation> entry : dataMap.entrySet())
+							if(entry.getKey().specialItem != null && entry.getKey().specialItem == SpecialItem.ARCH_CHEST) return;
+						dataMap.put(new Mystic(this, SpecialItem.ARCH_CHEST), new ItemLocation(inventoryType, j[0]));
 					} else if(name.toLowerCase().contains("armageddon")) {
-//						armaBoots = true;
+						for(Map.Entry<Mystic, ItemLocation> entry : dataMap.entrySet())
+							if(entry.getKey().specialItem != null && entry.getKey().specialItem == SpecialItem.ARMA_BOOTS) return;
+						dataMap.put(new Mystic(this, SpecialItem.ARMA_BOOTS), new ItemLocation(inventoryType, j[0]));
 					}
 				} catch(Exception ignored) { }
 
@@ -89,7 +95,7 @@ public class HypixelPlayer {
 			});
 			return dataMap;
 		} catch(Exception e) {
-			return null;
+			return dataMap;
 		}
 	}
 

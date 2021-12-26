@@ -54,9 +54,9 @@ public class EnderchestInventoryGUI implements Listener, InventoryHolder {
 		}
 
 //		TODO: Attempt Save
-		for(ItemStack conflictItem : loadout.conflictItems) {
-			player.getInventory().addItem(conflictItem);
-		}
+//		for(ItemStack conflictItem : loadout.conflictItems) {
+//			player.getInventory().addItem(conflictItem);
+//		}
 //		for(ItemStack stashItem : loadout.stash) {
 //			player.getInventory().addItem(stashItem);
 //		}
