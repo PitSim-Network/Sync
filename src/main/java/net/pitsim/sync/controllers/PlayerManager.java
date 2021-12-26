@@ -144,8 +144,10 @@ public class PlayerManager implements Listener {
 
 	@EventHandler
 	public void onAttack(AttackEvent.Apply attackEvent) {
-//		Arch chest
-		attackEvent.multiplier.add(0.85);
+		ItemStack chestplate = attackEvent.defender.getEquipment().getChestplate();
+		if(Misc.isAirOrNull(chestplate)) return;
+		NBTItem nbtItem = new NBTItem(chestplate);
+		if(nbtItem.hasKey(NBTTag.IS_ARCH.getRef())) attackEvent.multiplier.add(0.9);
 	}
 
 	@EventHandler
