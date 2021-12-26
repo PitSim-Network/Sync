@@ -5,6 +5,7 @@ import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.gui.AGUI;
 import dev.kyro.arcticapi.gui.AGUIPanel;
 import dev.kyro.arcticapi.misc.AOutput;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -42,7 +43,7 @@ public class VoidMenuPanel extends AGUIPanel {
 
 	@Override
 	public String getName() {
-		return "Item Void Menu";
+		return ChatColor.GRAY + "Item Void Menu";
 	}
 
 	@Override

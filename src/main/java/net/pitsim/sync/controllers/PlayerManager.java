@@ -11,7 +11,6 @@ import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,9 +20,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
@@ -60,15 +57,15 @@ public class PlayerManager implements Listener {
 		int firstArrow = -1; boolean multipleStacks = false; boolean hasSpace = false;
 		if(player.getItemInHand().getType() == Material.BOW) {
 
-			NBTItem nbtItem = new NBTItem(player.getItemInHand());
-			if(nbtItem.hasKey(NBTTag.ITEM_UUID.getRef()) && !player.getItemInHand().getItemMeta().hasEnchant(Enchantment.WATER_WORKER)) {
-				ItemStack modified = player.getItemInHand();
-				modified.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
-				ItemMeta itemMeta = modified.getItemMeta();
-				itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				modified.setItemMeta(itemMeta);
-				player.setItemInHand(modified);
-			}
+//			NBTItem nbtItem = new NBTItem(player.getItemInHand());
+//			if(nbtItem.hasKey(NBTTag.ITEM_UUID.getRef()) && !player.getItemInHand().getItemMeta().hasEnchant(Enchantment.WATER_WORKER)) {
+//				ItemStack modified = player.getItemInHand();
+//				modified.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
+//				ItemMeta itemMeta = modified.getItemMeta();
+//				itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+//				modified.setItemMeta(itemMeta);
+//				player.setItemInHand(modified);
+//			}
 
 			for(int i = 0; i < 36; i++) {
 				ItemStack itemStack = player.getInventory().getItem(i);

@@ -6,6 +6,7 @@ import dev.kyro.arcticapi.gui.AGUIPanel;
 import net.pitsim.sync.controllers.MapManager;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.misc.Misc;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -23,7 +24,7 @@ public class VoidPanel extends AGUIPanel {
 
 	@Override
 	public String getName() {
-		return "Removes all items from loadout";
+		return ChatColor.GRAY + "Removes all items from loadout";
 	}
 
 	@Override

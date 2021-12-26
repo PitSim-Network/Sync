@@ -24,7 +24,7 @@ public class MapPanel extends AGUIPanel {
 
 	@Override
 	public String getName() {
-		return "Select a Map";
+		return ChatColor.GRAY + "Select a Map";
 	}
 
 	@Override

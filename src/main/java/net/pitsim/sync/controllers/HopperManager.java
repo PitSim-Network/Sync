@@ -47,10 +47,10 @@ public class HopperManager implements Listener {
 		if(isHopper(attackEvent.defender)) {
 			Hopper hopper = getHopper(attackEvent.defender);
 			attackEvent.multiplier.add(hopper.type.damageMultiplier);
-			if(attackEvent.arrow != null || attackEvent.pet != null) {
-				attackEvent.multiplier.add(0D);
-				attackEvent.trueDamage = 0;
-			}
+//			if(attackEvent.arrow != null || attackEvent.pet != null) {
+//				attackEvent.multiplier.add(0D);
+//				attackEvent.trueDamage = 0;
+//			}
 		}
 		if(isHopper(attackEvent.attacker)) {
 			Hopper hopper = getHopper(attackEvent.attacker);

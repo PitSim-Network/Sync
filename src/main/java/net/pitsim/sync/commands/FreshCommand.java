@@ -87,6 +87,10 @@ public class FreshCommand implements CommandExecutor {
 					.setName("&bMystic Bow")
 					.setLore(new ALoreBuilder("&7Kept on death", "&f", "&f", "&7Used in the mystic well"))
 					.addUnbreakable(true).getItemStack();
+			mystic.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
+			ItemMeta itemMeta = mystic.getItemMeta();
+			itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+			mystic.setItemMeta(itemMeta);
 		} else {
 
 			mystic = new AItemStackBuilder(Material.LEATHER_LEGGINGS)
@@ -99,7 +103,6 @@ public class FreshCommand implements CommandExecutor {
 			mystic.setItemMeta(meta);
 		}
 
-		if(mystic == null) return null;
 		NBTItem nbtMystic = new NBTItem(mystic);
 		nbtMystic.setString(NBTTag.ITEM_UUID.getRef(), UUID.randomUUID().toString());
 		nbtMystic.addCompound(NBTTag.PIT_ENCHANTS.getRef());

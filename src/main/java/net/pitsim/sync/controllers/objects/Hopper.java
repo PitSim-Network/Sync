@@ -93,43 +93,45 @@ public class Hopper {
 			lastHitTarget = System.currentTimeMillis();
 		}
 
-		if(count % 5 == 0) {
-			for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-				if(!onlinePlayer.getWorld().equals(hopper.getWorld()));
-				PacketPlayOutAnimation attackPacket = new PacketPlayOutAnimation(((CraftEntity)hopper).getHandle(), 0);
-				((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(attackPacket);
-			}
-		}
-		if(count % 5 == 4) {
-			for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-				if(!onlinePlayer.getWorld().equals(hopper.getWorld()));
-
-				PacketContainer packet = PitSim.PROTOCOL_MANAGER.createPacket(PacketType.Play.Server.ENTITY_METADATA);
-				packet.getIntegers().write(0, hopper.getEntityId());
-				WrappedDataWatcher watcher = new WrappedDataWatcher();
-				watcher.setEntity(hopper);
-				watcher.setObject(0, (byte) (0x0));
-				packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
-
-				try {
-					PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
-				} catch(InvocationTargetException e) {
-					e.printStackTrace();
+		if(count > 60) {
+			if(count % 5 == 0) {
+				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+					if(!onlinePlayer.getWorld().equals(hopper.getWorld()));
+					PacketPlayOutAnimation attackPacket = new PacketPlayOutAnimation(((CraftEntity)hopper).getHandle(), 0);
+					((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(attackPacket);
 				}
 			}
-		} else {
-			for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-				PacketContainer packet = PitSim.PROTOCOL_MANAGER.createPacket(PacketType.Play.Server.ENTITY_METADATA);
-				packet.getIntegers().write(0, hopper.getEntityId());
-				WrappedDataWatcher watcher = new WrappedDataWatcher();
-				watcher.setEntity(hopper);
-				watcher.setObject(0, (byte) (0x10));
-				packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+			if(count % 5 == 4) {
+				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+					if(!onlinePlayer.getWorld().equals(hopper.getWorld()));
 
-				try {
-					PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
-				} catch(InvocationTargetException e) {
-					e.printStackTrace();
+					PacketContainer packet = PitSim.PROTOCOL_MANAGER.createPacket(PacketType.Play.Server.ENTITY_METADATA);
+					packet.getIntegers().write(0, hopper.getEntityId());
+					WrappedDataWatcher watcher = new WrappedDataWatcher();
+					watcher.setEntity(hopper);
+					watcher.setObject(0, (byte) (0x0));
+					packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+					try {
+						PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
+					} catch(InvocationTargetException e) {
+						e.printStackTrace();
+					}
+				}
+			} else {
+				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+					PacketContainer packet = PitSim.PROTOCOL_MANAGER.createPacket(PacketType.Play.Server.ENTITY_METADATA);
+					packet.getIntegers().write(0, hopper.getEntityId());
+					WrappedDataWatcher watcher = new WrappedDataWatcher();
+					watcher.setEntity(hopper);
+					watcher.setObject(0, (byte) (0x10));
+					packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+					try {
+						PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
+					} catch(InvocationTargetException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -164,7 +166,7 @@ public class Hopper {
 		}
 
 		boolean isCritical = Misc.isCritical(hopper);
-		if(count > 40) {
+		if(count > 60) {
 			for(Entity nearbyEntity : hopper.getNearbyEntities(5, 5, 5)) {
 				if(!(nearbyEntity instanceof Player) || team.contains(nearbyEntity.getUniqueId())) continue;
 				Player hitTarget = (Player) nearbyEntity;

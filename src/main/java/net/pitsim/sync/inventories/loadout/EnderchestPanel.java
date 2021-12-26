@@ -3,6 +3,7 @@ package net.pitsim.sync.inventories.loadout;
 import dev.kyro.arcticapi.gui.AGUI;
 import dev.kyro.arcticapi.gui.AGUIPanel;
 import net.pitsim.sync.misc.Misc;
+import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -26,7 +27,7 @@ public class EnderchestPanel extends AGUIPanel {
 
 	@Override
 	public String getName() {
-		return Misc.getFormattedName(player) + " Enderchest";
+		return ChatColor.GRAY + Misc.getFormattedName(player) + " Enderchest";
 	}
 
 	@Override

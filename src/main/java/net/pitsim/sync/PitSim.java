@@ -12,6 +12,7 @@ import net.citizensnpcs.api.npc.NPC;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 import net.pitsim.sync.commands.*;
+import net.pitsim.sync.commands.HopperGUICommand;
 import net.pitsim.sync.commands.admin.*;
 import net.pitsim.sync.controllers.*;
 import net.pitsim.sync.controllers.objects.Match;
@@ -176,6 +177,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("duel").setExecutor(new DuelCommand());
 		getCommand("stash").setExecutor(new StashCommand());
 		getCommand("unstash").setExecutor(new StashCommand());
+		getCommand("hopper").setExecutor(new HopperGUICommand());
 //		getCommand("togglestereo").setExecutor(new ToggleStereoCommand());
 	}
 

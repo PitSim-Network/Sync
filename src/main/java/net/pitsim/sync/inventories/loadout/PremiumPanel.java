@@ -8,6 +8,7 @@ import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.enums.PremiumType;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -31,7 +32,7 @@ public class PremiumPanel extends AGUIPanel {
 
 	@Override
 	public String getName() {
-		return "Premium Items";
+		return ChatColor.GRAY + "Premium Items";
 	}
 
 	@Override

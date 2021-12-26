@@ -1,7 +1,7 @@
 package net.pitsim.sync.hypixel;
 
-import dev.kyro.arcticapi.misc.AOutput;
 import net.pitsim.sync.controllers.DuelManager;
+import net.pitsim.sync.controllers.HopperManager;
 import net.pitsim.sync.controllers.MapManager;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.events.KillEvent;
@@ -23,9 +23,9 @@ public class LoadoutManager implements Listener {
 	public static List<Loadout> loadouts = new ArrayList<>();
 
 	public static void load(Player player) {
+		if(HopperManager.isHopper(player)) return;
 		Loadout loadout = getLoadout(player.getUniqueId());
 		loadout.fullLoad(player);
-		AOutput.broadcast("loading player");
 	}
 
 	public static void save(Player player) {
@@ -44,6 +44,7 @@ public class LoadoutManager implements Listener {
 
 	@EventHandler
 	public void onDeath(KillEvent killEvent) {
+		if(HopperManager.isHopper(killEvent.dead)) return;
 		if(DuelManager.getMatch(killEvent.dead) != null) return;
 		Misc.clearInventory(killEvent.dead);
 		LoadoutManager.load(killEvent.dead);
@@ -52,6 +53,7 @@ public class LoadoutManager implements Listener {
 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
+		if(HopperManager.isHopper(event.getEntity())) return;
 		if(DuelManager.getMatch(event.getEntity()) != null) return;
 		Misc.clearInventory(event.getEntity());
 		LoadoutManager.load(event.getEntity());

@@ -14,7 +14,7 @@ public class BottomlessQuiver extends PitEnchant {
 
 	public BottomlessQuiver() {
 		super("Bottomless Quiver", false, ApplyType.BOWS,
-				"bq", "bottomless-quiver", "bottom", "quiver");
+				"bottomlessquiver", "bq", "bottomless-quiver", "bottom", "quiver");
 	}
 
 	@EventHandler
