@@ -31,7 +31,7 @@ public class VoidMenuPanel extends AGUIPanel {
 		getInventory().setItem(20, clearStack);
 
 		ItemStack voidStack = new AItemStackBuilder(Material.EYE_OF_ENDER)
-				.setName("&dVOID ITEMS")
+				.setName("&d&lVOID ITEMS")
 				.setLore(new ALoreBuilder(
 						"&7Click to dispose of items that you",
 						"&7will &lnever &7use in your loadout",
