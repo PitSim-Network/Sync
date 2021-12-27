@@ -46,23 +46,42 @@ public class PlayerManager implements Listener {
 		Player player = event.getPlayer();
 		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		Block block = event.getClickedBlock();
-		if(block.getType() != Material.ENDER_CHEST) return;
-		event.setCancelled(true);
+		if(block.getType() == Material.ENDER_CHEST) {
+			event.setCancelled(true);
 
-		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(pitPlayer.loadout == null) {
-			AOutput.error(player, "For some reason you do not have anything loaded");
-			return;
-		} else if(pitPlayer.loadout.loadoutGUI == null) {
-			AOutput.error(player, "You can only make changes to your own layout");
-			return;
+			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+			if(pitPlayer.loadout == null) {
+				AOutput.error(player, "For some reason you do not have anything loaded");
+				return;
+			} else if(pitPlayer.loadout.loadoutGUI == null) {
+				AOutput.error(player, "You can only make changes to your own layout");
+				return;
+			}
+
+			if(player.getWorld() != MapManager.getLobby()) {
+				AOutput.send(player, "&7Your layout will only save if you do this in the lobby");
+			}
+
+			pitPlayer.loadout.loadoutGUI.open();
+		} else if(block.getType() == Material.ENDER_PORTAL_FRAME) {
+			event.setCancelled(true);
+
+			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+			if(pitPlayer.loadout == null) {
+				AOutput.error(player, "For some reason you do not have anything loaded");
+				return;
+			} else if(pitPlayer.loadout.loadoutGUI == null) {
+				AOutput.error(player, "You can only make changes to your own layout");
+				return;
+			}
+
+			if(player.getWorld() != MapManager.getLobby()) {
+				AOutput.error(player, "You can only do this in the lobby");
+				return;
+			}
+
+			pitPlayer.loadout.loadoutGUI.getHomePanel().openPanel(pitPlayer.loadout.loadoutGUI.voidMenuPanel);
 		}
-
-		if(player.getWorld() != MapManager.getLobby()) {
-			AOutput.send(player, "&7Your layout will only save if you do this in the lobby");
-		}
-
-		pitPlayer.loadout.loadoutGUI.open();
 	}
 
 	@EventHandler
