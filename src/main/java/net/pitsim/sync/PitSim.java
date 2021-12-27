@@ -174,7 +174,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("ecitems").setExecutor(new EnderchestCommand());
 		getCommand("void").setExecutor(new VoidCommand());
 		getCommand("resource").setExecutor(new ResourceCommand());
-		getCommand("duel").setExecutor(new DuelCommand());
+//		getCommand("duel").setExecutor(new DuelCommand());
 		getCommand("stash").setExecutor(new StashCommand());
 		getCommand("unstash").setExecutor(new StashCommand());
 		getCommand("hopper").setExecutor(new HopperGUICommand());
