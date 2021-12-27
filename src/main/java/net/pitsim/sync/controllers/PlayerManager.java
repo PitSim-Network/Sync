@@ -10,9 +10,11 @@ import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -28,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-//import net.kyori.adventure.audience.Audience;
-
 public class PlayerManager implements Listener {
 //	public static Map<Player, BossBarManager> bossBars = new HashMap<>();
 	static {
@@ -39,6 +39,30 @@ public class PlayerManager implements Listener {
 				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) ((CraftPlayer) onlinePlayer).getHandle().getDataWatcher().watch(9, (byte) 0);
 			}
 		}.runTaskTimer(PitSim.INSTANCE, 0L, 20L);
+	}
+
+	@EventHandler(priority = EventPriority.LOW)
+	public void onEnderchestClick(PlayerInteractEvent event) {
+		Player player = event.getPlayer();
+		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+		Block block = event.getClickedBlock();
+		if(block.getType() != Material.ENDER_CHEST) return;
+		event.setCancelled(true);
+
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		if(pitPlayer.loadout == null) {
+			AOutput.error(player, "For some reason you do not have anything loaded");
+			return;
+		} else if(pitPlayer.loadout.loadoutGUI == null) {
+			AOutput.error(player, "You can only make changes to your own layout");
+			return;
+		}
+
+		if(player.getWorld() != MapManager.getLobby()) {
+			AOutput.send(player, "&7Your layout will only save if you do this in the lobby");
+		}
+
+		pitPlayer.loadout.loadoutGUI.open();
 	}
 
 	@EventHandler
