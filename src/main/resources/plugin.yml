@@ -49,3 +49,4 @@ commands:
   unstash:
   void:
   hopper:
+  spawn:
