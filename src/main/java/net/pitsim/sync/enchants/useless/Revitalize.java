@@ -12,6 +12,7 @@ public class Revitalize extends PitEnchant {
 		super("Revitalize", false, ApplyType.PANTS,
 				"revitalize");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

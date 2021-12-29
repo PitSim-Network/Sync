@@ -25,13 +25,20 @@ public class Mystic {
 	public String name;
 	public List<String> lore = new ArrayList<>();
 	public int tier;
-	public int lives;
+	public int lives = 0;
+	public int maxLives = 0;
 	public PantColor color;
-	public int maxLives;
-	public boolean isGemmed;
+	public boolean isGemmed = false;
 	public Map<PitEnchant, Integer> enchantMap = new LinkedHashMap<>();
 
+	public ItemStack overrideItem;
 	public SpecialItem specialItem;
+
+	public Mystic(ItemStack overrideItem) {
+		this.overrideItem = overrideItem;
+		this.enchantMap = EnchantManager.getEnchantsOnItem(overrideItem);
+		generateNonce();
+	}
 
 	public Mystic(HypixelPlayer owner, SpecialItem specialItem) {
 		this.owner = owner;
@@ -49,7 +56,7 @@ public class Mystic {
 
 			type = MysticType.getMysticType(data.getInt("id", -1));
 
-			name = display.getString("Name", "").replaceAll("[^\\x00-\\x7F]+.", "");
+			name = display.getString("Name", "");
 			for(Object line : display.getList("Lore")) {
 				lore.add(((String) line).replaceAll("[^\\x00-\\x7F]+.", ""));
 			}
@@ -103,6 +110,15 @@ public class Mystic {
 	}
 
 	public ItemStack getItemStack() {
+		if(overrideItem != null) {
+			NBTItem nbtItem = new NBTItem(overrideItem);
+			nbtItem.setString(NBTTag.PIT_NONCE.getRef(), nonce);
+			nbtItem.setInteger(NBTTag.CURRENT_LIVES.getRef(), lives);
+			nbtItem.setInteger(NBTTag.MAX_LIVES.getRef(), maxLives);
+			nbtItem.setBoolean(NBTTag.IS_GEMMED.getRef(), isGemmed);
+			EnchantManager.setItemLore(nbtItem.getItem());
+			return nbtItem.getItem();
+		}
 		if(specialItem != null) return specialItem.getItem();
 
 		String mysticString = type.displayName.equalsIgnoreCase("pants") ? color.refName : type.displayName;
@@ -117,6 +133,7 @@ public class Mystic {
 		nbtItem.setInteger(NBTTag.CURRENT_LIVES.getRef(), lives);
 		nbtItem.setInteger(NBTTag.MAX_LIVES.getRef(), maxLives);
 		nbtItem.setBoolean(NBTTag.IS_GEMMED.getRef(), isGemmed);
+		nbtItem.setString(NBTTag.ORIGINAL_NAME.getRef(), name);
 
 		EnchantManager.setItemLore(nbtItem.getItem());
 		return nbtItem.getItem();

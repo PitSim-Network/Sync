@@ -11,6 +11,7 @@ public class WolfPack extends PitEnchant {
 	public WolfPack() {
 		super("Wolf Pack", true, ApplyType.PANTS,
 				"wolfpack");
+		isUseless = true;
 	}
 
 	@Override

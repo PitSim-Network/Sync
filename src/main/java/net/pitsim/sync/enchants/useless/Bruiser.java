@@ -12,6 +12,7 @@ public class Bruiser extends PitEnchant {
 		super("Bruiser", false, ApplyType.SWORDS,
 				"bruiser");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

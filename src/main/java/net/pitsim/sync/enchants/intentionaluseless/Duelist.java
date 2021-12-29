@@ -13,6 +13,7 @@ public class Duelist extends PitEnchant {
 		super("Duelist", false, ApplyType.SWORDS,
 				"duelist");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

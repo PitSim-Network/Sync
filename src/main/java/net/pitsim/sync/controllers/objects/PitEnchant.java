@@ -18,6 +18,7 @@ public abstract class PitEnchant implements Listener {
 	public boolean isRare;
 	public ApplyType applyType;
 	public boolean isUncommonEnchant;
+	public boolean isUseless;
 	public boolean levelStacks = false;
 	public boolean meleOnly = false;
 	public boolean fakeHits = false;
@@ -64,7 +65,7 @@ public abstract class PitEnchant implements Listener {
 
 	public String getDisplayName() {
 
-		return overrideName != null ? overrideName : ChatColor.translateAlternateColorCodes('&', isRare ? "&dRARE! &9" + name : "&9" + name);
+		return overrideName != null ? overrideName : ChatColor.translateAlternateColorCodes('&', isRare ? "&dRARE! " + (isUseless ? "&c" : "&9") + name : (isUseless ? "&c" : "&9") + name);
 	}
 
 	public void setOverrideName(String overrideName) {

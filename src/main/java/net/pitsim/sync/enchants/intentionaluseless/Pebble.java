@@ -13,6 +13,7 @@ public class Pebble extends PitEnchant {
 		super("Pebble", false, ApplyType.PANTS,
 				"pebble");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

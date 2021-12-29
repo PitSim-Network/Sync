@@ -12,6 +12,7 @@ public class Creative extends PitEnchant {
 		super("Creative", false, ApplyType.PANTS,
 				"creative");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

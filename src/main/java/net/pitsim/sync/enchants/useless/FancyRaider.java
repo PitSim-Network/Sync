@@ -11,6 +11,7 @@ public class FancyRaider extends PitEnchant {
 	public FancyRaider() {
 		super("Fancy Raider", false, ApplyType.SWORDS,
 				"fancyraider");
+		isUseless = true;
 	}
 
 	@Override

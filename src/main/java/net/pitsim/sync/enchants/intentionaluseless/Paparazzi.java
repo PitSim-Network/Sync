@@ -11,6 +11,7 @@ public class Paparazzi extends PitEnchant {
 	public Paparazzi() {
 		super("Paparazzi", true, ApplyType.PANTS,
 				"paparazzi");
+		isUseless = true;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ public class Knockback extends PitEnchant {
 	public Knockback() {
 		super("Knockback", true, ApplyType.SWORDS,
 				"knockback");
+		isUseless = true;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package net.pitsim.sync.misc;
 
 import net.minecraft.server.v1_8_R3.*;
 import net.pitsim.sync.PitSim;
+import net.pitsim.sync.enchants.needtoinspect.PinDown;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -59,6 +60,8 @@ public class Misc {
 	public static void applyPotionEffect(Player player, PotionEffectType type, int duration, int amplifier, boolean ambient, boolean particles) {
 		if(amplifier < 0) return;
 		if(duration == 0) return;
+
+		if(PinDown.attemptPin(player, type)) return;
 
 		for(PotionEffect potionEffect : player.getActivePotionEffects()) {
 			if(!potionEffect.getType().equals(type) || potionEffect.getAmplifier() > amplifier) continue;

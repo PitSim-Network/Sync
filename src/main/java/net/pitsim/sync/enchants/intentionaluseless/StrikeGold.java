@@ -11,6 +11,7 @@ public class StrikeGold extends PitEnchant {
 	public StrikeGold() {
 		super("Strike Gold", false, ApplyType.ALL,
 				"strikegold");
+		isUseless = true;
 	}
 
 	@Override

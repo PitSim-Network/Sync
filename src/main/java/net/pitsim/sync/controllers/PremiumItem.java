@@ -1,12 +1,17 @@
 package net.pitsim.sync.controllers;
 
+import de.tr7zw.nbtapi.NBTItem;
+import net.pitsim.sync.commands.FreshCommand;
 import net.pitsim.sync.controllers.objects.PitEnchant;
+import net.pitsim.sync.enums.NBTTag;
+import net.pitsim.sync.enums.PantColor;
 import net.pitsim.sync.enums.PremiumType;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
 public class PremiumItem {
-	public List<PremiumItem> itemList = new ArrayList<>();
+	public static List<PremiumItem> itemList = new ArrayList<>();
 
 	static {
 		new PremiumItem(PremiumType.DAMAGE_SWORD, 0.7, new Enchant("bill", 2));
@@ -78,7 +83,7 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.MLB_BOWS, 5, new Enchant("mlb", 1), new Enchant("ftts", 2));
 		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("ftts", 3));
 
-		new PremiumItem(PremiumType.MISC, 15, new Enchant("mlb", 1));
+//		new PremiumItem(PremiumType.MISC, 15, new Enchant("mlb", 1));
 	}
 
 	public PremiumType premiumType;
@@ -90,6 +95,32 @@ public class PremiumItem {
 		this.cost = cost;
 		this.enchants = Arrays.asList(enchants);
 		itemList.add(this);
+	}
+
+	public ItemStack getItemStack() {
+		PantColor pantColor = null;
+		switch(premiumType) {
+			case DEFENCE_PANTS:
+				pantColor = PantColor.BLUE;
+				break;
+			case REGULARITY_PANTS:
+				pantColor = PantColor.RAGE;
+				break;
+			case RGM_PANTS:
+				pantColor = PantColor.RED;
+		}
+		ItemStack mystic = FreshCommand.getFreshItem(premiumType.getApplyType(), pantColor);
+		for(Map.Entry<PitEnchant, Integer> entry : getEnchants().entrySet()) {
+			try {
+				mystic = EnchantManager.addEnchant(mystic, entry.getKey(), entry.getValue(), false);
+			} catch(Exception ignored) { }
+		}
+
+		NBTItem nbtItem = new NBTItem(mystic);
+		nbtItem.setString(NBTTag.PREMIUM_TYPE.getRef(), premiumType.refName);
+
+		EnchantManager.setItemLore(nbtItem.getItem());
+		return nbtItem.getItem();
 	}
 
 	public Map<PitEnchant, Integer> getEnchants() {

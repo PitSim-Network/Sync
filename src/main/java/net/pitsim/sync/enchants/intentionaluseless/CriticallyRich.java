@@ -11,6 +11,7 @@ public class CriticallyRich extends PitEnchant {
 	public CriticallyRich() {
 		super("Critically Rich", false, ApplyType.SWORDS,
 				"criticallyrich");
+		isUseless = true;
 	}
 
 	@Override

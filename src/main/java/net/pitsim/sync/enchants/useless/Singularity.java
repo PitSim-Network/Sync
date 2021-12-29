@@ -11,6 +11,7 @@ public class Singularity extends PitEnchant {
 	public Singularity() {
 		super("Singularity", true, ApplyType.PANTS,
 				"singularity");
+		isUseless = true;
 	}
 
 	@Override

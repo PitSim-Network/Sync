@@ -6,11 +6,12 @@ import net.pitsim.sync.enums.ApplyType;
 
 import java.util.List;
 
-public class ThePunch extends PitEnchant {
+public class ThinkOfThePeople extends PitEnchant {
 
-	public ThePunch() {
-		super("The Punch", true, ApplyType.SWORDS,
-				"punch");
+	public ThinkOfThePeople() {
+		super("Think of the People", true, ApplyType.PANTS,
+				"thinkofthepeople", "people", "thepeople", "think");
+		isUncommonEnchant = true;
 		isUseless = true;
 	}
 

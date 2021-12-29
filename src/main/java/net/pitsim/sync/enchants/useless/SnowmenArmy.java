@@ -11,6 +11,7 @@ public class SnowmenArmy extends PitEnchant {
 	public SnowmenArmy() {
 		super("Snowmen Army", true, ApplyType.PANTS,
 				"snowmenarmy");
+		isUseless = true;
 	}
 
 	@Override

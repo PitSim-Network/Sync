@@ -13,6 +13,7 @@ public class SelfCheckout extends PitEnchant {
 		super("Self-checkout", false, ApplyType.PANTS,
 				"selfcheckout");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

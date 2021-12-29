@@ -11,6 +11,7 @@ public class Revengeance extends PitEnchant {
 	public Revengeance() {
 		super("Revengeance", false, ApplyType.SWORDS,
 				"revengeance");
+		isUseless = true;
 	}
 
 	@Override

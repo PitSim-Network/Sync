@@ -12,6 +12,7 @@ public class PitBlob extends PitEnchant {
 		super("Pit Blob", false, ApplyType.SWORDS,
 				"pitblob");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

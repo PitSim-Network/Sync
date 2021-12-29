@@ -13,6 +13,7 @@ public class RespawnAbsorption extends PitEnchant {
 		super("Respawn: Resistance", false, ApplyType.PANTS,
 				"respawnresistance");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

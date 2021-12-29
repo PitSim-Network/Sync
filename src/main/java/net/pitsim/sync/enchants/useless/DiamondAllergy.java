@@ -11,6 +11,7 @@ public class DiamondAllergy extends PitEnchant {
 	public DiamondAllergy() {
 		super("Diamond Allergy", false, ApplyType.PANTS,
 				"diamondallergy");
+		isUseless = true;
 	}
 
 	@Override

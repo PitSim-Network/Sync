@@ -11,6 +11,7 @@ public class CounterJanitor extends PitEnchant {
 	public CounterJanitor() {
 		super("Counter-Janitor", false, ApplyType.SWORDS,
 				"counterjanitor");
+		isUseless = true;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ public class Cricket extends PitEnchant {
 	public Cricket() {
 		super("Cricket", false, ApplyType.PANTS,
 				"cricket");
+		isUseless = true;
 	}
 
 	@Override

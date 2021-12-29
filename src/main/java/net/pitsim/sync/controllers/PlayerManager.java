@@ -41,22 +41,23 @@ public class PlayerManager implements Listener {
 		}.runTaskTimer(PitSim.INSTANCE, 0L, 20L);
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEnderchestClick(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		Block block = event.getClickedBlock();
+
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		if(pitPlayer.loadout == null) {
+			AOutput.error(player, "For some reason you do not have anything loaded");
+			return;
+		} else if(pitPlayer.loadout.loadoutGUI == null) {
+			AOutput.error(player, "You can only make changes to your own layout");
+			return;
+		}
+
 		if(block.getType() == Material.ENDER_CHEST) {
 			event.setCancelled(true);
-
-			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-			if(pitPlayer.loadout == null) {
-				AOutput.error(player, "For some reason you do not have anything loaded");
-				return;
-			} else if(pitPlayer.loadout.loadoutGUI == null) {
-				AOutput.error(player, "You can only make changes to your own layout");
-				return;
-			}
 
 			if(player.getWorld() != MapManager.getLobby()) {
 				AOutput.send(player, "&7Your layout will only save if you do this in the lobby");
@@ -66,21 +67,21 @@ public class PlayerManager implements Listener {
 		} else if(block.getType() == Material.ENDER_PORTAL_FRAME) {
 			event.setCancelled(true);
 
-			PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-			if(pitPlayer.loadout == null) {
-				AOutput.error(player, "For some reason you do not have anything loaded");
-				return;
-			} else if(pitPlayer.loadout.loadoutGUI == null) {
-				AOutput.error(player, "You can only make changes to your own layout");
-				return;
-			}
-
 			if(player.getWorld() != MapManager.getLobby()) {
 				AOutput.error(player, "You can only do this in the lobby");
 				return;
 			}
 
 			pitPlayer.loadout.loadoutGUI.getHomePanel().openPanel(pitPlayer.loadout.loadoutGUI.voidMenuPanel);
+		} else if(block.getType() == Material.BEACON) {
+			event.setCancelled(true);
+
+			if(player.getWorld() != MapManager.getLobby()) {
+				AOutput.error(player, "You can only do this in the lobby");
+				return;
+			}
+
+			pitPlayer.loadout.loadoutGUI.getHomePanel().openPanel(pitPlayer.loadout.loadoutGUI.premiumPanel);
 		}
 	}
 

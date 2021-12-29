@@ -12,6 +12,7 @@ public class DangerClose extends PitEnchant {
 		super("Danger Close", false, ApplyType.PANTS,
 				"dangerclose");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

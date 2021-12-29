@@ -11,6 +11,7 @@ public class DavidAndGoliath extends PitEnchant {
 	public DavidAndGoliath() {
 		super("David and Goliath", false, ApplyType.PANTS,
 				"davidandgoliath");
+		isUseless = true;
 	}
 
 	@Override

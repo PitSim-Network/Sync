@@ -11,6 +11,7 @@ public class Phoenix extends PitEnchant {
 	public Phoenix() {
 		super("Phoenix", true, ApplyType.PANTS,
 				"phoenix");
+		isUseless = true;
 	}
 
 	@Override

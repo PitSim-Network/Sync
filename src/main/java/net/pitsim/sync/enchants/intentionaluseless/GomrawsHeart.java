@@ -11,6 +11,7 @@ public class GomrawsHeart extends PitEnchant {
 	public GomrawsHeart() {
 		super("Gomraw's Heart", true, ApplyType.PANTS,
 				"gomrawsheart");
+		isUseless = true;
 	}
 
 	@Override

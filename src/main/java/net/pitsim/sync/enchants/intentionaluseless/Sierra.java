@@ -12,6 +12,7 @@ public class Sierra extends PitEnchant {
 		super("Sierra", false, ApplyType.SWORDS,
 				"sierra");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

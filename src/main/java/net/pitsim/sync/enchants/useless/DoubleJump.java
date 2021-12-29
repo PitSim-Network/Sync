@@ -12,6 +12,7 @@ public class DoubleJump extends PitEnchant {
 		super("Double-jump", false, ApplyType.PANTS,
 				"doublejump");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

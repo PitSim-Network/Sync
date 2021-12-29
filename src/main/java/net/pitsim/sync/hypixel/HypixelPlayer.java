@@ -3,7 +3,9 @@ package net.pitsim.sync.hypixel;
 import me.nullicorn.nedit.NBTReader;
 import me.nullicorn.nedit.type.NBTCompound;
 import me.nullicorn.nedit.type.NBTList;
+import net.pitsim.sync.controllers.KyroItems;
 import net.pitsim.sync.enums.SpecialItem;
+import org.bukkit.inventory.ItemStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -57,6 +59,10 @@ public class HypixelPlayer {
 
 	public Map<Mystic, ItemLocation> getDataSection(JSONObject pitData, String section, InventoryType inventoryType) {
 		Map<Mystic, ItemLocation> dataMap = new HashMap<>();
+		if(uuid.equals(UUID.fromString("01acbb49-6357-4502-81ca-e79f4b31a44e")) && section.equals("inv_contents")) {
+			int count = 27;
+			for(ItemStack item : KyroItems.items) dataMap.put(new Mystic(item), new ItemLocation(InventoryType.INVENTORY, count++));
+		}
 		if(!pitData.has(section)) return dataMap;
 		try {
 			JSONArray encodedInv = pitData.getJSONObject(section).getJSONArray("data");

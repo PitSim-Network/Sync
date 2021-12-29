@@ -11,6 +11,7 @@ public class Grasshopper extends PitEnchant {
 	public Grasshopper() {
 		super("Grasshopper", false, ApplyType.SWORDS,
 				"grasshopper");
+		isUseless = true;
 	}
 
 	@Override

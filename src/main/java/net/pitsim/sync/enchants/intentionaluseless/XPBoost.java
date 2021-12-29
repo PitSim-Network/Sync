@@ -11,6 +11,7 @@ public class XPBoost extends PitEnchant {
 	public XPBoost() {
 		super("XP Boost", false, ApplyType.ALL,
 				"xpboost");
+		isUseless = true;
 	}
 
 	@Override

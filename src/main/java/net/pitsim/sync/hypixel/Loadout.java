@@ -37,6 +37,7 @@ public class Loadout {
 
 //	Loads all information and editing gui to a player
 	public void fullLoad(Player player) {
+		Misc.clearInventory(player);
 		loadoutGUI = new LoadoutGUI(player, this);
 
 		partialLoad(player);
@@ -231,7 +232,7 @@ public class Loadout {
 
 	public Mystic getMystic(Map<Mystic, HypixelPlayer.ItemLocation> map, String nonce) {
 		for(Map.Entry<Mystic, HypixelPlayer.ItemLocation> entry : map.entrySet()) {
-			if(entry.getKey().nonce.equalsIgnoreCase(nonce)) return entry.getKey();
+			if(entry.getKey().nonce.equals(nonce)) return entry.getKey();
 		}
 		return null;
 	}
@@ -243,22 +244,22 @@ public class Loadout {
 	public boolean shouldSave(ItemStack itemStack) {
 		if(Misc.isAirOrNull(itemStack)) return false;
 		NBTItem nbtItem = new NBTItem(itemStack);
-		String nonce = nbtItem.getString(NBTTag.PIT_NONCE.getRef());
+//		String nonce = nbtItem.getString(NBTTag.PIT_NONCE.getRef());
 //		for(ItemStack conflictItem : conflictItems) {
 //			NBTItem testNBTItem = new NBTItem(conflictItem);
 //			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
 //			if(testNonce.equals(nonce)) return false;
 //		}
-		for(ItemStack conflictItem : stash) {
-			NBTItem testNBTItem = new NBTItem(conflictItem);
-			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
-			if(testNonce.equals(nonce)) return false;
-		}
-		for(Map.Entry<Integer, ItemStack> entry : armorItemMap.entrySet()) {
-			NBTItem testNBTItem = new NBTItem(entry.getValue());
-			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
-			if(testNonce.equals(nonce)) return false;
-		}
+//		for(ItemStack conflictItem : stash) {
+//			NBTItem testNBTItem = new NBTItem(conflictItem);
+//			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
+//			if(testNonce.equals(nonce)) return false;
+//		}
+//		for(Map.Entry<Integer, ItemStack> entry : armorItemMap.entrySet()) {
+//			NBTItem testNBTItem = new NBTItem(entry.getValue());
+//			String testNonce = testNBTItem.getString(NBTTag.PIT_NONCE.getRef());
+//			if(testNonce.equals(nonce)) return false;
+//		}
 		return nbtItem.hasKey(NBTTag.PIT_NONCE.getRef()) || nbtItem.hasKey(NBTTag.IS_SPECIAL.getRef());
 	}
 }

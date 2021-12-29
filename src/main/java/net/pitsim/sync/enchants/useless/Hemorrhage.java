@@ -11,6 +11,7 @@ public class Hemorrhage extends PitEnchant {
 	public Hemorrhage() {
 		super("Hemorrhage", true, ApplyType.SWORDS,
 				"hemorrhage");
+		isUseless = true;
 	}
 
 	@Override

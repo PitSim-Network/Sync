@@ -11,6 +11,7 @@ public class SpeedyKill extends PitEnchant {
 	public SpeedyKill() {
 		super("Speedy Kill", false, ApplyType.SWORDS,
 				"speedykill");
+		isUseless = true;
 	}
 
 	@Override

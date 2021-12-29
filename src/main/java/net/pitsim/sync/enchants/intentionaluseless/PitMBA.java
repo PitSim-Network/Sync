@@ -12,6 +12,7 @@ public class PitMBA extends PitEnchant {
 		super("Pit MBA", false, ApplyType.PANTS,
 				"pitmba");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

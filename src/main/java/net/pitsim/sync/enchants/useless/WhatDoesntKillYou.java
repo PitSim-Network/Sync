@@ -12,6 +12,7 @@ public class WhatDoesntKillYou extends PitEnchant {
 		super("What doesn't kill you", false, ApplyType.BOWS,
 				"wdky");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

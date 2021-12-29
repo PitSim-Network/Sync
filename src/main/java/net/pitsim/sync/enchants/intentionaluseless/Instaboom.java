@@ -12,6 +12,7 @@ public class Instaboom extends PitEnchant {
 	public Instaboom() {
 		super("Instaboom", true, ApplyType.PANTS,
 				"instaboom");
+		isUseless = true;
 	}
 
 	@Override

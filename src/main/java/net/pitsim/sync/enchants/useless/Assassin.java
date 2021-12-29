@@ -11,6 +11,7 @@ public class Assassin extends PitEnchant {
 	public Assassin() {
 		super("Assassin", true, ApplyType.PANTS,
 				"assassin");
+		isUseless = true;
 	}
 
 	@Override

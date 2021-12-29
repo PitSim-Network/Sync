@@ -1,12 +1,5 @@
 package net.pitsim.sync.hypixel;
 
-import net.pitsim.sync.controllers.EnchantManager;
-import net.pitsim.sync.controllers.objects.PitEnchant;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public enum Enchant {
 
 	ARROW_ARMORY("arrowarmory", "damage_per_arrow", false),
@@ -67,7 +60,7 @@ public enum Enchant {
 	HEMORRHAGE("hemorrhage", "melee_bleed", true),
 	HIDDEN_JEWEL("hiddenjewelpants", "hidden_jewel", false),
 	MELE_HIDDEN_JEWEL("hiddenjewelsword", "melee_hidden_jewel", false),
-	HUNT_THE_HUNTER("Hunt the Hunter", "counter_bounty_hunter", false),
+	HUNT_THE_HUNTER("huntthehunter", "counter_bounty_hunter", false),
 	INSTABOOM("instaboom", "instaboom_tnt", true),
 	JUMPSPAMMER("jumpspammer", "jump_spammer", false),
 	KING_BUSTER("kb", "melee_damage_vs_high_hp", false),
@@ -132,7 +125,7 @@ public enum Enchant {
 	WASP("wasp", "bow_weakness_on_hit", false),
 	WHAT_DOESNT_KILL_YOU("wdky", "heal_on_shoot_self", false),
 	WOLF_PACK("wolfpack", "wolf_pack", true),
-	XP_BOOST("XP Boost", "xp_boost", false),
+	XP_BOOST("xpboost", "xp_boost", false),
 	XP_BUMP("xpbump", "xp_per_kill", false),
 
 //	EVIL_WITHIN("Evil Within", "evil_within", false),
@@ -172,17 +165,15 @@ public enum Enchant {
 	HEIGH_HO("heighho", "heigh_ho", false),
 	REALLY_TOXIC("reallytoxic", "really_toxic", false),
 	NEW_DEAL("newdeal", "new_deal", false),
-
-	BREACHING_CHARGE("Combo: Breaching Charge", "breaching_charge", false),
-	DO_IT_LIKE_THE_FRENCH("Do it like the French", "do_it_like_the_french", false),
+	BREACHING_CHARGE("breachingcharge", "breaching_charge", false),
+	DO_IT_LIKE_THE_FRENCH("doitlikethefrench", "do_it_like_the_french", false),
+	BRAKES("brakes", "brakes", false),
+	SYBIL("sybil", "sybil", true),
+	THINK_OF_THE_PEOPLE("thinkofthepeople", "think_of_the_people", true),
+	DEAL_WITH_THE_DEVIL("dealwiththedevil", "gentlemen_agreement", true),
 
 //	Guess
-//	TODO: Add below enchant classes and fetch keys
-	BRAKES("Brakes!", "", false),
-	SYBIL("Sybil", "", true),
-	ACE_OF_SPADES("Ace of Spades", "", false),
-	THINK_OF_THE_PEOPLE("Think of the People", "think_of_the_people", true),
-	DEAL_WITH_THE_DEVIL("Deal with the Devil", "gentlemen_agreement", true);
+	ACE_OF_SPADES("aceofspades", "ace_of_spades", false);
 
 	private String refName;
 	public String key;
@@ -205,17 +196,6 @@ public enum Enchant {
 
 	public String getRefName() {
 
-		return (isRare ? "" : "") + refName;
-	}
-
-	public static void sort() {
-		List<PitEnchant> enchants = EnchantManager.pitEnchants;
-		List<String> strings = new ArrayList<>();
-
-		enchants.forEach(enchant -> strings.add(enchant.refNames.get(0)));
-		Collections.sort(strings);
-
-		strings.forEach(System.out::println);
-
+		return refName;
 	}
 }

@@ -12,6 +12,7 @@ public class zzUseless extends PitEnchant {
 		super("NAME", false, ApplyType.SWORDS,
 				"REFNAME");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

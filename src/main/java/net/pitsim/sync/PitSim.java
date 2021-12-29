@@ -21,9 +21,9 @@ import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
 import net.pitsim.sync.enchants.intentionaluseless.*;
 import net.pitsim.sync.enchants.needtoinspect.*;
-import net.pitsim.sync.enchants.newcheck.*;
 import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
+import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
@@ -123,7 +123,8 @@ public class PitSim extends JavaPlugin {
 		registerListeners();
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
-			LoadoutManager.load(player);
+			Loadout loadout = LoadoutManager.getLoadout(player.getUniqueId());
+			loadout.fullLoad(player);
 		}
 	}
 
@@ -304,7 +305,7 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new ArrowArmory());
 		EnchantManager.registerEnchant(new Assassin());
 		EnchantManager.registerEnchant(new Berserker());
-		EnchantManager.registerEnchant(new Billionaire());
+		EnchantManager.registerEnchant(new Billy());
 		EnchantManager.registerEnchant(new BottomlessQuiver());
 		EnchantManager.registerEnchant(new BountyReaper());
 		EnchantManager.registerEnchant(new Bruiser());
@@ -330,6 +331,7 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new Hemorrhage());
 		EnchantManager.registerEnchant(new HiddenJewelPants());
 		EnchantManager.registerEnchant(new HiddenJewelSword());
+		EnchantManager.registerEnchant(new HuntTheHunter());
 		EnchantManager.registerEnchant(new Instaboom());
 		EnchantManager.registerEnchant(new Jumpspammer());
 		EnchantManager.registerEnchant(new Knockback());
@@ -368,5 +370,13 @@ public class PitSim extends JavaPlugin {
 		EnchantManager.registerEnchant(new WolfPack());
 		EnchantManager.registerEnchant(new XPBoost());
 		EnchantManager.registerEnchant(new XPBump());
+
+		EnchantManager.registerEnchant(new BreachingCharge());
+		EnchantManager.registerEnchant(new DoItLikeTheFrench());
+		EnchantManager.registerEnchant(new Brakes());
+		EnchantManager.registerEnchant(new Sybil());
+		EnchantManager.registerEnchant(new ThinkOfThePeople());
+		EnchantManager.registerEnchant(new DealWithTheDevil());
+		EnchantManager.registerEnchant(new AceOfSpades());
 	}
 }

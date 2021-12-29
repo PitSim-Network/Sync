@@ -12,6 +12,7 @@ public class Eggs extends PitEnchant {
 		super("Eggs", false, ApplyType.PANTS,
 				"eggs");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

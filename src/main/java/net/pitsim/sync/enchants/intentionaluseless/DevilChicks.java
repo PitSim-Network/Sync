@@ -11,6 +11,7 @@ public class DevilChicks extends PitEnchant {
 	public DevilChicks() {
 		super("Devil Chicks!", true, ApplyType.BOWS,
 				"devilchicks");
+		isUseless = true;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ public class Lodbrok extends PitEnchant {
 	public Lodbrok() {
 		super("Lodbrok", false, ApplyType.PANTS,
 				"lodbrok");
+		isUseless = true;
 	}
 
 	@Override

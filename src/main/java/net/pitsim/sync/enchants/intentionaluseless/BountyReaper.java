@@ -11,6 +11,7 @@ public class BountyReaper extends PitEnchant {
 	public BountyReaper() {
 		super("Bounty Reaper", false, ApplyType.SWORDS,
 				"bountyreaper");
+		isUseless = true;
 	}
 
 	@Override

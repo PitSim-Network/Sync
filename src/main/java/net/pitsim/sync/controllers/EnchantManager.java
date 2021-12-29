@@ -217,12 +217,21 @@ public class EnchantManager implements Listener {
 			return;
 		}
 
+		if(nbtItem.hasKey(NBTTag.ORIGINAL_NAME.getRef())) {
+			new AItemStackBuilder(itemStack).setName(nbtItem.getString(NBTTag.ORIGINAL_NAME.getRef()));
+		}
+
 		ALoreBuilder loreBuilder = new ALoreBuilder();
 
-		char color = currentLives <= 3 ? 'c' : 'a';
-		loreBuilder.addLore("&7Kills: &" + color + currentLives + "&7/" + maxLives + (isGemmed ? " &a\u2666" : ""));
-		ItemMeta itemMeta = itemStack.getItemMeta();
+		if(nbtItem.hasKey(NBTTag.PREMIUM_TYPE.getRef())) {
+			loreBuilder.addLore("&7Premium Item");
+		} else {
+			char color = currentLives <= 3 ? 'c' : 'a';
+//			loreBuilder.addLore("&7Lives: &" + color + currentLives + "&7/" + maxLives + (isGemmed ? " &a\u2666" : ""));
+			loreBuilder.addLore("&7Lives: &a" + maxLives + "&7/" + maxLives + (isGemmed ? " &a\u2666" : ""));
+		}
 
+		ItemMeta itemMeta = itemStack.getItemMeta();
 		if(nbtItem.getBoolean(NBTTag.IS_VENOM.getRef())) {
 			itemMeta.setDisplayName(ChatColor.DARK_PURPLE + "Tier II Evil Pants");
 			loreBuilder.getLore().clear();
@@ -242,6 +251,11 @@ public class EnchantManager implements Listener {
 
 		if(nbtItem.getBoolean(NBTTag.IS_VENOM.getRef())) {
 			loreBuilder.addLore("&7", "&5Enchants require heresy", "&5As strong as leather");
+		}
+
+		if(nbtItem.hasKey(NBTTag.ORIGINAL_NAME.getRef()) && itemStack.getType() == Material.LEATHER_LEGGINGS) {
+			String color = itemStack.getItemMeta().getDisplayName().substring(0, 2);
+			loreBuilder.addLore("", color + "As strong as iron");
 		}
 
 		itemMeta.setLore(loreBuilder.getLore());
@@ -345,7 +359,7 @@ public class EnchantManager implements Listener {
 	@org.jetbrains.annotations.NotNull
 	public static Map<PitEnchant, Integer> getEnchantsOnItem(ItemStack itemStack, @NotNull Map<PitEnchant, Integer> currentEnchantMap) {
 
-		Map<PitEnchant, Integer> itemEnchantMap = new HashMap<>();
+		Map<PitEnchant, Integer> itemEnchantMap = new LinkedHashMap<>();
 		if(itemStack == null || itemStack.getType() == Material.AIR) return itemEnchantMap;
 		NBTItem nbtItem = new NBTItem(itemStack);
 		if(!nbtItem.hasKey(NBTTag.ITEM_UUID.getRef())) return itemEnchantMap;

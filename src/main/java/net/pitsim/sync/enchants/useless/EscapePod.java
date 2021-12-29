@@ -11,6 +11,7 @@ public class EscapePod extends PitEnchant {
 	public EscapePod() {
 		super("Escape Pod", true, ApplyType.PANTS,
 				"escapepod");
+		isUseless = true;
 	}
 
 	@Override

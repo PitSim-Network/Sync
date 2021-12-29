@@ -12,6 +12,7 @@ public class PurpleGold extends PitEnchant {
 		super("Purple Gold", false, ApplyType.PANTS,
 				"purplegold");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

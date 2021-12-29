@@ -11,6 +11,7 @@ public class Negotiator extends PitEnchant {
 	public Negotiator() {
 		super("Negotiator", false, ApplyType.PANTS,
 				"negotiator");
+		isUseless = true;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ public class FirstShot extends PitEnchant {
 	public FirstShot() {
 		super("First Shot", false, ApplyType.BOWS,
 				"firstshot");
+		isUseless = true;
 	}
 
 	@Override

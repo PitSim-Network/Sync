@@ -12,6 +12,7 @@ public class PantsRadar extends PitEnchant {
 		super("Pants Radar", false, ApplyType.ALL,
 				"pantsradar");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

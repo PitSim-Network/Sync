@@ -11,6 +11,7 @@ public class Martyrdom extends PitEnchant {
 	public Martyrdom() {
 		super("Martyrdom", true, ApplyType.PANTS,
 				"martyrdom");
+		isUseless = true;
 	}
 
 	@Override

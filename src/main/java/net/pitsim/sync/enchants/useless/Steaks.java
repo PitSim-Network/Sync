@@ -12,6 +12,7 @@ public class Steaks extends PitEnchant {
 		super("Steaks", false, ApplyType.PANTS,
 				"steaks");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ public enum NBTTag {
 	CURRENT_LIVES("sync-current-lives"),
 	MAX_LIVES("sync-max-lives"),
 	PREMIUM_TYPE("sync-premium"),
+	ORIGINAL_NAME("sync-name"),
 
 	IS_SPECIAL("sync-isspecial"),
 	IS_GHELM("sync-isghelm"),

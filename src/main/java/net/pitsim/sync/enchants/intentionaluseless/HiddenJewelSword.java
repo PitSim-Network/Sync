@@ -12,6 +12,7 @@ public class HiddenJewelSword extends PitEnchant {
 		super("Hidden Jewel", false, ApplyType.SWORDS,
 				"hiddenjewelsword");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

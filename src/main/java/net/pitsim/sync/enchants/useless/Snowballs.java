@@ -11,6 +11,7 @@ public class Snowballs extends PitEnchant {
 	public Snowballs() {
 		super("Snowballs", true, ApplyType.PANTS,
 				"snowballs");
+		isUseless = true;
 	}
 
 	@Override

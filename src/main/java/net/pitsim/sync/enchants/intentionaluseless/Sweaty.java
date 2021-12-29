@@ -11,6 +11,7 @@ public class Sweaty extends PitEnchant {
 	public Sweaty() {
 		super("Sweaty", false, ApplyType.ALL,
 				"sweaty");
+		isUseless = true;
 	}
 
 	@Override

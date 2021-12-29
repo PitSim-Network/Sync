@@ -1,4 +1,4 @@
-package net.pitsim.sync.enchants.newcheck;
+package net.pitsim.sync.enchants;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.PitSim;

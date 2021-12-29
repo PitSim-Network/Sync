@@ -11,6 +11,7 @@ public class DivineMiracle extends PitEnchant {
 	public DivineMiracle() {
 		super("Divine Miracle", true, ApplyType.PANTS,
 				"divinemiracle", "divine");
+		isUseless = true;
 	}
 
 	@Override

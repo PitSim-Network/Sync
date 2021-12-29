@@ -29,6 +29,24 @@ public enum PremiumType {
 		return null;
 	}
 
+	public MysticType getApplyType() {
+		switch(this) {
+			case DAMAGE_SWORD:
+			case TRUE_DAMAGE_SWORD:
+			case HEALING_SWORD:
+				return MysticType.SWORD;
+			case DEFENCE_PANTS:
+			case REGULARITY_PANTS:
+			case RGM_PANTS:
+				return MysticType.PANTS;
+			case VOLLEY_BOWS:
+			case MLB_BOWS:
+				return MysticType.BOW;
+			case MISC: //TODO: FIX
+		}
+		return null;
+	}
+
 	public ItemStack getDisplayStack() {
 		ItemStack mystic;
 		try {
@@ -43,7 +61,7 @@ public enum PremiumType {
 					mystic = FreshCommand.getFreshItem(MysticType.SWORD, null);
 					mystic = EnchantManager.addEnchant(mystic, EnchantManager.getEnchant("perun"), 3, false);
 					return new AItemStackBuilder(mystic)
-							.setName("bc&lTRUE DAMAGE SWORDS")
+							.setName("&b&lTRUE DAMAGE SWORDS")
 							.getItemStack();
 				case HEALING_SWORD:
 					mystic = FreshCommand.getFreshItem(MysticType.SWORD, null);
@@ -67,7 +85,7 @@ public enum PremiumType {
 					mystic = FreshCommand.getFreshItem(MysticType.PANTS, PantColor.RED);
 					mystic = EnchantManager.addEnchant(mystic, EnchantManager.getEnchant("rgm"), 3, false);
 					return new AItemStackBuilder(mystic)
-							.setName("&ec&lRGM PANTS")
+							.setName("&e&lRGM PANTS")
 							.getItemStack();
 				case VOLLEY_BOWS:
 					mystic = FreshCommand.getFreshItem(MysticType.BOW, null);

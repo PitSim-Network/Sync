@@ -25,7 +25,7 @@ public class LoadoutManager implements Listener {
 	public static void load(Player player) {
 		if(HopperManager.isHopper(player)) return;
 		Loadout loadout = getLoadout(player.getUniqueId());
-		loadout.fullLoad(player);
+		loadout.partialLoad(player);
 	}
 
 	public static void save(Player player) {
@@ -39,7 +39,9 @@ public class LoadoutManager implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		load(event.getPlayer());
+		Player player = event.getPlayer();
+		Loadout loadout = getLoadout(player.getUniqueId());
+		loadout.fullLoad(player);
 	}
 
 	@EventHandler
@@ -72,7 +74,6 @@ public class LoadoutManager implements Listener {
 	public void onQuit(PlayerQuitEvent event) {
 		if(DuelManager.getMatch(event.getPlayer()) != null) return;
 		Misc.clearInventory(event.getPlayer());
-		LoadoutManager.load(event.getPlayer());
 		event.getPlayer().teleport(MapManager.getLobbySpawn());
 	}
 

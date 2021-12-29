@@ -12,6 +12,7 @@ public class TNT extends PitEnchant {
 		super("TNT", false, ApplyType.PANTS,
 				"tnt");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

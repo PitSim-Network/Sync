@@ -11,6 +11,7 @@ public class ComboXP extends PitEnchant {
 	public ComboXP() {
 		super("Combo: XP", false, ApplyType.SWORDS,
 				"comboxp");
+		isUseless = true;
 	}
 
 	@Override

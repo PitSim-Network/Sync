@@ -11,6 +11,7 @@ public class MixedCombat extends PitEnchant {
 	public MixedCombat() {
 		super("Mixed Combat", false, ApplyType.BOWS,
 				"mixedcombat");
+		isUseless = true;
 	}
 
 	@Override

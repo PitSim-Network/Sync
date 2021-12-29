@@ -12,6 +12,7 @@ public class Excess extends PitEnchant {
 		super("Excess", false, ApplyType.PANTS,
 				"excess");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override

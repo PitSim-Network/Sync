@@ -63,7 +63,7 @@ public class Sounds {
 	public static final SoundEffect GAMBLE_NO = new SoundEffect(Sound.NOTE_PLING, 1, 1.5);
 	public static final SoundEffect LAST_STAND = new SoundEffect(Sound.ZOMBIE_WOODBREAK, 1, 1);
 	public static final SoundEffect LUCKY_SHOT = new SoundEffect(Sound.ZOMBIE_WOODBREAK, 1, 1);
-	public static final SoundEffect PIN_DOWN = new SoundEffect(Sound.BURP, 1, 1);
+	public static final SoundEffect PIN_DOWN = new SoundEffect(Sound.BURP, 1, 1.2857143);
 	public static final SoundEffect RGM = new SoundEffect(Sound.ENDERMAN_HIT, 1, 1);
 	public static final SoundEffect TELEBOW = new SoundEffect(Sound.ENDERMAN_TELEPORT, 1, 2);
 	public static final SoundEffect VENOM = new SoundEffect(Sound.SPIDER_IDLE, 1, 1);

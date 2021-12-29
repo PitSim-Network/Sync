@@ -12,6 +12,7 @@ public class Pitpocket extends PitEnchant {
 		super("Pitpocket", false, ApplyType.SWORDS,
 				"pitpocket");
 		isUncommonEnchant = true;
+		isUseless = true;
 	}
 
 	@Override
