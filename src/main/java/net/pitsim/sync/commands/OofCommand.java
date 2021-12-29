@@ -22,6 +22,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class OofCommand implements CommandExecutor {
+    public static OofCommand INSTANCE;
+
+    public OofCommand() {
+        INSTANCE = this;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
