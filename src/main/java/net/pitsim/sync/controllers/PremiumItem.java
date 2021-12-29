@@ -82,6 +82,9 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.MLB_BOWS, 20, new Enchant("mlb", 1), new Enchant("pin", 3));
 		new PremiumItem(PremiumType.MLB_BOWS, 5, new Enchant("mlb", 1), new Enchant("ftts", 2));
 		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("ftts", 3));
+		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("tele", 1));
+		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("tele", 2));
+		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("tele", 3));
 
 //		new PremiumItem(PremiumType.MISC, 15, new Enchant("mlb", 1));
 	}
