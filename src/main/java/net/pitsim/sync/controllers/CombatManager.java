@@ -11,12 +11,10 @@ import net.pitsim.sync.events.OofEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -68,16 +66,9 @@ public class CombatManager implements Listener {
 
    }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public static void onJoin(PlayerJoinEvent event) {
-
-
-    }
-
    @EventHandler
     public static void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        PitPlayer pitplayer = PitPlayer.getPitPlayer(event.getPlayer());
 
         APlayerData.savePlayerData(event.getPlayer());
         event.getPlayer().closeInventory();
