@@ -17,7 +17,7 @@ public class Mirror extends PitEnchant {
 		isUncommonEnchant = true;
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onAttack(AttackEvent.Apply attackEvent) {
 		if(!canApply(attackEvent)) return;
 
