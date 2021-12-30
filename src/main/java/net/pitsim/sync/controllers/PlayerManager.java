@@ -48,15 +48,15 @@ public class PlayerManager implements Listener {
 		Block block = event.getClickedBlock();
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(pitPlayer.loadout == null) {
-			AOutput.error(player, "For some reason you do not have anything loaded");
-			return;
-		} else if(pitPlayer.loadout.loadoutGUI == null) {
-			AOutput.error(player, "You can only make changes to your own layout");
-			return;
-		}
 
 		if(block.getType() == Material.ENDER_CHEST) {
+			if(pitPlayer.loadout == null) {
+				AOutput.error(player, "For some reason you do not have anything loaded");
+				return;
+			} else if(pitPlayer.loadout.loadoutGUI == null) {
+				AOutput.error(player, "You can only make changes to your own layout");
+				return;
+			}
 			event.setCancelled(true);
 
 			if(player.getWorld() != MapManager.getLobby()) {
@@ -65,6 +65,13 @@ public class PlayerManager implements Listener {
 
 			pitPlayer.loadout.loadoutGUI.open();
 		} else if(block.getType() == Material.ENDER_PORTAL_FRAME) {
+			if(pitPlayer.loadout == null) {
+				AOutput.error(player, "For some reason you do not have anything loaded");
+				return;
+			} else if(pitPlayer.loadout.loadoutGUI == null) {
+				AOutput.error(player, "You can only make changes to your own layout");
+				return;
+			}
 			event.setCancelled(true);
 
 			if(player.getWorld() != MapManager.getLobby()) {
@@ -74,6 +81,13 @@ public class PlayerManager implements Listener {
 
 			pitPlayer.loadout.loadoutGUI.getHomePanel().openPanel(pitPlayer.loadout.loadoutGUI.voidMenuPanel);
 		} else if(block.getType() == Material.BEACON) {
+			if(pitPlayer.loadout == null) {
+				AOutput.error(player, "For some reason you do not have anything loaded");
+				return;
+			} else if(pitPlayer.loadout.loadoutGUI == null) {
+				AOutput.error(player, "You can only make changes to your own layout");
+				return;
+			}
 			event.setCancelled(true);
 
 			if(player.getWorld() != MapManager.getLobby()) {
@@ -185,6 +199,9 @@ public class PlayerManager implements Listener {
 
 	@EventHandler
 	public void onAttack(AttackEvent.Apply attackEvent) {
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(attackEvent.attacker);
+		if(pitPlayer.loadout != null && pitPlayer.loadout.hypixelPlayer.heresyLevel >= 2) attackEvent.increasePercent += 5;
+
 		ItemStack chestplate = attackEvent.defender.getEquipment().getChestplate();
 		if(Misc.isAirOrNull(chestplate)) return;
 		NBTItem nbtItem = new NBTItem(chestplate);

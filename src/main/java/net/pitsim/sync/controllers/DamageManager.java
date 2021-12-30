@@ -1,6 +1,5 @@
 package net.pitsim.sync.controllers;
 
-import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.misc.AOutput;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -11,15 +10,14 @@ import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enchants.Regularity;
 import net.pitsim.sync.enchants.Telebow;
 import net.pitsim.sync.enchants.needtoinspect.WolfPack;
-import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.KillEvent;
+import net.pitsim.sync.misc.ArmorReduction;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -32,7 +30,10 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DamageManager implements Listener {
 
@@ -167,15 +168,17 @@ public class DamageManager implements Listener {
 //		AOutput.send(attackEvent.attacker, "Initial Damage: " + attackEvent.event.getDamage());
 
 //		As strong as iron
-		if(attackEvent.defender.getInventory().getLeggings() != null && attackEvent.defender.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
-			NBTItem pants = new NBTItem(attackEvent.defender.getInventory().getLeggings());
-			if(pants.hasKey(NBTTag.ITEM_UUID.getRef())) {
-				attackEvent.multipliers.add(0.86956521);
-			}
-		}
-		if(attackEvent.defender.getInventory().getHelmet() != null && attackEvent.defender.getInventory().getHelmet().getType() == Material.GOLD_HELMET) {
-			attackEvent.multipliers.add(0.95652173913);
-		}
+//		if(attackEvent.defender.getInventory().getLeggings() != null && attackEvent.defender.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
+//			NBTItem pants = new NBTItem(attackEvent.defender.getInventory().getLeggings());
+//			if(pants.hasKey(NBTTag.ITEM_UUID.getRef())) {
+//				attackEvent.multipliers.add(0.86956521);
+//			}
+//		}
+//		if(attackEvent.defender.getInventory().getHelmet() != null && attackEvent.defender.getInventory().getHelmet().getType() == Material.GOLD_HELMET) {
+//			attackEvent.multipliers.add(0.95652173913);
+//		}
+
+		attackEvent.multipliers.add(ArmorReduction.getReductionMultiplier(attackEvent.defender));
 
 		double damage = attackEvent.getFinalDamage();
 		attackEvent.event.setDamage(damage);

@@ -21,6 +21,7 @@ public class HypixelPlayer {
 
 	public int enderchestRows = 6;
 	public boolean hasThick = true;
+	public int heresyLevel = 3;
 
 	public Map<Mystic, ItemLocation> mysticMap = new LinkedHashMap<>();
 	public List<SpecialItem> specialItems = new ArrayList<>();
