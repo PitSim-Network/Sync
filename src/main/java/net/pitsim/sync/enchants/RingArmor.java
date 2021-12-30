@@ -23,16 +23,12 @@ public class RingArmor extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 		if(attackEvent.arrow == null) return;
-		attackEvent.multiplier.add(getDamageMultiplier(enchantLvl));
+		attackEvent.decreasePercent += getDamageReduction(enchantLvl);
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
 		return new ALoreBuilder("&7Receive &9-" + getDamageReduction(enchantLvl) + "% &7damage from", "&7arrows").getLore();
-	}
-
-	public double getDamageMultiplier(int enchantLvl) {
-		return (100D - getDamageReduction(enchantLvl)) / 100;
 	}
 
 	public int getDamageReduction(int enchantLvl) {

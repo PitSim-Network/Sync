@@ -23,7 +23,7 @@ public class KingBuster extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 		if(attackEvent.defender.getHealth() / attackEvent.defender.getMaxHealth() < 0.5) return;
-		attackEvent.increasePercent += getDamage(enchantLvl) / 100D;
+		attackEvent.increasePercent += getDamage(enchantLvl);
 	}
 
 	@Override

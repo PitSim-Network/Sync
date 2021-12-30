@@ -38,7 +38,7 @@ public class ArrowArmory extends PitEnchant {
 
 		for(Arrow trackedArrow : trackedArrows) {
 			if(!trackedArrow.equals(attackEvent.arrow)) continue;
-			attackEvent.increasePercent += getIncrease(enchantLvl) / 100.0;
+			attackEvent.increasePercent += getIncrease(enchantLvl);
 			break;
 		}
 	}

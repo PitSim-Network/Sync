@@ -46,7 +46,7 @@ public class HopperManager implements Listener {
 	public void onAttack(AttackEvent.Apply attackEvent) {
 		if(isHopper(attackEvent.defender)) {
 			Hopper hopper = getHopper(attackEvent.defender);
-			attackEvent.multiplier.add(hopper.type.damageMultiplier);
+			attackEvent.multipliers.add(hopper.type.damageMultiplier);
 //			if(attackEvent.arrow != null || attackEvent.pet != null) {
 //				attackEvent.multiplier.add(0D);
 //				attackEvent.trueDamage = 0;

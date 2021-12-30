@@ -36,7 +36,7 @@ public class NewDeal extends PitEnchant {
 		int enchantLvl = attackEvent.getDefenderEnchantLevel(this);
 		if(enchantLvl == 0) return;
 
-		attackEvent.multiplier.add(Misc.getReductionMultiplier(getDamageReduction(enchantLvl)));
+		attackEvent.decreasePercent += getDamageReduction(enchantLvl);
 	}
 
 	@Override
@@ -51,9 +51,5 @@ public class NewDeal extends PitEnchant {
 
 	public double getDamageReduction(int enchantLvl) {
 		return (enchantLvl - 1) * 4;
-	}
-
-	public double getTrueDamage(int enchantLvl) {
-		return Math.max(1.2 - enchantLvl * 0.2, 0);
 	}
 }

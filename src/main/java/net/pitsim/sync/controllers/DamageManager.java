@@ -170,11 +170,11 @@ public class DamageManager implements Listener {
 		if(attackEvent.defender.getInventory().getLeggings() != null && attackEvent.defender.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
 			NBTItem pants = new NBTItem(attackEvent.defender.getInventory().getLeggings());
 			if(pants.hasKey(NBTTag.ITEM_UUID.getRef())) {
-				attackEvent.multiplier.add(0.86956521);
+				attackEvent.multipliers.add(0.86956521);
 			}
 		}
 		if(attackEvent.defender.getInventory().getHelmet() != null && attackEvent.defender.getInventory().getHelmet().getType() == Material.GOLD_HELMET) {
-			attackEvent.multiplier.add(0.95652173913);
+			attackEvent.multipliers.add(0.95652173913);
 		}
 
 		double damage = attackEvent.getFinalDamage();

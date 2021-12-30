@@ -24,7 +24,7 @@ public class SpammerAndProud extends PitEnchant {
 
 		if(attackEvent.attacker.getWorld() != attackEvent.defender.getWorld() ||
 				attackEvent.attacker.getLocation().distance(attackEvent.defender.getLocation()) >= 8) return;
-		attackEvent.increasePercent += getIncrease(enchantLvl) / 100.0;
+		attackEvent.increasePercent += getIncrease(enchantLvl);
 	}
 
 	@Override

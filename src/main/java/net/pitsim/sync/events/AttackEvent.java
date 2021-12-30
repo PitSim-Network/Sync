@@ -77,9 +77,8 @@ public class AttackEvent extends Event {
 
 		public double increase = 0;
 		public double increasePercent = 0;
-		public List<Double> multiplier = new ArrayList<>();
 		public double decreasePercent = 0;
-		public double decrease = 0;
+		public List<Double> multipliers = new ArrayList<>();
 		public double trueDamage = 0;
 		public double veryTrueDamage = 0;
 		public double selfTrueDamage = 0;
@@ -94,10 +93,8 @@ public class AttackEvent extends Event {
 
 			double damage = event.getDamage();
 			damage += increase;
-			damage *= 1 + increasePercent;
-			for(double multiplier : multiplier) damage *= multiplier;
-			damage *= 1 - decreasePercent;
-//			damage -= decrease;
+			damage *= Math.max(100 + increasePercent - decreasePercent, 0) / 100;
+			for(double multiplier : multipliers) damage *= multiplier;
 			return Math.max(damage, 0);
 		}
 
@@ -106,7 +103,7 @@ public class AttackEvent extends Event {
 			double damage = event.getDamage();
 			damage += increase;
 			damage *= 1 + increasePercent;
-			for(double multiplier : multiplier) {
+			for(double multiplier : multipliers) {
 				if(multiplier < 1) continue;
 				damage *= multiplier;
 			}

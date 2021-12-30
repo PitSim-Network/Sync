@@ -28,19 +28,15 @@ public class DiamondAllergy extends PitEnchant {
 		if(weapon == null) return;
 		if(weapon.getType() != Material.DIAMOND_SWORD && weapon.getType() != Material.DIAMOND_SPADE) return;
 
-		attackEvent.multiplier.add(getDamageMultiplier(enchantLvl));
+		attackEvent.decreasePercent += getReduction(enchantLvl);
 	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
-		return new ALoreBuilder("&7Receive &9-" + getDamageReduction(enchantLvl) + "% &7damage from", "&7diamond weapons").getLore();
+		return new ALoreBuilder("&7Receive &9-" + getReduction(enchantLvl) + "% &7damage from", "&7diamond weapons").getLore();
 	}
 
-	public double getDamageMultiplier(int enchantLvl) {
-		return Math.max(1 - ((double) enchantLvl / 10), 0);
-	}
-
-	public int getDamageReduction(int enchantLvl) {
-		return (int) (100 - getDamageMultiplier(enchantLvl) * 100);
+	public int getReduction(int enchantLvl) {
+		return enchantLvl * 10;
 	}
 }

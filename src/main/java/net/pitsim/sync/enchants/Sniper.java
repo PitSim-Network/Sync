@@ -23,7 +23,7 @@ public class Sniper extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 		if(attackEvent.arrow == null || attackEvent.arrow.getLocation().distance(attackEvent.defender.getLocation()) < 24) return;
-		attackEvent.increasePercent += getDamage(enchantLvl) / 100.0;
+		attackEvent.increasePercent += getDamage(enchantLvl);
 	}
 
 	@Override

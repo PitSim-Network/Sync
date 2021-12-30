@@ -34,7 +34,7 @@ public class Shark extends PitEnchant {
 //		TODO: Check this
 		if(attackEvent.attacker.getHealth() < 12) nearby++;
 
-		attackEvent.increasePercent += (getDamage(enchantLvl) / 100D) * nearby;
+		attackEvent.increasePercent += getDamage(enchantLvl) * nearby;
 	}
 
 	@Override
@@ -46,9 +46,5 @@ public class Shark extends PitEnchant {
 
 	public int getDamage(int enchantLvl) {
 		return (int) (Math.pow(enchantLvl, 1.2)  * 2);
-	}
-
-	public double getCap(int enchantLvl) {
-		return enchantLvl * 10;
 	}
 }

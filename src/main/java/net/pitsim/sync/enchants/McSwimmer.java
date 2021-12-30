@@ -5,7 +5,6 @@ import net.pitsim.sync.controllers.EnchantManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.misc.Misc;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -44,7 +43,7 @@ public class McSwimmer extends PitEnchant {
 
 		Material material = inside.getType();
 		if(material != Material.LAVA && material != Material.STATIONARY_LAVA && material != Material.WATER && material != Material.STATIONARY_WATER) return;
-		attackEvent.multiplier.add(Misc.getReductionMultiplier(getReduction(enchantLvl)));
+		attackEvent.decreasePercent += getReduction(enchantLvl);
 	}
 
 	@Override

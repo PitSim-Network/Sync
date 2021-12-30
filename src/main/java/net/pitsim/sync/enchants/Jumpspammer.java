@@ -4,7 +4,6 @@ import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.misc.Misc;
 import org.bukkit.event.EventHandler;
 
 import java.util.List;
@@ -23,11 +22,11 @@ public class Jumpspammer extends PitEnchant {
 		int defenderEnchantLvl = attackEvent.getDefenderEnchantLevel(this);
 
 		if(attackerEnchantLvl != 0 && !attackEvent.attacker.isOnGround()) {
-			attackEvent.increasePercent += getDamageIncrease(attackerEnchantLvl) / 100.0;
+			attackEvent.increasePercent += getDamageIncrease(attackerEnchantLvl);
 		}
 
 		if(defenderEnchantLvl != 0 && !attackEvent.defender.isOnGround()) {
-			attackEvent.multiplier.add(Misc.getReductionMultiplier(getDamageDecrease(defenderEnchantLvl)));
+			attackEvent.decreasePercent += getDamageDecrease(defenderEnchantLvl);
 		}
 	}
 

@@ -25,7 +25,7 @@ public class Billionaire extends PitEnchant {
 		if(enchantLvl == 0) return;
 
 //		attackEvent.multiplier.add(getDamageMultiplier(enchantLvl));
-		attackEvent.increasePercent += getDamageIncrease(enchantLvl) / 100.0;
+		attackEvent.increasePercent += getDamageIncrease(enchantLvl);
 		Sounds.BILLIONAIRE.play(attackEvent.attacker);
 	}
 

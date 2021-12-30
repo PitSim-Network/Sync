@@ -17,13 +17,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.text.DecimalFormat;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Robinhood extends PitEnchant {
-	public static List<Arrow> robinMap = new ArrayList<>();
+	public static Map<Arrow, Integer> robinMap = new HashMap<>();
 
 	public Robinhood() {
 		super("Robinhood", true, ApplyType.BOWS,
@@ -33,9 +30,9 @@ public class Robinhood extends PitEnchant {
 	@EventHandler
 	public void onAttack(AttackEvent.Apply attackEvent) {
 		if(!canApply(attackEvent) || attackEvent.arrow == null) return;
-		if(!robinMap.contains(attackEvent.arrow)) return;
+		if(!robinMap.containsKey(attackEvent.arrow)) return;
 
-		attackEvent.multiplier.add(0.5D);
+		attackEvent.decreasePercent += getReduction(robinMap.get(attackEvent.arrow));
 	}
 
 	@EventHandler
@@ -59,12 +56,12 @@ public class Robinhood extends PitEnchant {
 
 		int enchantLvl = EnchantManager.getEnchantLevel(player, this);
 		if(enchantLvl == 0) return;
-		robinMap.add(arrow);
+		robinMap.put(arrow, enchantLvl);
 
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if(!robinMap.contains(arrow)) {
+				if(!robinMap.containsKey(arrow)) {
 					cancel();
 					return;
 				}
@@ -100,6 +97,10 @@ public class Robinhood extends PitEnchant {
 	public List<String> getDescription(int enchantLvl) {
 		DecimalFormat format = new DecimalFormat("0.#");
 		return new ALoreBuilder("&7Your shots &ehome &7from &e" + format.format(getRange(enchantLvl)) + " &7block" + (getRange(enchantLvl) == 1 ? "" : "s"),
-				"&7away and deal &c-50% &7damage", "&7(3s cooldown)").getLore();
+				"&7away and deal &c-" + getReduction(enchantLvl) + "% &7damage", "&7(3s cooldown)").getLore();
+	}
+
+	public int getReduction(int enchantLvl) {
+		return Math.max(70 - enchantLvl * 10, 0);
 	}
 }

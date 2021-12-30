@@ -214,9 +214,9 @@ public class Hopper {
 	public enum Type {
 		CHAIN("&7Chain Hopper", "chain", "&7", 0.5),
 		DIAMOND("&9Diamond Hopper", "diamond", "&9", 0.5),
-		MYSTIC("&eMystic Hopper", "mystic", "&e", 0.6),
-		VENOM("&2Venom Hopper", "venom", "&2", 0.6),
-		GSET("&6GSet Hopper", "gset", "&6", 0.6);
+		MYSTIC("&eMystic Hopper", "mystic", "&e", 0.5),
+		VENOM("&2Venom Hopper", "venom", "&2", 0.5),
+		GSET("&6GSet Hopper", "gset", "&6", 0.5);
 
 		public String name;
 		public String refName;

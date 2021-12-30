@@ -188,7 +188,7 @@ public class PlayerManager implements Listener {
 		ItemStack chestplate = attackEvent.defender.getEquipment().getChestplate();
 		if(Misc.isAirOrNull(chestplate)) return;
 		NBTItem nbtItem = new NBTItem(chestplate);
-		if(nbtItem.hasKey(NBTTag.IS_ARCH.getRef())) attackEvent.multiplier.add(0.9);
+		if(nbtItem.hasKey(NBTTag.IS_ARCH.getRef())) attackEvent.decreasePercent += 10;
 	}
 
 	@EventHandler

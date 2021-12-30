@@ -32,7 +32,7 @@ public class Solitude extends PitEnchant {
 			nearbyPlayers++;
 		}
 		if(nearbyPlayers > getMaxNearbyPlayers(enchantLvl)) return;
-		attackEvent.multiplier.add(Misc.getReductionMultiplier(getDamageReduction(enchantLvl)));
+		attackEvent.decreasePercent += getDamageReduction(enchantLvl);
 	}
 
 	@Override
