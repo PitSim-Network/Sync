@@ -102,7 +102,7 @@ public class AttackEvent extends Event {
 
 			double damage = event.getDamage();
 			damage += increase;
-			damage *= 1 + increasePercent;
+			damage *= (100 + increasePercent) / 100;
 			for(double multiplier : multipliers) {
 				if(multiplier < 1) continue;
 				damage *= multiplier;
