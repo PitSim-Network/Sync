@@ -36,7 +36,7 @@ dependencies {
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
 
     compile group: 'com.github.koca2000', name: 'NoteBlockAPI', version: '-SNAPSHOT'
-    compile 'com.github.ArcticDevelopment:ArcticAPI:9b31c9ca58'
+    compile 'com.github.ArcticDevelopment:ArcticAPI:b3172a60bd'
     compile 'de.tr7zw:item-nbt-api-plugin:2.8.0'// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     compileOnly files('libs/Buzz_API.jar')
