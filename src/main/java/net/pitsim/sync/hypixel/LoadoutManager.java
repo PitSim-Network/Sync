@@ -99,6 +99,7 @@ public class LoadoutManager implements Listener {
 		}
 	}
 
+
 	public static void save(Player player) {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 
