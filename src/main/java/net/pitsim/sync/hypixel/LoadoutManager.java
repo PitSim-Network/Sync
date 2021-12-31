@@ -88,6 +88,7 @@ public class LoadoutManager implements Listener {
 
 	public static void deathPremium(Player player) {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		if(pitPlayer.premiumGUI.premiumItems.size() == 0) return;
 		int creditCost = LoadoutManager.getPremiumCost(pitPlayer.player);
 		pitPlayer.credits -= creditCost;
 		AOutput.send(player, "&7Premium items costed &6" + creditCost + " &7credit" + (creditCost == 1 ? "" : "s"));
