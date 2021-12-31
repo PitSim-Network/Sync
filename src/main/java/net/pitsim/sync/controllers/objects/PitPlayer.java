@@ -124,10 +124,6 @@ public class PitPlayer {
 		player.setMaxHealth(maxHealth);
 	}
 
-	public int getMaxCredits() {
-		return 1000;
-	}
-
 	public void save() {
 		APlayer aPlayer = APlayerData.getPlayerData(player);
 		FileConfiguration playerData = aPlayer.playerData;

@@ -188,6 +188,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("unstash").setExecutor(new StashCommand());
 		getCommand("hopper").setExecutor(new HopperGUICommand());
 		getCommand("show").setExecutor(new ShowCommand());
+		getCommand("cg").setExecutor(new CrateGiveCommand());
 	}
 
 	private void registerListeners() {

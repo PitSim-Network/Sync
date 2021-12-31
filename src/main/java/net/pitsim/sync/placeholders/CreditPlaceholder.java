@@ -23,6 +23,6 @@ public class CreditPlaceholder implements APAPIPlaceholder {
 		} else {
 			chatColor = "&a";
 		}
-		return chatColor + pitPlayer.credits + " &7/ " + pitPlayer.getMaxCredits();
+		return chatColor + pitPlayer.credits + " &7/ " + CreditManager.getMaxCredits(player);
 	}
 }
