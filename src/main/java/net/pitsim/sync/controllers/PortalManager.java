@@ -1,6 +1,5 @@
 package net.pitsim.sync.controllers;
 
-import dev.kyro.arcticapi.misc.AUtil;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
@@ -18,12 +17,10 @@ public class PortalManager implements Listener {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 		if(pitPlayer.loadout != null && pitPlayer.loadout.loadoutGUI != null) {
 			LoadoutManager.save(player);
-			for(PremiumItem premiumItem : pitPlayer.loadout.loadoutGUI.premiumPanel.premiumItems) {
-				AUtil.giveItemSafely(player, premiumItem.getItemStack());
-			}
 		}
 
 		Misc.giveDiamond(player);
+		player.updateInventory();
 		player.teleport(MapManager.getFFASpawn());
 	}
 }

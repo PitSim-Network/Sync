@@ -27,6 +27,7 @@ import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
+import net.pitsim.sync.placeholders.CreditPlaceholder;
 import net.pitsim.sync.placeholders.PrefixPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -109,6 +110,7 @@ public class PitSim extends JavaPlugin {
 
 		ArcticAPI.setupPlaceholderAPI("sync");
 		AHook.registerPlaceholder(new PrefixPlaceholder());
+		AHook.registerPlaceholder(new CreditPlaceholder());
 
 		loadConfig();
 
@@ -155,6 +157,10 @@ public class PitSim extends JavaPlugin {
 
 		ABaseCommand adminCommand = new BaseAdminCommand("pitsim");
 		getCommand("ps").setExecutor(adminCommand);
+
+		ABaseCommand giveCommand = new BaseGiveCommand(adminCommand, "give");
+		giveCommand.registerCommand(new CreditGiveCommand("credits"));
+
 		adminCommand.registerCommand(new HopperCommand("hopper"));
 		adminCommand.registerCommand(new ReloadCommand("reload"));
 		adminCommand.registerCommand(new BypassCommand("bypass"));
@@ -197,6 +203,7 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PortalManager(), this);
 		getServer().getPluginManager().registerEvents(new HopperManager(), this);
 		getServer().getPluginManager().registerEvents(new MapManager(), this);
+		getServer().getPluginManager().registerEvents(new CreditManager(), this);
 	}
 
 	private void loadConfig() {

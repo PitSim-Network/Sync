@@ -3,6 +3,7 @@ package net.pitsim.sync.hypixel;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
+import net.pitsim.sync.controllers.PremiumItem;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.inventories.loadout.LoadoutGUI;
@@ -48,6 +49,8 @@ public class Loadout {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 		pitPlayer.loadout = this;
 
+		LoadoutManager.loadPremium(player);
+
 		for(Map.Entry<Integer, ItemStack> integerItemStackEntry : inventoryItemMap.entrySet()) {
 			player.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
 		}
@@ -70,7 +73,7 @@ public class Loadout {
 		for(int i = 0; i < 36; i++) {
 			ItemStack itemStack = player.getInventory().getItem(i);
 //			TODO: Check if it is a mystic
-			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+			if(itemStack == null || itemStack.getType() == Material.AIR || PremiumItem.isPremium(itemStack)) continue;
 			if(!shouldSave(itemStack)) {
 				player.getInventory().setItem(i, new ItemStack(Material.AIR));
 				continue;
@@ -81,7 +84,7 @@ public class Loadout {
 		for(int i = 0; i < loadoutGUI.enderchestPanel.getInventory().getSize(); i++) {
 			ItemStack itemStack = loadoutGUI.enderchestPanel.getInventory().getItem(i);
 //			TODO: Check if it is a mystic
-			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+			if(itemStack == null || itemStack.getType() == Material.AIR || PremiumItem.isPremium(itemStack)) continue;
 			if(!shouldSave(itemStack)) {
 				loadoutGUI.enderchestPanel.getInventory().setItem(i, new ItemStack(Material.AIR));
 				continue;
@@ -91,7 +94,7 @@ public class Loadout {
 		armorItemMap.clear();
 		for(int i = 0; i < player.getEquipment().getArmorContents().length; i++) {
 			ItemStack itemStack = player.getEquipment().getArmorContents()[i];
-			if(itemStack == null || itemStack.getType() == Material.AIR) continue;
+			if(itemStack == null || itemStack.getType() == Material.AIR || PremiumItem.isPremium(itemStack)) continue;
 			if(!shouldSave(itemStack)) {
 				player.getInventory().setItem(i, new ItemStack(Material.AIR));
 				continue;

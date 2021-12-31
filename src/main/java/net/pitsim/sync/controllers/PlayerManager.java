@@ -38,7 +38,25 @@ public class PlayerManager implements Listener {
 			public void run() {
 				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) ((CraftPlayer) onlinePlayer).getHandle().getDataWatcher().watch(9, (byte) 0);
 			}
-		}.runTaskTimer(PitSim.INSTANCE, 0L, 20L);
+		}.runTaskTimer(PitSim.INSTANCE, 0L, 20);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) PitPlayer.getPitPlayer(onlinePlayer).save();
+			}
+		}.runTaskTimer(PitSim.INSTANCE, 0L, 20);
+	}
+
+	@EventHandler
+	public void onQuit(PlayerQuitEvent event) {
+		Player player = event.getPlayer();
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				PitPlayer.pitPlayers.remove(pitPlayer);
+			}
+		}.runTaskLater(PitSim.INSTANCE, 20L);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -81,13 +99,6 @@ public class PlayerManager implements Listener {
 
 			pitPlayer.loadout.loadoutGUI.getHomePanel().openPanel(pitPlayer.loadout.loadoutGUI.voidMenuPanel);
 		} else if(block.getType() == Material.BEACON) {
-			if(pitPlayer.loadout == null) {
-				AOutput.error(player, "For some reason you do not have anything loaded");
-				return;
-			} else if(pitPlayer.loadout.loadoutGUI == null) {
-				AOutput.error(player, "You can only make changes to your own layout");
-				return;
-			}
 			event.setCancelled(true);
 
 			if(player.getWorld() != MapManager.getLobby()) {
@@ -95,7 +106,7 @@ public class PlayerManager implements Listener {
 				return;
 			}
 
-			pitPlayer.loadout.loadoutGUI.getHomePanel().openPanel(pitPlayer.loadout.loadoutGUI.premiumPanel);
+			pitPlayer.premiumGUI.open();
 		}
 	}
 

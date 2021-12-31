@@ -5,15 +5,15 @@ import dev.kyro.arcticapi.data.APlayerData;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.enchants.Hearts;
-import net.pitsim.sync.enums.AChatColor;
 import net.pitsim.sync.events.HealEvent;
 import net.pitsim.sync.hypixel.Loadout;
+import net.pitsim.sync.inventories.PremiumGUI;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -24,7 +24,7 @@ public class PitPlayer {
 	public static List<PitPlayer> pitPlayers = new ArrayList<>();
 
 	public Player player;
-	public String prefix;
+	public String prefix = "";
 
 	public PitPerk[] pitPerks = new PitPerk[] { Vampire.INSTANCE, NoPerk.INSTANCE, NoPerk.INSTANCE, NoPerk.INSTANCE };
 
@@ -32,30 +32,25 @@ public class PitPlayer {
 	public Map<PitEnchant, Integer> enchantCharge = new HashMap<>();
 	public Map<UUID, Double> recentDamageMap = new HashMap<>();
 	public List<BukkitTask> assistRemove = new ArrayList<>();
-	public AChatColor chatColor = null;
 	public UUID lastHitUUID = null;
-	public ItemStack confirmedDrop = null;
 
 	public Loadout loadout;
+	public PremiumGUI premiumGUI;
+
+//	Data that gets saved
+	public int credits;
+	public Date lastLogout;
 
 	public PitPlayer(Player player) {
 		this.player = player;
 
-		String message = "%luckperms_prefix%";
-		prefix = "";
+		this.premiumGUI = new PremiumGUI(player);
 
 		APlayer aPlayer = APlayerData.getPlayerData(player);
+		FileConfiguration playerData = aPlayer.playerData;
 
-//		for(int i = 0; i < pitPerks.length; i++) {
-//			String perkString = aPlayer.playerData.getString("perk-" + i);
-//			PitPerk savedPerk = perkString != null ? PitPerk.getPitPerk(perkString) : NoPerk.INSTANCE;
-//			pitPerks[i] = savedPerk != null ? savedPerk : NoPerk.INSTANCE;
-//		}
-
-		String chatColorString = aPlayer.playerData.getString("chatcolor");
-		if(chatColorString != null) {
-			chatColor = AChatColor.valueOf(chatColorString);
-		}
+		this.credits = playerData.getInt("credits");
+		this.lastLogout = new Date(playerData.getLong("lastlogout"));
 	}
 
 	public static PitPlayer getPitPlayer(Player player) {
@@ -75,7 +70,6 @@ public class PitPlayer {
 
 		return pitPlayer;
 	}
-
 
 	public void addDamage(Player player, double damage) {
 		if(player == null) return;
@@ -120,12 +114,6 @@ public class PitPlayer {
 		return healEvent;
 	}
 
-	public boolean hasPerk(PitPerk pitPerk) {
-
-		for(PitPerk perk : pitPerks) if(perk == pitPerk) return true;
-		return false;
-	}
-
 	public void updateMaxHealth() {
 		int maxHealth = 24;
 		if(Hearts.INSTANCE != null) maxHealth += Hearts.INSTANCE.getExtraHealth(this);
@@ -134,5 +122,19 @@ public class PitPlayer {
 
 		if(player.getMaxHealth() == maxHealth) return;
 		player.setMaxHealth(maxHealth);
+	}
+
+	public int getMaxCredits() {
+		return 100;
+	}
+
+	public void save() {
+		APlayer aPlayer = APlayerData.getPlayerData(player);
+		FileConfiguration playerData = aPlayer.playerData;
+
+		playerData.set("credits", credits);
+		playerData.set("lastlogout", lastLogout.getTime());
+
+		aPlayer.save();
 	}
 }

@@ -10,7 +10,6 @@ public class LoadoutGUI extends AGUI {
 	public EnderchestPanel enderchestPanel;
 	public VoidPanel voidPanel;
 	public VoidMenuPanel voidMenuPanel;
-	public PremiumPanel premiumPanel;
 
 	public LoadoutGUI(Player player, Loadout loadout) {
 		super(player);
@@ -19,7 +18,6 @@ public class LoadoutGUI extends AGUI {
 		this.enderchestPanel = new EnderchestPanel(this);
 		this.voidPanel = new VoidPanel(this);
 		this.voidMenuPanel = new VoidMenuPanel(this);
-		this.premiumPanel = new PremiumPanel(this);
 
 		setHomePanel(enderchestPanel);
 	}

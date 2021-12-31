@@ -1,9 +1,14 @@
 package net.pitsim.sync.inventories.loadout;
 
+import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.gui.AGUI;
 import dev.kyro.arcticapi.gui.AGUIPanel;
+import dev.kyro.arcticapi.misc.AOutput;
+import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.misc.Misc;
+import net.pitsim.sync.misc.Sounds;
 import org.bukkit.ChatColor;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -37,7 +42,19 @@ public class EnderchestPanel extends AGUIPanel {
 
 	@Override
 	public void onClick(InventoryClickEvent event) {
-
+		if(event.getClick() == ClickType.NUMBER_KEY) {
+			event.setCancelled(true);
+			AOutput.error(player, "Please do not use hotkeys");
+			Sounds.NO.play(player);
+			return;
+		}
+		ItemStack clickedItem = event.getCurrentItem();
+		if(Misc.isAirOrNull(clickedItem)) return;
+		NBTItem nbtItem = new NBTItem(clickedItem);
+		if(nbtItem.hasKey(NBTTag.PREMIUM_TYPE.getRef())) {
+			event.setCancelled(true);
+			return;
+		}
 	}
 
 	@Override

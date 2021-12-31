@@ -224,7 +224,7 @@ public class EnchantManager implements Listener {
 		ALoreBuilder loreBuilder = new ALoreBuilder();
 
 		if(nbtItem.hasKey(NBTTag.PREMIUM_TYPE.getRef())) {
-			loreBuilder.addLore("&7Premium Item");
+			loreBuilder.addLore("&7Premium Cost: &6" + nbtItem.getInteger(NBTTag.PREMIUM_COST.getRef()));
 		} else {
 			char color = currentLives <= 3 ? 'c' : 'a';
 //			loreBuilder.addLore("&7Lives: &" + color + currentLives + "&7/" + maxLives + (isGemmed ? " &a\u2666" : ""));
