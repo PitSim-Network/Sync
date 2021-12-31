@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Date;
 
 public class CreditManager implements Listener {
-	public static int LOW_CREDIT_THRESHOLD = 20;
+	public static int LOW_CREDIT_THRESHOLD = 100;
 
 	static {
 		new BukkitRunnable() {
@@ -22,11 +22,11 @@ public class CreditManager implements Listener {
 				count++;
 				for(PitPlayer pitPlayer : PitPlayer.pitPlayers) {
 					if(!pitPlayer.player.isOnline() || pitPlayer.credits >= pitPlayer.getMaxCredits()) continue;
-					if(pitPlayer.credits >= LOW_CREDIT_THRESHOLD && count % 6 != 0) continue;
+					if(pitPlayer.credits >= LOW_CREDIT_THRESHOLD && count % 5 != 0) continue;
 					give(pitPlayer, 1, false);
 				}
 			}
-		}.runTaskTimer(PitSim.INSTANCE, 0L, 20 * 5);
+		}.runTaskTimer(PitSim.INSTANCE, 0L, 20 * 2);
 	}
 
 	@EventHandler
@@ -45,7 +45,7 @@ public class CreditManager implements Listener {
 			public void run() {
 				PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 				if(pitPlayer.lastLogout.getTime() == 0) return;
-				int minutesPassed = (int) ((new Date().getTime() - pitPlayer.lastLogout.getTime()) / 1000.0 / 60.0);
+				int minutesPassed = (int) ((new Date().getTime() - pitPlayer.lastLogout.getTime()) / 1000.0 / 10.0);
 				int creditsOwed = getCreditsOwed(minutesPassed);
 				give(pitPlayer, creditsOwed, false);
 			}

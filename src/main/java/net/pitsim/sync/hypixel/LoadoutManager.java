@@ -96,6 +96,8 @@ public class LoadoutManager implements Listener {
 			}
 			player.updateInventory();
 			AOutput.error(player, "Not enough funds to continue using premium items");
+			pitPlayer.premiumGUI.premiumItems.clear();
+			pitPlayer.premiumGUI.premiumItemMap.clear();
 		}
 	}
 

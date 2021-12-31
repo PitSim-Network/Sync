@@ -125,7 +125,7 @@ public class PitPlayer {
 	}
 
 	public int getMaxCredits() {
-		return 100;
+		return 1000;
 	}
 
 	public void save() {

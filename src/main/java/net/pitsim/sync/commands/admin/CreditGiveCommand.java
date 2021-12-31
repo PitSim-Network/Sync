@@ -50,7 +50,7 @@ public class CreditGiveCommand extends ASubCommand {
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(target);
 		CreditManager.give(pitPlayer, credits, true);
-		AOutput.send(player, "&7Gave &6" + target.getName() + " &6" + credits + " &7credits.");
+		AOutput.send(player, "&7Gave " + target.getName() + " &6" + credits + " &7credits");
 		AOutput.send(target, "&7You have received &6" + credits + " &7credits");
 	}
 }

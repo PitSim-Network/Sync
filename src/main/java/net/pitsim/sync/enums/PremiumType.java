@@ -43,6 +43,7 @@ public enum PremiumType {
 			case MLB_BOWS:
 				return MysticType.BOW;
 			case MISC: //TODO: FIX
+				return MysticType.BOW;
 		}
 		return null;
 	}

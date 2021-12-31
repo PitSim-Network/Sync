@@ -32,7 +32,7 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 20, new Enchant("perun", 3), new Enchant("stomp", 3));
 		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 70, new Enchant("perun", 3), new Enchant("ls", 3));
 		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 90, new Enchant("perun", 3), new Enchant("bill", 1));
-		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 90, new Enchant("perun", 2), new Enchant("gamble", 1));
+		new PremiumItem(PremiumType.TRUE_DAMAGE_SWORD, 225, new Enchant("perun", 2), new Enchant("gamble", 1));
 
 		new PremiumItem(PremiumType.HEALING_SWORD, 0, new Enchant("ls", 3));
 		new PremiumItem(PremiumType.HEALING_SWORD, 3, new Enchant("cd", 3), new Enchant("ls", 3));
@@ -40,14 +40,17 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.HEALING_SWORD, 18, new Enchant("pf", 3), new Enchant("ls", 3));
 		new PremiumItem(PremiumType.HEALING_SWORD, 25, new Enchant("ch", 3), new Enchant("ls", 3));
 		new PremiumItem(PremiumType.HEALING_SWORD, 25, new Enchant("bill", 1), new Enchant("ls", 3));
+		new PremiumItem(PremiumType.HEALING_SWORD, 100, new Enchant("bill", 3), new Enchant("ls", 2));
 		new PremiumItem(PremiumType.HEALING_SWORD, 120, new Enchant("bill", 2), new Enchant("ls", 3));
 		new PremiumItem(PremiumType.HEALING_SWORD, 700, new Enchant("bill", 3), new Enchant("ls", 3));
 
 		new PremiumItem(PremiumType.DEFENCE_PANTS, 0, new Enchant("cf", 3));
-		new PremiumItem(PremiumType.DEFENCE_PANTS, 2, new Enchant("soli", 3));
 		new PremiumItem(PremiumType.DEFENCE_PANTS, 2, new Enchant("pero", 3), new Enchant("mirror", 1));
 		new PremiumItem(PremiumType.DEFENCE_PANTS, 9, new Enchant("cf", 3), new Enchant("mirror", 1));
 		new PremiumItem(PremiumType.DEFENCE_PANTS, 15, new Enchant("cf", 3), new Enchant("pero", 3));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 2, new Enchant("soli", 3));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 30, new Enchant("soli", 3), new Enchant("mirror", 1));
+		new PremiumItem(PremiumType.DEFENCE_PANTS, 80, new Enchant("soli", 3), new Enchant("cf", 3));
 		new PremiumItem(PremiumType.DEFENCE_PANTS, 10, new Enchant("newdeal", 3), new Enchant("mirror", 1));
 
 		new PremiumItem(PremiumType.REGULARITY_PANTS, 2, new Enchant("regularity", 2));
@@ -63,14 +66,11 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.RGM_PANTS, 50, new Enchant("rgm", 2), new Enchant("cf", 3));
 		new PremiumItem(PremiumType.RGM_PANTS, 100, new Enchant("rgm", 2), new Enchant("mirror", 1));
 
+		new PremiumItem(PremiumType.VOLLEY_BOWS, 0, new Enchant("volley", 1));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 1, new Enchant("volley", 3));
-//		new PremiumItem(PremiumType.VOLLEY_BOWS, 8, new Enchant("volley", 1), new Enchant("wasp", 3));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 8, new Enchant("volley", 3), new Enchant("wasp", 3));
-//		new PremiumItem(PremiumType.VOLLEY_BOWS, 6, new Enchant("volley", 1), new Enchant("drain", 3));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 10, new Enchant("volley", 3), new Enchant("drain", 3));
-//		new PremiumItem(PremiumType.VOLLEY_BOWS, 6, new Enchant("volley", 1), new Enchant("pin", 3));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 10, new Enchant("volley", 3), new Enchant("pin", 3));
-//		new PremiumItem(PremiumType.VOLLEY_BOWS, 5, new Enchant("volley", 1), new Enchant("ftts", 3));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 10, new Enchant("volley", 3), new Enchant("ftts", 3));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 20, new Enchant("volley", 1), new Enchant("para", 3));
 		new PremiumItem(PremiumType.VOLLEY_BOWS, 80, new Enchant("volley", 3), new Enchant("para", 3));
@@ -85,11 +85,12 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.MLB_BOWS, 20, new Enchant("mlb", 1), new Enchant("pin", 3));
 		new PremiumItem(PremiumType.MLB_BOWS, 5, new Enchant("mlb", 1), new Enchant("ftts", 2));
 		new PremiumItem(PremiumType.MLB_BOWS, 15, new Enchant("mlb", 1), new Enchant("ftts", 3));
-		new PremiumItem(PremiumType.MLB_BOWS, 70, new Enchant("mlb", 1), new Enchant("tele", 1));
-		new PremiumItem(PremiumType.MLB_BOWS, 200, new Enchant("mlb", 1), new Enchant("tele", 2));
-		new PremiumItem(PremiumType.MLB_BOWS, 400, new Enchant("mlb", 1), new Enchant("tele", 3));
 
-//		new PremiumItem(PremiumType.MISC, 15, new Enchant("mlb", 1));
+		new PremiumItem(PremiumType.MISC, 0, new Enchant("tele", 1));
+		new PremiumItem(PremiumType.MISC, 4, new Enchant("tele", 3));
+		new PremiumItem(PremiumType.MISC, 200, new Enchant("mlb", 1), new Enchant("tele", 2));
+		new PremiumItem(PremiumType.MISC, 400, new Enchant("mlb", 1), new Enchant("tele", 3));
+		new PremiumItem(PremiumType.MISC, 400, new Enchant("mlb", 1), new Enchant("tele", 3));
 	}
 
 	public PremiumType premiumType;
