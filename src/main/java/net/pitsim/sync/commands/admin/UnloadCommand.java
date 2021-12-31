@@ -43,7 +43,7 @@ public class UnloadCommand extends ASubCommand {
 		}
 
 		pitPlayer.loadout = null;
-		Misc.clearInventory(player);
+		Misc.clearInventory(target);
 		AOutput.send(player, "&7Disconnected data connected to &6" + target.getName());
 	}
 }

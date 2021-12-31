@@ -46,9 +46,9 @@ public class LoadCommand extends ASubCommand {
 			return;
 		}
 
-		Misc.clearInventory(player);
+		Misc.clearInventory(target);
 		Loadout loadout = LoadoutManager.getLoadout(loadUUID);
-		loadout.partialLoad(player);
+		loadout.partialLoad(target);
 		AOutput.send(player, "&7Loaded the data of &6" + loadout.hypixelPlayer.name + " &7to the player &6" + target.getName());
 	}
 }
