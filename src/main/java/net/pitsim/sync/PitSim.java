@@ -161,6 +161,8 @@ public class PitSim extends JavaPlugin {
 		ABaseCommand giveCommand = new BaseGiveCommand(adminCommand, "give");
 		giveCommand.registerCommand(new CreditGiveCommand("credits"));
 
+		adminCommand.registerCommand(new UnloadCommand("unload"));
+		adminCommand.registerCommand(new LoadCommand("load"));
 		adminCommand.registerCommand(new HopperCommand("hopper"));
 		adminCommand.registerCommand(new ReloadCommand("reload"));
 		adminCommand.registerCommand(new BypassCommand("bypass"));
@@ -184,7 +186,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("stash").setExecutor(new StashCommand());
 		getCommand("unstash").setExecutor(new StashCommand());
 		getCommand("hopper").setExecutor(new HopperGUICommand());
-//		getCommand("togglestereo").setExecutor(new ToggleStereoCommand());
+		getCommand("show").setExecutor(new ShowCommand());
 	}
 
 	private void registerListeners() {
