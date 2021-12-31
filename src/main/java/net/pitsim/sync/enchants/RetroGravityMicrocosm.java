@@ -23,7 +23,6 @@ import java.util.*;
 
 public class RetroGravityMicrocosm extends PitEnchant {
 	public static Map<Player, RGMInfo> rgmGlobalMap = new HashMap<>();
-//	public static Map<UUID, Map<UUID, Integer>> rgmMap = new HashMap<>();
 
 	public RetroGravityMicrocosm() {
 		super("Retro-Gravity Microcosm", true, ApplyType.PANTS,
@@ -91,25 +90,6 @@ public class RetroGravityMicrocosm extends PitEnchant {
 			Sounds.RGM.play(attackEvent.attacker);
 		}
 	}
-
-//	public static Map<UUID, Integer> getPlayerRGMMap(Player player) {
-//
-//		rgmMap.putIfAbsent(player.getUniqueId(), new HashMap<>());
-//		return rgmMap.get(player.getUniqueId());
-//	}
-//
-//	public static int getCharge(Player rgmPlayer, Player player) {
-//
-//		Map<UUID, Integer> playerRGMMap = getPlayerRGMMap(rgmPlayer);
-//		playerRGMMap.putIfAbsent(player.getUniqueId(), 0);
-//		return playerRGMMap.get(player.getUniqueId());
-//	}
-//
-//	public static void setCharge(Player rgmPlayer, Player player, int amount) {
-//
-//		Map<UUID, Integer> playerRGMMap = getPlayerRGMMap(rgmPlayer);
-//		playerRGMMap.put(player.getUniqueId(), amount);
-//	}
 
 	@Override
 	public List<String> getDescription(int enchantLvl) {
