@@ -163,6 +163,7 @@ public class PitSim extends JavaPlugin {
 
 		adminCommand.registerCommand(new UnloadCommand("unload"));
 		adminCommand.registerCommand(new LoadCommand("load"));
+		adminCommand.registerCommand(new FullLoadCommand("fullload"));
 		adminCommand.registerCommand(new HopperCommand("hopper"));
 		adminCommand.registerCommand(new ReloadCommand("reload"));
 		adminCommand.registerCommand(new BypassCommand("bypass"));
