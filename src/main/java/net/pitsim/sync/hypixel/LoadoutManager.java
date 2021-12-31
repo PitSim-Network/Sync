@@ -186,6 +186,7 @@ public class LoadoutManager implements Listener {
 
 	public static HypixelPlayer getHypixelPlayer(UUID uuid) {
 		for(HypixelPlayer hypixelPlayer : hypixelPlayers) {
+			if(hypixelPlayer == null || hypixelPlayer.uuid == null) continue;
 			if(hypixelPlayer.uuid.equals(uuid)) return hypixelPlayer;
 		}
 		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(uuid));
