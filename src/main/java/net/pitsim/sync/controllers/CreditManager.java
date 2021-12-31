@@ -55,7 +55,7 @@ public class CreditManager implements Listener {
 	public static void give(PitPlayer pitPlayer, int amount, boolean overflow) {
 		if(amount == 0) return;
 
-		pitPlayer.credits += overflow ? Math.max(Math.min(amount, pitPlayer.getMaxCredits() - pitPlayer.credits), 0) : amount;
+		pitPlayer.credits += overflow ? amount : Math.max(Math.min(amount, pitPlayer.getMaxCredits() - pitPlayer.credits), 0);
 	}
 
 	public static int getCreditsOwed(int minutesPassed) {
