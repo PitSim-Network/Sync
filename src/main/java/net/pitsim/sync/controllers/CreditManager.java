@@ -45,7 +45,7 @@ public class CreditManager implements Listener {
 			public void run() {
 				PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 				if(pitPlayer.lastLogout.getTime() == 0) return;
-				int minutesPassed = (int) ((new Date().getTime() - pitPlayer.lastLogout.getTime()) / 1000.0 / 10.0);
+				int minutesPassed = (int) ((new Date().getTime() - pitPlayer.lastLogout.getTime()) / 1000.0 / 60.0);
 				int creditsOwed = getCreditsOwed(minutesPassed);
 				give(pitPlayer, creditsOwed, false);
 			}
