@@ -50,7 +50,7 @@ public class SprintDrain extends PitEnchant {
 	}
 
 	public int getSpeedAmplifier(int enchantLvl) {
-		return Misc.linearEnchant(enchantLvl, 0.5, 1);
+		return Misc.linearEnchant(enchantLvl, 0.5, 0.5);
 	}
 
 	public int getSpeedDuration(int enchantLvl) {
