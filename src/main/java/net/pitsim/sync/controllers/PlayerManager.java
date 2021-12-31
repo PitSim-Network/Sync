@@ -68,6 +68,7 @@ public class PlayerManager implements Listener {
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 
 		if(block.getType() == Material.ENDER_CHEST) {
+			event.setCancelled(true);
 			if(pitPlayer.loadout == null) {
 				AOutput.error(player, "For some reason you do not have anything loaded");
 				return;
@@ -75,7 +76,6 @@ public class PlayerManager implements Listener {
 				AOutput.error(player, "You can only make changes to your own layout");
 				return;
 			}
-			event.setCancelled(true);
 
 			if(player.getWorld() != MapManager.getLobby()) {
 				AOutput.send(player, "&7Your layout will only save if you do this in the lobby");
@@ -83,6 +83,7 @@ public class PlayerManager implements Listener {
 
 			pitPlayer.loadout.loadoutGUI.open();
 		} else if(block.getType() == Material.ENDER_PORTAL_FRAME) {
+			event.setCancelled(true);
 			if(pitPlayer.loadout == null) {
 				AOutput.error(player, "For some reason you do not have anything loaded");
 				return;
@@ -90,7 +91,6 @@ public class PlayerManager implements Listener {
 				AOutput.error(player, "You can only make changes to your own layout");
 				return;
 			}
-			event.setCancelled(true);
 
 			if(player.getWorld() != MapManager.getLobby()) {
 				AOutput.error(player, "You can only do this in the lobby");

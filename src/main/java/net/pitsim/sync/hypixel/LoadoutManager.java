@@ -51,6 +51,13 @@ public class LoadoutManager implements Listener {
 
 	public static void load(Player player) {
 		if(HopperManager.isHopper(player)) return;
+
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		if(pitPlayer.loadout != null) {
+			pitPlayer.loadout.partialLoad(player);
+			return;
+		}
+
 		Loadout loadout = getLoadout(player.getUniqueId());
 		loadout.partialLoad(player);
 	}
