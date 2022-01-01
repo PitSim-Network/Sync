@@ -60,8 +60,6 @@ public class DuelManager implements Listener{
 		}
 
 		return max + 1;
-
-
 	}
 
 	public static Match getMatch(Player player) {
@@ -167,8 +165,5 @@ public class DuelManager implements Listener{
 				}
 			}
 		}.runTaskLater(PitSim.INSTANCE, 15 * 20L);
-
-
 	}
-
 }
