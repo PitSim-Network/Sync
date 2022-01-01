@@ -1,5 +1,6 @@
 package net.pitsim.sync.controllers.objects;
 
+import be.maximvdw.featherboard.api.FeatherBoardAPI;
 import dev.kyro.arcticapi.misc.AOutput;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.pitsim.sync.PitSim;
@@ -55,6 +56,10 @@ public class Match implements Listener {
 		player1.setHealth(player1.getMaxHealth());
 		player2.setHealth(player2.getMaxHealth());
 
+
+		FeatherBoardAPI.showScoreboard(player1, "duel");
+		FeatherBoardAPI.showScoreboard(player2, "duel");
+
 		PitPlayer pitPlayer1 = PitPlayer.getPitPlayer(player1);
 		player1.teleport(player1Spawn);
 
@@ -83,6 +88,7 @@ public class Match implements Listener {
 
 		endMessages(winner, loser);
 		winner.setHealth(winner.getMaxHealth());
+		loser.setHealth(1);
 
 		loser.setGameMode(GameMode.SPECTATOR);
 
@@ -102,9 +108,13 @@ public class Match implements Listener {
 				Misc.clearInventory(player2);
 				LoadoutManager.load(player2);
 
+				loser.setHealth(loser.getMaxHealth());
 				loser.setGameMode(GameMode.SURVIVAL);
 				player1.teleport(MapManager.getLobbySpawn());
 				player2.teleport(MapManager.getLobbySpawn());
+
+				FeatherBoardAPI.showScoreboard(player1, "default");
+				FeatherBoardAPI.showScoreboard(player2, "default");
 
 				Misc.sendSubTitle(winner, "", 10);
 				Misc.sendSubTitle(loser, "", 10);

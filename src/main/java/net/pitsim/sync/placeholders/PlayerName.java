@@ -18,7 +18,7 @@ public class PlayerName implements APAPIPlaceholder {
 		if(DuelManager.getMatch(player) == null) return null;
 		Match match = DuelManager.getMatch(player);
 		assert match != null;
-		if(player == match.player1) return PlaceholderAPI.setPlaceholders(match.player1, match.player1.getName());
-		else return PlaceholderAPI.setPlaceholders(match.player2, match.player2.getName());
+		if(player == match.player1) return PlaceholderAPI.setPlaceholders(match.player1, "%luckperms_prefix%" + match.player1.getName());
+		else return PlaceholderAPI.setPlaceholders(match.player2, "%luckperms_prefix%" + match.player2.getName());
 	}
 }

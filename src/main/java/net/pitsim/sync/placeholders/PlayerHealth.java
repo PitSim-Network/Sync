@@ -22,6 +22,6 @@ public class PlayerHealth implements APAPIPlaceholder {
 		if(player == match.player1) opponent = match.player1;
 		else opponent = match.player2;
 
-		return " &c" + (int) Misc.round(opponent.getHealth() / 2, 1) + "\u2764" + "&7/&c" + (int) Misc.round(opponent.getMaxHealth() / 2, 1) + "\u2764";
+		return " &c" + (int) Misc.round(opponent.getHealth() / 2, 1) + "&7/&c" + (int) Misc.round(opponent.getMaxHealth() / 2, 1) + "\u2764";
 	}
 }
