@@ -60,6 +60,5 @@ public class MapPanel extends AGUIPanel {
 
 	@Override
 	public void onClose(InventoryCloseEvent event) {
-		player.getInventory().clear();
 	}
 }

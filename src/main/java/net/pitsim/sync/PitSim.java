@@ -27,8 +27,7 @@ import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
-import net.pitsim.sync.placeholders.CreditPlaceholder;
-import net.pitsim.sync.placeholders.PrefixPlaceholder;
+import net.pitsim.sync.placeholders.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -111,6 +110,12 @@ public class PitSim extends JavaPlugin {
 		ArcticAPI.setupPlaceholderAPI("sync");
 		AHook.registerPlaceholder(new PrefixPlaceholder());
 		AHook.registerPlaceholder(new CreditPlaceholder());
+		AHook.registerPlaceholder(new PlayerName());
+		AHook.registerPlaceholder(new PlayerPing());
+		AHook.registerPlaceholder(new PlayerHealth());
+		AHook.registerPlaceholder(new OpponentName());
+		AHook.registerPlaceholder(new OpponentPing());
+		AHook.registerPlaceholder(new OpponentHealth());
 
 		loadConfig();
 
@@ -183,7 +188,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("ecitems").setExecutor(new EnderchestCommand());
 		getCommand("void").setExecutor(new VoidCommand());
 		getCommand("resource").setExecutor(new ResourceCommand());
-//		getCommand("duel").setExecutor(new DuelCommand());
+		getCommand("duel").setExecutor(new DuelCommand());
 		getCommand("stash").setExecutor(new StashCommand());
 		getCommand("unstash").setExecutor(new StashCommand());
 		getCommand("hopper").setExecutor(new HopperGUICommand());

@@ -23,4 +23,5 @@ public class PortalManager implements Listener {
 		player.updateInventory();
 		player.teleport(MapManager.getFFASpawn());
 	}
+
 }

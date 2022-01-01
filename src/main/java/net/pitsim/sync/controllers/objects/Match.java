@@ -7,7 +7,6 @@ import net.pitsim.sync.controllers.DuelManager;
 import net.pitsim.sync.controllers.MapManager;
 import net.pitsim.sync.controllers.RingCalc;
 import net.pitsim.sync.enums.PvpArena;
-import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Countdown;
 import net.pitsim.sync.misc.Misc;
@@ -16,14 +15,11 @@ import net.pitsim.sync.misc.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.Map;
 
 public class Match implements Listener {
 
@@ -61,29 +57,21 @@ public class Match implements Listener {
 
 		PitPlayer pitPlayer1 = PitPlayer.getPitPlayer(player1);
 		player1.teleport(player1Spawn);
-		clearInventory(player1);
 
-		Loadout player1Loadout = LoadoutManager.getLoadout(Misc.getUUID(player1.getUniqueId()));
-		giveDiamond(player1);
-
-		if(player1Loadout.inventoryItemMap.size() > 0) {
-			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : player1Loadout.inventoryItemMap.entrySet()) {
-				player1.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-			}
+		if(pitPlayer1.loadout != null && pitPlayer1.loadout.loadoutGUI != null) {
+			LoadoutManager.save(player1);
 		}
+		player1.updateInventory();
+		Misc.giveDiamond(player1);
 
 		PitPlayer pitPlayer2 = PitPlayer.getPitPlayer(player2);
 		player2.teleport(player2Spawn);
-		clearInventory(player2);
 
-		Loadout player2Loadout = LoadoutManager.getLoadout(Misc.getUUID(player2.getUniqueId()));
-		giveDiamond(player2);
-
-		if(player2Loadout.inventoryItemMap.size() > 0) {
-			for(Map.Entry<Integer, ItemStack> integerItemStackEntry : player2Loadout.inventoryItemMap.entrySet()) {
-				player2.getInventory().setItem(integerItemStackEntry.getKey(), integerItemStackEntry.getValue());
-			}
+		if(pitPlayer2.loadout != null && pitPlayer2.loadout.loadoutGUI != null) {
+			LoadoutManager.save(player2);
 		}
+		player2.updateInventory();
+		Misc.giveDiamond(player2);
 
 		startMessages(player1, player2);
 	}
@@ -93,12 +81,13 @@ public class Match implements Listener {
 		if(loser == player1) winner = player2;
 		else winner = player1;
 
-		clearInventory(player1);
-		clearInventory(player2);
 		endMessages(winner, loser);
 		winner.setHealth(winner.getMaxHealth());
 
 		loser.setGameMode(GameMode.SPECTATOR);
+
+		LoadoutManager.deathPremium(player1);
+		LoadoutManager.deathPremium(player2);
 
 		Sounds.CTF_FLAG_CAPTURED.play(loser);
 		Sounds.LEVEL_UP.play(winner);
@@ -107,6 +96,11 @@ public class Match implements Listener {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
+				Misc.clearInventory(player1);
+				LoadoutManager.load(player1);
+
+				Misc.clearInventory(player2);
+				LoadoutManager.load(player2);
 
 				loser.setGameMode(GameMode.SURVIVAL);
 				player1.teleport(MapManager.getLobbySpawn());
@@ -123,8 +117,6 @@ public class Match implements Listener {
 	}
 
 	public void onPluginDisable() {
-		if(player1 != null) clearInventory(player1);
-		if(player2 != null) clearInventory(player2);
 		if(player1 != null) player1.teleport(MapManager.getLobbySpawn());
 		if(player2 != null) player2.teleport(MapManager.getLobbySpawn());
 
@@ -136,8 +128,6 @@ public class Match implements Listener {
 		if(loser == player1) winner = player2;
 		else winner = player1;
 
-		clearInventory(player1);
-		clearInventory(player2);
 		endMessages(winner, loser);
 		winner.setHealth(winner.getMaxHealth());
 
@@ -159,13 +149,6 @@ public class Match implements Listener {
 		player.getInventory().setBoots(null);
 	}
 
-	public void giveDiamond(Player player) {
-		player.getInventory().setHelmet(new ItemStack(Material.IRON_HELMET));
-		player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-		player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-		player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-	}
-
 	public void endMessages(Player winner, Player loser) {
 
 		String winnerName = "%luckperms_prefix%" + winner.getName();
@@ -179,13 +162,13 @@ public class Match implements Listener {
 
 		AOutput.send(winner, "&8&m-------------------------");
 		AOutput.send(winner, "&6&lMatch Results");
-		AOutput.send(winner, "&aWinner: " + PlaceholderAPI.setPlaceholders(winner, winnerName) + " &c" + Misc.round(winner.getHealth() / 2, 1) + "\u2764");
+		AOutput.send(winner, "&aWinner: " + PlaceholderAPI.setPlaceholders(winner, winnerName) + " &c" + (int) Misc.round(winner.getHealth() / 2, 1) + "\u2764");
 		AOutput.send(winner, "&cLoser: " + PlaceholderAPI.setPlaceholders(loser, loserName) + " &c0\u2764");
 		AOutput.send(winner, "&8&m-------------------------");
 
 		AOutput.send(loser, "&8&m-------------------------");
 		AOutput.send(loser, "&6&lMatch Results");
-		AOutput.send(loser, "&aWinner: " + PlaceholderAPI.setPlaceholders(winner, winnerName) + " &c" + Misc.round(winner.getHealth()/2, 1) + "\u2764");
+		AOutput.send(loser, "&aWinner: " + PlaceholderAPI.setPlaceholders(winner, winnerName) + " &c" + (int) Misc.round(winner.getHealth()/2, 1) + "\u2764");
 		AOutput.send(loser, "&cLoser: " + PlaceholderAPI.setPlaceholders(loser, loserName) + " &c0\u2764");
 		AOutput.send(loser, "&8&m-------------------------");
 	}

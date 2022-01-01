@@ -5,6 +5,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.pitsim.sync.controllers.DuelManager;
 import net.pitsim.sync.enums.PvpArena;
 import net.pitsim.sync.inventories.DuelGUI;
+import net.pitsim.sync.misc.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,8 +44,9 @@ public class DuelCommand implements CommandExecutor {
                     DuelManager.requests.remove(player);
                     DuelManager.requests.remove(duelPlayer);
                     DuelManager.requestArenas.remove(duelPlayer);
+                    Sounds.BOOSTER_REMIND.play(duelPlayer);
                     AOutput.send(duelPlayer, PlaceholderAPI.setPlaceholders(player, playerName) + " &chas declined your duel request!");
-                    AOutput.send(player, "&aYou declined " + PlaceholderAPI.setPlaceholders(player, playerName) + "&a's duel request!");
+                    AOutput.send(player, "&cYou declined " + PlaceholderAPI.setPlaceholders(duelPlayer, duelPlayerName) + "&c's duel request!");
                     return false;
                 }
             }
@@ -69,6 +71,11 @@ public class DuelCommand implements CommandExecutor {
             }
             for(Map.Entry<Player, Player> playerPlayerEntry : DuelManager.requests.entrySet()) {
                 if(playerPlayerEntry.getKey() == duelPlayer && playerPlayerEntry.getValue() == player) {
+                    String playerName = "%luckperms_prefix%" + player.getName();
+                    String duelPlayerName = "%luckperms_prefix%" + duelPlayer.getName();
+                    AOutput.send(duelPlayer, PlaceholderAPI.setPlaceholders(player, playerName) + " &ahas accepted your duel request!");
+                    AOutput.send(player, "&aYou accepted " + PlaceholderAPI.setPlaceholders(duelPlayer, duelPlayerName) + "&a's duel request!");
+
                     DuelManager.requests.remove(player);
                     DuelManager.requests.remove(duelPlayer);
                     DuelManager.createDuel(duelPlayer, player, DuelManager.requestArenas.get(duelPlayer));
@@ -91,6 +98,11 @@ public class DuelCommand implements CommandExecutor {
 
         for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if(onlinePlayer.getName().equalsIgnoreCase(playerString)) duelPlayer = onlinePlayer;
+        }
+
+        if(duelPlayer == player) {
+            AOutput.error(player, "&cYou cannot duel yourself!");
+            return false;
         }
 
 
