@@ -31,7 +31,7 @@ public class CreditManager implements Listener {
 
 	public static int getSecondsPerCredit(Player player) {
 		if(player.hasPermission("group.premium")) return 5;
-		return 20;
+		return 10;
 	}
 
 	public static int getOfflineMinutesPerCredit(Player player) {
