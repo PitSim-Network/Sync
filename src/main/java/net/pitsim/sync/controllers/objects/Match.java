@@ -31,6 +31,7 @@ public class Match implements Listener {
 	public RingCalc.XYCoords arenaCoordinates;
 	public PvpArena arena;
 
+	public Player deadPlayer = null;
 	public boolean isStarting;
 
 	public Match(Player player1, Player player2, PvpArena arena, int position) {
