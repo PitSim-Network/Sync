@@ -48,7 +48,7 @@ public class DuelManager implements Listener{
 
 		int max = positions.get(0);
 		
-		for (int i = 1; i < positions.size(); i++) {
+		for (int i = 1; i < positions.size();   i++) {
 			if (positions.get(i) > max) {
 				max = positions.get(i);
 			}
@@ -151,6 +151,7 @@ public class DuelManager implements Listener{
 		AOutput.send(challenged, PlaceholderAPI.setPlaceholders(requester, requesterName) + " &ehas challenged you to a duel on &a" + arena.refName);
 		challenged.sendMessage(clickAccept);
 		Sounds.BOOSTER_REMIND.play(challenged);
+		Sounds.BOOSTER_REMIND.play(requester);
 
 		AOutput.send(requester, "&aDuel request sent to " + PlaceholderAPI.setPlaceholders(challenged, challengedName));
 
