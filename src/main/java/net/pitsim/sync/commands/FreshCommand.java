@@ -30,11 +30,7 @@ public class FreshCommand implements CommandExecutor {
 
 		if(!(sender instanceof Player)) return false;
 		Player player = (Player) sender;
-
-		if(!player.hasPermission("group.nitro")) {
-			AOutput.send(player, "&cYou must boost our discord server to gain access to this feature! &7Join with: &f&ndiscord.gg/pitsim");
-			return false;
-		}
+		if(!player.isOp()) return false;
 
 		if(args.length < 1) {
 
