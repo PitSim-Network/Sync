@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -126,6 +127,13 @@ public class DuelManager implements Listener{
 			if(match.player1 == event.getEntity() || match.player2 == event.getEntity()) event.setCancelled(true);
 
 		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onCommand(PlayerCommandPreprocessEvent event) {
+		if(!event.getMessage().equalsIgnoreCase("/oof") && !event.getMessage().equalsIgnoreCase("/spawn")) return;
+		if(event.getPlayer().getWorld().getName().equals("lobby") || event.getPlayer().getWorld().getName().equals("pvp")) event.setCancelled(true);
+		AOutput.error(event.getPlayer(), "&cYou cannot do this here!");
 	}
 
 	@EventHandler
