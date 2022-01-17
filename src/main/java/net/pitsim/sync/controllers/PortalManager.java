@@ -23,5 +23,17 @@ public class PortalManager implements Listener {
 		player.updateInventory();
 		player.teleport(MapManager.getFFASpawn());
 	}
+//
+//	@EventHandler
+//	public void onQuit(PlayerQuitEvent event) {
+//		Player player = event.getPlayer();
+//
+//		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+//		if(pitPlayer.loadout != null && pitPlayer.loadout.loadoutGUI != null) {
+//			LoadoutManager.save(player);
+//		}
+//
+//		player.updateInventory();
+//	}
 
 }

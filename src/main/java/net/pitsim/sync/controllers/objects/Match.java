@@ -142,7 +142,8 @@ public class Match implements Listener {
 		endMessages(winner, loser);
 		winner.setHealth(winner.getMaxHealth());
 
-		loser.setGameMode(GameMode.SPECTATOR);
+		FeatherBoardAPI.showScoreboard(winner, "default");
+		FeatherBoardAPI.showScoreboard(loser, "default");
 
 		Sounds.CTF_FLAG_CAPTURED.play(loser);
 		Sounds.LEVEL_UP.play(winner);
