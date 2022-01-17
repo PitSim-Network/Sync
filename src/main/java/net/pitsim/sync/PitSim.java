@@ -194,6 +194,7 @@ public class PitSim extends JavaPlugin {
 		getCommand("hopper").setExecutor(new HopperGUICommand());
 		getCommand("show").setExecutor(new ShowCommand());
 		getCommand("cg").setExecutor(new CrateGiveCommand());
+		getCommand("sync").setExecutor(new SyncCommand());
 	}
 
 	private void registerListeners() {

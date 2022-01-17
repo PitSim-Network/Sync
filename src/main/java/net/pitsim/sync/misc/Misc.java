@@ -236,6 +236,7 @@ public class Misc {
 		player.getInventory().setChestplate(null);
 		player.getInventory().setLeggings(null);
 		player.getInventory().setBoots(null);
+		player.setItemOnCursor(new ItemStack(Material.AIR));
 	}
 
 	public static void giveDiamond(Player player) {
