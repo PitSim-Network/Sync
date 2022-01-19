@@ -192,6 +192,14 @@ public class LoadoutManager implements Listener {
 		deathPremium(player);
 	}
 
+	public static boolean hasHypixelPlayer(UUID uuid) {
+		for(HypixelPlayer hypixelPlayer : hypixelPlayers) {
+			if(hypixelPlayer == null || hypixelPlayer.uuid == null) continue;
+			if(hypixelPlayer.uuid.equals(uuid)) return true;
+		}
+		return false;
+	}
+
 	public static HypixelPlayer getHypixelPlayer(UUID uuid) {
 		for(HypixelPlayer hypixelPlayer : hypixelPlayers) {
 			if(hypixelPlayer == null || hypixelPlayer.uuid == null) continue;

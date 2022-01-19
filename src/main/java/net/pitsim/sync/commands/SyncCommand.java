@@ -5,7 +5,6 @@ import dev.kyro.arcticapi.misc.ASound;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.MapManager;
 import net.pitsim.sync.controllers.objects.PitPlayer;
-import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.inventories.PremiumGUI;
@@ -51,11 +50,7 @@ public class SyncCommand implements CommandExecutor {
 		Misc.clearInventory(player);
 		player.teleport(MapManager.getLobbySpawn());
 
-		for(HypixelPlayer hypixelPlayer : LoadoutManager.hypixelPlayers) {
-			if(!hypixelPlayer.uuid.equals(player.getUniqueId())) continue;
-			LoadoutManager.hypixelPlayers.remove(hypixelPlayer);
-			break;
-		}
+		if(LoadoutManager.hasHypixelPlayer(player.getUniqueId())) LoadoutManager.hypixelPlayers.remove(LoadoutManager.getHypixelPlayer(player.getUniqueId()));
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 		pitPlayer.premiumGUI = new PremiumGUI(player);
