@@ -164,7 +164,7 @@ public class Loadout {
 					int slot = playerData.getInt(key);
 
 					Mystic mystic = getMystic(mysticMap, nonce);
-					if(mystic == null || voidNonceList.contains(mystic.nonce)) {
+					if(mystic == null || voidNonceList.contains(mystic.nonce) || inventoryItemMap.containsKey(slot)) {
 						playerData.set(key, null);
 						continue;
 					}
@@ -180,7 +180,7 @@ public class Loadout {
 					int slot = playerData.getInt(key);
 
 					Mystic mystic = getMystic(mysticMap, nonce);
-					if(mystic == null || voidNonceList.contains(mystic.nonce)) {
+					if(mystic == null || voidNonceList.contains(mystic.nonce) || inventoryItemMap.containsKey(slot)) {
 						playerData.set(key, null);
 						continue;
 					}
@@ -196,7 +196,7 @@ public class Loadout {
 					int slot = playerData.getInt(key);
 
 					Mystic mystic = getMystic(mysticMap, nonce);
-					if(mystic == null || voidNonceList.contains(mystic.nonce)) {
+					if(mystic == null || voidNonceList.contains(mystic.nonce) || inventoryItemMap.containsKey(slot)) {
 						playerData.set(key, null);
 						continue;
 					}
