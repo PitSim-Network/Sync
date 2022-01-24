@@ -54,6 +54,8 @@ public class Robinhood extends PitEnchant {
 		Arrow arrow = (Arrow) event.getProjectile();
 		if(event instanceof VolleyShootEvent) return;
 
+		if(!arrow.isCritical()) return;
+
 		int enchantLvl = EnchantManager.getEnchantLevel(player, this);
 		if(enchantLvl == 0) return;
 		robinMap.put(arrow, enchantLvl);
