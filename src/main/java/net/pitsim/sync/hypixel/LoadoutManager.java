@@ -210,6 +210,13 @@ public class LoadoutManager implements Listener {
 		return hypixelPlayer;
 	}
 
+	public static boolean hasLoadout(UUID uuid) {
+		for(Loadout loadout : loadouts) {
+			if(loadout.uuid.equals(uuid)) return true;
+		}
+		return false;
+	}
+
 	public static Loadout getLoadout(UUID uuid) {
 		for(Loadout loadout : loadouts) {
 			if(loadout.uuid.equals(uuid)) return loadout;

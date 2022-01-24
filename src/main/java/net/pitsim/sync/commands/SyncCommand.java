@@ -51,6 +51,7 @@ public class SyncCommand implements CommandExecutor {
 		player.teleport(MapManager.getLobbySpawn());
 
 		if(LoadoutManager.hasHypixelPlayer(player.getUniqueId())) LoadoutManager.hypixelPlayers.remove(LoadoutManager.getHypixelPlayer(player.getUniqueId()));
+		if(LoadoutManager.hasLoadout(player.getUniqueId())) LoadoutManager.loadouts.remove(LoadoutManager.getLoadout(player.getUniqueId()));
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 		pitPlayer.premiumGUI = new PremiumGUI(player);
