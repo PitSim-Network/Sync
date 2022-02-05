@@ -94,8 +94,7 @@ public class DamageManager implements Listener {
 		Map<PitEnchant, Integer> defenderEnchantMap = EnchantManager.getEnchantsOnPlayer(defender);
 		boolean fakeHit = false;
 
-		if(nonHitCooldownList.contains(defender) && !Regularity.toReg.contains(defender.getUniqueId()) &&
-				!(event.getDamager() instanceof Arrow)) {
+		if(nonHitCooldownList.contains(defender) && !Regularity.toReg.contains(defender.getUniqueId())) {
 			event.setCancelled(true);
 			return;
 		}
