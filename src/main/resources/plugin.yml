@@ -49,5 +49,4 @@ commands:
   unstash:
   void:
   hopper:
-  spawn:
   sync:
