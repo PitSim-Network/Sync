@@ -1,8 +1,10 @@
-package net.pitsim.sync.enchants.intentionaluseless;
+package net.pitsim.sync.enchants;
 
 import dev.kyro.arcticapi.builders.ALoreBuilder;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
+import net.pitsim.sync.events.AttackEvent;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -11,7 +13,16 @@ public class DavidAndGoliath extends PitEnchant {
 	public DavidAndGoliath() {
 		super("David and Goliath", false, ApplyType.PANTS,
 				"davidandgoliath");
-		isUseless = true;
+	}
+
+	@EventHandler
+	public void onAttack(AttackEvent.Apply attackEvent) {
+		if(!canApply(attackEvent)) return;
+
+		int enchantLvl = attackEvent.getDefenderEnchantLevel(this);
+		if(enchantLvl == 0) return;
+
+		attackEvent.decreasePercent += getReduction(enchantLvl);
 	}
 
 	@Override
