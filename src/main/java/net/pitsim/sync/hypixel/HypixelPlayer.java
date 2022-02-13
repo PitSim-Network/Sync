@@ -5,6 +5,7 @@ import me.nullicorn.nedit.type.NBTCompound;
 import me.nullicorn.nedit.type.NBTList;
 import net.pitsim.sync.controllers.KyroItems;
 import net.pitsim.sync.enums.SpecialItem;
+import net.pitsim.sync.exceptions.PitException;
 import org.bukkit.inventory.ItemStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import java.util.*;
 
 public class HypixelPlayer {
 	public JSONObject playerObj;
+	public boolean first = true;
 
 	public UUID uuid;
 	public String name;
@@ -24,10 +26,35 @@ public class HypixelPlayer {
 	public int heresyLevel = 3;
 
 	public Map<Mystic, ItemLocation> mysticMap = new LinkedHashMap<>();
-	public List<SpecialItem> specialItems = new ArrayList<>();
+
+	public HypixelPlayer() {
+	}
+
+	public void updatePitPanda(JSONObject playerObj) {
+		if(playerObj == null) return;
+
+		if(first) {
+			mysticMap.put(new Mystic(SpecialItem.GHELM), new ItemLocation(InventoryType.INVENTORY, 0));
+			mysticMap.put(new Mystic(SpecialItem.ARCH_CHEST), new ItemLocation(InventoryType.INVENTORY, 1));
+			mysticMap.put(new Mystic(SpecialItem.ARMA_BOOTS), new ItemLocation(InventoryType.INVENTORY, 2));
+		}
+
+		JSONArray items = playerObj.getJSONArray("items");
+		for(Object item : items) {
+			try {
+				JSONObject jsonItem = (JSONObject) item;
+				Mystic mystic = new Mystic(jsonItem);
+				mysticMap.put(mystic, new ItemLocation(InventoryType.STASH, 0));
+			} catch(Exception exception) {
+				if(exception instanceof PitException) continue;
+				exception.printStackTrace();
+			}
+		}
+
+		first = false;
+	}
 
 	public HypixelPlayer(JSONObject playerObj) {
-
 		update(playerObj);
 	}
 
@@ -37,10 +64,6 @@ public class HypixelPlayer {
 		} catch(Exception ignored) {
 			ignored.printStackTrace();
 		}
-		getStats();
-	}
-
-	public void getStats() {
 		try {
 			JSONObject achievements = playerObj.getJSONObject("achievements");
 			JSONObject pitData = playerObj.getJSONObject("stats").getJSONObject("Pit").getJSONObject("profile");
@@ -84,19 +107,19 @@ public class HypixelPlayer {
 					if(name.toLowerCase().contains("golden")) {
 						for(Map.Entry<Mystic, ItemLocation> entry : dataMap.entrySet())
 								if(entry.getKey().specialItem != null && entry.getKey().specialItem == SpecialItem.GHELM) return;
-						dataMap.put(new Mystic(this, SpecialItem.GHELM), new ItemLocation(inventoryType, j[0]));
+						dataMap.put(new Mystic(SpecialItem.GHELM), new ItemLocation(inventoryType, j[0]));
 					} else if(name.toLowerCase().contains("archangel")) {
 						for(Map.Entry<Mystic, ItemLocation> entry : dataMap.entrySet())
 							if(entry.getKey().specialItem != null && entry.getKey().specialItem == SpecialItem.ARCH_CHEST) return;
-						dataMap.put(new Mystic(this, SpecialItem.ARCH_CHEST), new ItemLocation(inventoryType, j[0]));
+						dataMap.put(new Mystic(SpecialItem.ARCH_CHEST), new ItemLocation(inventoryType, j[0]));
 					} else if(name.toLowerCase().contains("armageddon")) {
 						for(Map.Entry<Mystic, ItemLocation> entry : dataMap.entrySet())
 							if(entry.getKey().specialItem != null && entry.getKey().specialItem == SpecialItem.ARMA_BOOTS) return;
-						dataMap.put(new Mystic(this, SpecialItem.ARMA_BOOTS), new ItemLocation(inventoryType, j[0]));
+						dataMap.put(new Mystic(SpecialItem.ARMA_BOOTS), new ItemLocation(inventoryType, j[0]));
 					}
 				} catch(Exception ignored) { }
 
-				Mystic mystic = new Mystic(this, compound);
+				Mystic mystic = new Mystic(compound);
 				if(!mystic.isMystic()) return;
 				dataMap.put(mystic, new ItemLocation(inventoryType, j[0]));
 			});

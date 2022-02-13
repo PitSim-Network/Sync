@@ -22,34 +22,6 @@ public class SpawnNPCs implements Listener {
 //		createVnx2NPC();
 	}
 
-	public static void removeNPCs() {
-		try {
-			upgrade.destroy();
-		} catch(Exception ignored) {
-			System.out.println("error despawning npc");
-		}
-		try {
-			prestige.destroy();
-		} catch(Exception ignored) {
-			System.out.println("error despawning npc");
-		}
-		try {
-			kyro.destroy();
-		} catch(Exception ignored) {
-			System.out.println("error despawning npc");
-		}
-		try {
-			wiji.destroy();
-		} catch(Exception ignored) {
-			System.out.println("error despawning npc");
-		}
-		try {
-			vnx2.destroy();
-		} catch(Exception ignored) {
-			System.out.println("error despawning npc");
-		}
-	}
-
 //	public static void createUpgradeNPC() {
 //		NPCRegistry registry = CitizensAPI.getNPCRegistry();
 //		upgrade = registry.createNPC(EntityType.VILLAGER, " ");

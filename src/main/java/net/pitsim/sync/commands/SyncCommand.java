@@ -44,7 +44,7 @@ public class SyncCommand implements CommandExecutor {
 			public void run() {
 				cooldownList.remove(player.getUniqueId());
 			}
-		}.runTaskLater(PitSim.INSTANCE, 20 * 60);
+		}.runTaskLater(PitSim.INSTANCE, 20 * 60 * 10);
 
 		player.closeInventory();
 		Misc.clearInventory(player);

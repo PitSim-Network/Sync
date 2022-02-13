@@ -8,23 +8,23 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.enums.PantColor;
 import net.pitsim.sync.enums.SpecialItem;
+import net.pitsim.sync.exceptions.PitException;
 import org.bukkit.inventory.ItemStack;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Mystic {
 	public NBTCompound data;
 
-	public HypixelPlayer owner;
 	public String nonce;
 
 	public MysticType type;
 	public String name;
-	public List<String> lore = new ArrayList<>();
-	public int tier;
+//	public List<String> lore = new ArrayList<>();
+//	public int tier;
 	public int lives = 0;
 	public int maxLives = 0;
 	public PantColor color;
@@ -34,20 +34,61 @@ public class Mystic {
 	public ItemStack overrideItem;
 	public SpecialItem specialItem;
 
+	public Mystic(JSONObject pitPandaData) throws Exception {
+		JSONObject itemData = pitPandaData.getJSONObject("item");
+		JSONArray flags = pitPandaData.getJSONArray("flags");
+		JSONArray enchants = pitPandaData.getJSONArray("enchants");
+
+		int id = itemData.getInt("id");
+		if(id != 300 && id != 283 && id != 261) throw new PitException();
+		if(id == 300) this.type = MysticType.PANTS;
+		else if(id == 283) this.type = MysticType.SWORD;
+		else if(id == 261) this.type = MysticType.BOW;
+		int meta = itemData.getInt("meta");
+		for(PantColor value : PantColor.values()) {
+			if(value.decimalColor != meta) continue;
+			this.color = value;
+			break;
+		}
+		this.name = itemData.getString("name");
+
+		this.nonce = String.valueOf(pitPandaData.getLong("nonce"));
+
+		this.lives = pitPandaData.getInt("lives");
+		this.maxLives = pitPandaData.getInt("maxLives");
+
+		for(Object flag : flags) {
+			String stringFlag = (String) flag;
+			if(stringFlag.equals("gemmed")) this.isGemmed = true;
+		}
+
+		for(Object enchant : enchants) {
+			JSONObject enchantObject = (JSONObject) enchant;
+
+			String enchantString = enchantObject.getString("key");
+			Enchant pitEnchant = Enchant.getEnchant(enchantString);
+
+			if(pitEnchant == null) continue;
+			int level = enchantObject.getInt("level");
+
+			for(PitEnchant testEnchant : EnchantManager.pitEnchants) {
+				if(testEnchant.refNames.contains(pitEnchant.getRefName())) enchantMap.put(testEnchant, level);
+			}
+		}
+	}
+
 	public Mystic(ItemStack overrideItem) {
 		this.overrideItem = overrideItem;
 		this.enchantMap = EnchantManager.getEnchantsOnItem(overrideItem);
 		generateNonce();
 	}
 
-	public Mystic(HypixelPlayer owner, SpecialItem specialItem) {
-		this.owner = owner;
+	public Mystic(SpecialItem specialItem) {
 		this.specialItem = specialItem;
 		this.nonce = specialItem.refName;
 	}
 
-	public Mystic(HypixelPlayer owner, NBTCompound data) {
-		this.owner = owner;
+	public Mystic(NBTCompound data) {
 		this.data = data;
 
 		try {
@@ -57,11 +98,11 @@ public class Mystic {
 			type = MysticType.getMysticType(data.getInt("id", -1));
 
 			name = display.getString("Name", "");
-			for(Object line : display.getList("Lore")) {
-				lore.add(((String) line).replaceAll("[^\\x00-\\x7F]+.", ""));
-			}
+//			for(Object line : display.getList("Lore")) {
+//				lore.add(((String) line).replaceAll("[^\\x00-\\x7F]+.", ""));
+//			}
 
-			tier = attributes.getInt("UpgradeTier", -1);
+//			tier = attributes.getInt("UpgradeTier", -1);
 			lives = attributes.getInt("Lives", -1);
 
 			if(type == MysticType.PANTS) {

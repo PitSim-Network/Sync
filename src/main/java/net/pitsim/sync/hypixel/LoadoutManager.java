@@ -205,7 +205,13 @@ public class LoadoutManager implements Listener {
 			if(hypixelPlayer == null || hypixelPlayer.uuid == null) continue;
 			if(hypixelPlayer.uuid.equals(uuid)) return hypixelPlayer;
 		}
-		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(uuid));
+//		HypixelPlayer hypixelPlayer = new HypixelPlayer(HypixelAPI.request(uuid));
+		HypixelPlayer hypixelPlayer = new HypixelPlayer();
+		hypixelPlayer.uuid = uuid;
+		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 0));
+		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 1));
+		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 2));
+		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 3));
 		hypixelPlayers.add(hypixelPlayer);
 		return hypixelPlayer;
 	}

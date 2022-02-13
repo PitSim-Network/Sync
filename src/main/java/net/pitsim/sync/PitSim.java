@@ -136,8 +136,6 @@ public class PitSim extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		SpawnNPCs.removeNPCs();
-
 		for(PitEnchant pitEnchant : EnchantManager.pitEnchants) pitEnchant.onDisable();
 
 //		Iterator<Map.Entry<Player, EntitySongPlayer>> it = StereoManager.playerMusic.entrySet().iterator();
