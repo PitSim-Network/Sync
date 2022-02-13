@@ -212,6 +212,7 @@ public class LoadoutManager implements Listener {
 		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 1));
 		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 2));
 		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 3));
+		hypixelPlayer.updatePitPanda(PitPandaAPI.request(uuid.toString(), 4));
 		hypixelPlayers.add(hypixelPlayer);
 		return hypixelPlayer;
 	}
