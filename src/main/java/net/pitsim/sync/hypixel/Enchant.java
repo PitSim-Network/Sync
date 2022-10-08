@@ -26,7 +26,7 @@ public enum Enchant {
 	CRICKET("cricket", "less_damage_on_grass", false),
 	CRITICALLY_FUNKY("criticallyfunky", "power_against_crits", false),
 	CRITICALLY_RICH("criticallyrich", "gold_per_crit", false),
-	CRUSH("crush", "crush", false),
+	CRUSH("crush", "melee_weakness", false),
 	DANGER_CLOSE("dangerclose", "superspeed_when_low", false),
 	DAVID_AND_GOLIATH("davidandgoliath", "less_damage_vs_bounties", false),
 	DEVIL_CHICKS("devilchicks", "explosive_chickens", true),
