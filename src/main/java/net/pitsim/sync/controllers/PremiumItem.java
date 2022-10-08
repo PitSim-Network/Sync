@@ -91,7 +91,6 @@ public class PremiumItem {
 		new PremiumItem(PremiumType.MISC, 4, new Enchant("tele", 3));
 		new PremiumItem(PremiumType.MISC, 200, new Enchant("mlb", 1), new Enchant("tele", 2));
 		new PremiumItem(PremiumType.MISC, 400, new Enchant("mlb", 1), new Enchant("tele", 3));
-		new PremiumItem(PremiumType.MISC, 400, new Enchant("mlb", 1), new Enchant("tele", 3));
 	}
 
 	public PremiumType premiumType;
