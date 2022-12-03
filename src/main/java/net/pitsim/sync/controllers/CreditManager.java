@@ -16,27 +16,27 @@ public class CreditManager implements Listener {
 	public static int LOW_CREDIT_THRESHOLD = 100;
 
 	public static int getMaxCredits(Player player) {
-		if(player.hasPermission("group.premium")) return 1000;
-		return 500;
+		if(player.hasPermission("group.premium")) return 2_000;
+		return 1_000;
 	}
 
 	public static int getLowCreditThreshold(Player player) {
-		return 50;
+		return 100;
 	}
 
-	public static int getLowSecondsPerCredit(Player player) {
-		if(player.hasPermission("group.premium")) return 2;
-		return 4;
-	}
-
-	public static int getSecondsPerCredit(Player player) {
-		if(player.hasPermission("group.premium")) return 5;
+	public static int getLowTicksPerCredit(Player player) {
+		if(player.hasPermission("group.premium")) return 1;
 		return 10;
 	}
 
-	public static int getOfflineMinutesPerCredit(Player player) {
-		if(player.hasPermission("group.premium")) return 1;
-		return 2;
+	public static int getTicksPerCredit(Player player) {
+		if(player.hasPermission("group.premium")) return 10;
+		return 20;
+	}
+
+	public static int getOfflineTicksPerCredit(Player player) {
+		if(player.hasPermission("group.premium")) return 20 * 5;
+		return 20 * 20;
 	}
 
 	static {
@@ -49,12 +49,12 @@ public class CreditManager implements Listener {
 					PitPlayer pitPlayer = PitPlayer.getPitPlayer(onlinePlayer);
 					if(pitPlayer.credits >= getMaxCredits(onlinePlayer)) continue;
 
-					int modulus = pitPlayer.credits < getLowCreditThreshold(onlinePlayer) ? getLowSecondsPerCredit(onlinePlayer) : getSecondsPerCredit(onlinePlayer);
+					int modulus = pitPlayer.credits < getLowCreditThreshold(onlinePlayer) ? getLowTicksPerCredit(onlinePlayer) : getTicksPerCredit(onlinePlayer);
 					if(seconds % modulus != 0) continue;
 					give(pitPlayer, 1, false);
 				}
 			}
-		}.runTaskTimer(PitSim.INSTANCE, 0L, 20);
+		}.runTaskTimer(PitSim.INSTANCE, 0L, 1);
 	}
 
 	@EventHandler
@@ -73,8 +73,8 @@ public class CreditManager implements Listener {
 			public void run() {
 				PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
 				if(pitPlayer.lastLogout.getTime() == 0) return;
-				int minutesPassed = (int) ((new Date().getTime() - pitPlayer.lastLogout.getTime()) / 1000.0 / 60.0);
-				int creditsOwed = getCreditsOwed(player, minutesPassed);
+				int ticksPassed = (int) ((new Date().getTime() - pitPlayer.lastLogout.getTime()) / 1000.0 * 20);
+				int creditsOwed = getCreditsOwed(player, ticksPassed);
 				give(pitPlayer, creditsOwed, false);
 			}
 		}.runTaskLater(PitSim.INSTANCE, 1L);
@@ -86,7 +86,7 @@ public class CreditManager implements Listener {
 		pitPlayer.credits += overflow ? amount : Math.max(Math.min(amount, getMaxCredits(pitPlayer.player) - pitPlayer.credits), 0);
 	}
 
-	public static int getCreditsOwed(Player player, int minutesPassed) {
-		return minutesPassed / getOfflineMinutesPerCredit(player);
+	public static int getCreditsOwed(Player player, int ticksPassed) {
+		return ticksPassed / getOfflineTicksPerCredit(player);
 	}
 }
