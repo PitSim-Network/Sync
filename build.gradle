@@ -45,7 +45,7 @@ dependencies {
 
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
     compile group: 'org.json', name: 'json', version: '20201115'
-    compile 'com.github.TheNullicorn:Nedit:v1.2.0'
+    compile 'com.github.TheNullicorn:Nedit:v2.0.0'
 }
 
 shadowJar {
