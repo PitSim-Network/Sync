@@ -4,6 +4,7 @@ import dev.kyro.arcticapi.builders.ALoreBuilder;
 import dev.kyro.arcticapi.misc.AUtil;
 import net.pitsim.sync.controllers.Cooldown;
 import net.pitsim.sync.controllers.EnchantManager;
+import net.pitsim.sync.controllers.GrimManager;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enchants.needtoinspect.ComboVenom;
 import net.pitsim.sync.enums.ApplyType;
@@ -44,6 +45,8 @@ public class MegaLongBow extends PitEnchant {
 
 		critArrow(player, arrow);
 		Misc.applyPotionEffect(player, PotionEffectType.JUMP, 40, getJumpMultiplier(enchantLvl), true, false);
+		GrimManager.exemptPlayer(player, 20 + getJumpMultiplier(enchantLvl) * 5L,
+				GrimManager.FlagType.SIMULATION, GrimManager.FlagType.GROUND_SPOOF);
 	}
 
 	public static void critArrow(Player player, Arrow arrow) {

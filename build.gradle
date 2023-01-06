@@ -33,6 +33,7 @@ dependencies {
     compileOnly 'com.sk89q.worldguard:worldguard-legacy:6.2'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:6.0'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
+    compileOnly 'com.github.MWHunter:GrimAPI:add576ba8b'
 
     compile 'com.github.ArcticDevelopment:ArcticAPI:b3172a60bd'
     compile 'de.tr7zw:item-nbt-api-plugin:2.8.0'// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
