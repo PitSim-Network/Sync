@@ -16,11 +16,11 @@ repositories {
     maven { url 'https://jitpack.io' }
     maven { url "https://repo.codemc.org/repository/maven-public" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
-    maven { url "http://maven.sk89q.com/repo/" }
     maven { url "https://maven.enginehub.org/repo/" }
     maven { url "https://repo.inventivetalent.org/content/repositories/snapshots" }
     maven { url "https://repo.dmulloy2.net/repository/public/" }
     maven { url 'https://repo.hypixel.net/repository/Hypixel/' }
+    maven { url 'https://maven.enginehub.org/repo' }
 }
 
 dependencies {
