@@ -6,6 +6,7 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
+import net.pitsim.sync.hypixel.HypixelPlayer;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
 import net.pitsim.sync.misc.Sounds;
@@ -224,7 +225,13 @@ public class PlayerManager implements Listener {
 		Player player = event.getPlayer();
 		LoadoutManager.getHypixelPlayer(player.getUniqueId());
 
-		event.getPlayer().setGameMode(GameMode.SURVIVAL);
+		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
+		if(!pitPlayer.loadout.stash.isEmpty()) {
+			int stashSize = pitPlayer.loadout.stash.size();
+			AOutput.send(player, "c&lSTASH!&7 You have " + stashSize + " item" + (stashSize == 1 ? "" : "s" + " in your stash"));
+		}
+
+		player.setGameMode(GameMode.SURVIVAL);
 	}
 
 	@EventHandler
