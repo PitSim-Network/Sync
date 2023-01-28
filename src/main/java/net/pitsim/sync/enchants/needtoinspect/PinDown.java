@@ -7,6 +7,8 @@ import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.enums.ApplyType;
 import net.pitsim.sync.events.AttackEvent;
+import net.pitsim.sync.events.KillEvent;
+import net.pitsim.sync.events.OofEvent;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +44,17 @@ public class PinDown extends PitEnchant {
 		super("Pin down", false, ApplyType.BOWS,
 				"pindown", "pin", "pd", "pin-down");
 		isUncommonEnchant = true;
+	}
+
+	@EventHandler
+	public void onOof(OofEvent event) {
+		Player player = event.getPlayer();
+		pinMap.remove(player);
+	}
+
+	@EventHandler
+	public void onKill(KillEvent killEvent) {
+		pinMap.remove(killEvent.dead);
 	}
 
 	@EventHandler
