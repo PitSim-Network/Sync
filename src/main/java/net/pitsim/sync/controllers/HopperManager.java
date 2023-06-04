@@ -6,6 +6,7 @@ import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.KillEvent;
 import net.pitsim.sync.events.OofEvent;
 import net.pitsim.sync.controllers.objects.Hopper;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -100,7 +101,9 @@ public class HopperManager implements Listener {
 		}
 	}
 
-	public static boolean isHopper(Player player) {
+	public static boolean isHopper(LivingEntity checkPlayer) {
+		if(!(checkPlayer instanceof Player)) return false;
+		Player player = (Player) checkPlayer;
 		return getHopper(player) != null;
 	}
 

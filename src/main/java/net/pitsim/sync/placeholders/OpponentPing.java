@@ -1,6 +1,6 @@
 package net.pitsim.sync.placeholders;
 
-import dev.kyro.arcticapi.hooks.APAPIPlaceholder;
+import dev.kyro.arcticapi.hooks.papi.APAPIPlaceholder;
 import net.pitsim.sync.controllers.DuelManager;
 import net.pitsim.sync.controllers.objects.Match;
 import org.bukkit.ChatColor;

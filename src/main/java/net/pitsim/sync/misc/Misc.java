@@ -2,7 +2,10 @@ package net.pitsim.sync.misc;
 
 import net.minecraft.server.v1_8_R3.*;
 import net.pitsim.sync.PitSim;
+import net.pitsim.sync.controllers.HopperManager;
+import net.pitsim.sync.controllers.PlayerManager;
 import net.pitsim.sync.enchants.needtoinspect.PinDown;
+import net.pitsim.sync.enums.PitEntityType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -21,10 +25,26 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class Misc {
+	public static boolean isEntity(Entity entity, PitEntityType... entityTypes) {
+		PitEntityType pitEntityType = getEntity(entity);
+		return Arrays.asList(entityTypes).contains(pitEntityType);
+	}
+
+	public static PitEntityType getEntity(Entity entity) {
+		if(!(entity instanceof LivingEntity)) return PitEntityType.NON_LIVING;
+		LivingEntity livingEntity = (LivingEntity) entity;
+		if(PlayerManager.isRealPlayer(livingEntity)) return PitEntityType.REAL_PLAYER;
+//		if(NonManager.getNon(livingEntity) != null) return PitEntityType.NON;
+		if(HopperManager.isHopper(livingEntity)) return PitEntityType.HOPPER;
+//		if(DarkzoneManager.isPitMob(livingEntity)) return PitEntityType.PIT_MOB;
+//		if(BossManager.isPitBoss(livingEntity)) return PitEntityType.PIT_BOSS;
+		return PitEntityType.UNKNOWN;
+	}
 
 	public static String getFormattedName(Player player) {
 		return getFormattedName(player.getName());
@@ -244,5 +264,9 @@ public class Misc {
 		if(isAirOrNull(player.getEquipment().getChestplate())) player.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
 		if(isAirOrNull(player.getEquipment().getLeggings())) player.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
 		if(isAirOrNull(player.getEquipment().getBoots())) player.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+	}
+
+	public static long getRunnableOffset(int minutes) {
+		return (long) (Math.random() * 20 * 60 * minutes);
 	}
 }

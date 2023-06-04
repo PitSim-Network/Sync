@@ -1,8 +1,8 @@
 package net.pitsim.sync.placeholders;
 
-import dev.kyro.arcticapi.hooks.APAPIPlaceholder;
-import net.pitsim.sync.controllers.objects.PitPlayer;
+import dev.kyro.arcticapi.hooks.papi.APAPIPlaceholder;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.pitsim.sync.controllers.objects.PitPlayer;
 import org.bukkit.entity.Player;
 
 public class PrefixPlaceholder implements APAPIPlaceholder {

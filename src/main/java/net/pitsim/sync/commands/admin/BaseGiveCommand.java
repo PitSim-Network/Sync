@@ -1,24 +1,26 @@
 package net.pitsim.sync.commands.admin;
 
-import dev.kyro.arcticapi.commands.ABaseCommand;
-import dev.kyro.arcticapi.misc.AOutput;
+import dev.kyro.arcticapi.commands.AMultiCommand;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class BaseGiveCommand extends ABaseCommand {
-	public BaseGiveCommand(ABaseCommand baseCommand, String executor) {
-		super(baseCommand, executor);
+public class BaseGiveCommand extends AMultiCommand {
+	public BaseGiveCommand(AMultiCommand base, String executor) {
+		super(base, executor);
 	}
 
 	@Override
-	public void executeBase(CommandSender sender, List<String> args) {
+	public void execute(CommandSender sender, Command command, String alias, List<String> args) {
 		if(!sender.isOp()) return;
-		for(String line : createHelp().getMessage()) AOutput.sendIfPlayer(sender, line);
+		super.execute(sender, command, alias, args);
 	}
 
 	@Override
-	public void executeFail(CommandSender sender, List<String> args) {
-		executeBase(sender, args);
+	public List<String> getTabComplete(Player player, String current, List<String> args) {
+		if(!player.isOp()) return null;
+		return null;
 	}
 }

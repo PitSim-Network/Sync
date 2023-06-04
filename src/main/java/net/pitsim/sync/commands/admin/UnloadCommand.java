@@ -1,22 +1,24 @@
 package net.pitsim.sync.commands.admin;
 
-import dev.kyro.arcticapi.commands.ASubCommand;
+import dev.kyro.arcticapi.commands.ACommand;
+import dev.kyro.arcticapi.commands.AMultiCommand;
 import dev.kyro.arcticapi.misc.AOutput;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.misc.Misc;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class UnloadCommand extends ASubCommand {
-	public UnloadCommand(String executor) {
-		super(executor);
+public class UnloadCommand extends ACommand {
+	public UnloadCommand(AMultiCommand base, String executor) {
+		super(base, executor);
 	}
 
 	@Override
-	public void execute(CommandSender sender, List<String> args) {
+	public void execute(CommandSender sender, Command command, String alias, List<String> args) {
 		if(!(sender instanceof Player)) return;
 		Player player = (Player) sender;
 
@@ -45,5 +47,10 @@ public class UnloadCommand extends ASubCommand {
 		pitPlayer.loadout = null;
 		Misc.clearInventory(target);
 		AOutput.send(player, "&7Disconnected data connected to &6" + target.getName());
+	}
+
+	@Override
+	public List<String> getTabComplete(Player player, String current, List<String> args) {
+		return null;
 	}
 }

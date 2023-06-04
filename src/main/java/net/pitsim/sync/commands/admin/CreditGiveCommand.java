@@ -1,26 +1,24 @@
 package net.pitsim.sync.commands.admin;
 
-import dev.kyro.arcticapi.commands.ASubCommand;
+import dev.kyro.arcticapi.commands.ACommand;
+import dev.kyro.arcticapi.commands.AMultiCommand;
 import dev.kyro.arcticapi.misc.AOutput;
 import net.pitsim.sync.controllers.CreditManager;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CreditGiveCommand extends ASubCommand {
-	public CreditGiveCommand(String executor) {
-		super(executor);
-		List<String> aliases = new ArrayList<>();
-		aliases.add("credit");
-		setAliases(aliases);
+public class CreditGiveCommand extends ACommand {
+	public CreditGiveCommand(AMultiCommand base, String executor) {
+		super(base, executor);
 	}
 
 	@Override
-	public void execute(CommandSender sender, List<String> args) {
+	public void execute(CommandSender sender, Command command, String alias, List<String> args) {
 		if(!(sender instanceof Player)) return;
 		Player player = (Player) sender;
 
@@ -52,5 +50,10 @@ public class CreditGiveCommand extends ASubCommand {
 		CreditManager.give(pitPlayer, credits, true);
 		AOutput.send(player, "&7Gave " + target.getName() + " &6" + credits + " &7credit" + (credits == 1 ? "" : "s"));
 		AOutput.send(target, "&7You have received &6" + credits + " &7credit" + (credits == 1 ? "" : "s"));
+	}
+
+	@Override
+	public List<String> getTabComplete(Player player, String current, List<String> args) {
+		return null;
 	}
 }

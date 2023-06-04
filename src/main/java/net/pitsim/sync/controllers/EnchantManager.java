@@ -14,9 +14,12 @@ import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.enums.PantColor;
 import net.pitsim.sync.exceptions.*;
 import net.pitsim.sync.misc.Misc;
+import net.pitsim.sync.misc.PitEquipment;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -27,13 +30,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class EnchantManager implements Listener {
-
 	public static List<PitEnchant> pitEnchants = new ArrayList<>();
+	public static Map<Player, Map<PitEnchant, Integer>> enchantMap = new HashMap<>();
 
 	public static void registerEnchant(PitEnchant pitEnchant) {
-
 		pitEnchants.add(pitEnchant);
 		PitSim.INSTANCE.getServer().getPluginManager().registerEvents(pitEnchant, PitSim.INSTANCE);
+	}
+
+	public static void readPlayerEnchants() {
+		enchantMap.clear();
+		for(Player onlinePlayer : Bukkit.getOnlinePlayers()) enchantMap.put(onlinePlayer, readEnchantsOnPlayer(onlinePlayer));
 	}
 
 	public static boolean canTypeApply(ItemStack itemStack, PitEnchant pitEnchant) {
@@ -79,7 +86,7 @@ public class EnchantManager implements Listener {
 		Integer rTokenNum = nbtItem.getInteger(NBTTag.ITEM_RTOKENS.getRef());
 
 		if(!jewel && safe) {
-			if(!EnchantManager.canTypeApply(itemStack, applyEnchant)) {
+			if(!canTypeApply(itemStack, applyEnchant)) {
 				throw new MismatchedEnchantException();
 			} else if(applyLvl > 3) {
 				throw new InvalidEnchantLevelException(true);
@@ -97,7 +104,7 @@ public class EnchantManager implements Listener {
 		if(enchantNum == 2 && safe) {
 			boolean hasCommonEnchant = false;
 			for(String enchantString : enchantOrder) {
-				PitEnchant pitEnchant = EnchantManager.getEnchant(enchantString);
+				PitEnchant pitEnchant = getEnchant(enchantString);
 				if(pitEnchant == null) continue;
 				if(pitEnchant.isUncommonEnchant) continue;
 				hasCommonEnchant = true;
@@ -152,13 +159,13 @@ public class EnchantManager implements Listener {
 
 		int maxTokens = nbtItem.getBoolean(NBTTag.IS_GEMMED.getRef()) ? 9 : 8;
 		if(enchantNum > 3 || tokenNum > maxTokens || rTokenNum > 4) return true;
-		for(PitEnchant pitEnchant : EnchantManager.pitEnchants) {
+		for(PitEnchant pitEnchant : pitEnchants) {
 			if(itemEnchants.getInteger(pitEnchant.refNames.get(0)) > 3) return true;
 		}
 		boolean hasCommonEnchant = false;
 		for(String enchantString : enchantOrder) {
-			PitEnchant pitEnchant = EnchantManager.getEnchant(enchantString);
-			if(pitEnchant == EnchantManager.getEnchant("theking")) return true;
+			PitEnchant pitEnchant = getEnchant(enchantString);
+			if(pitEnchant == getEnchant("theking")) return true;
 			if(pitEnchant == null) continue;
 			if(pitEnchant.isUncommonEnchant) continue;
 			hasCommonEnchant = true;
@@ -241,7 +248,7 @@ public class EnchantManager implements Listener {
 
 		for(String key : enchantOrder) {
 
-			PitEnchant enchant = EnchantManager.getEnchant(key);
+			PitEnchant enchant = getEnchant(key);
 			Integer enchantLvl = itemEnchants.getInteger(key);
 			if(enchant == null) continue;
 			loreBuilder.addLore("&f");
@@ -263,14 +270,12 @@ public class EnchantManager implements Listener {
 	}
 
 	public static boolean isGemmed(ItemStack itemStack) {
-
 		if(Misc.isAirOrNull(itemStack)) return false;
 		NBTItem nbtItem = new NBTItem(itemStack);
 		return nbtItem.getBoolean(NBTTag.IS_GEMMED.getRef());
 	}
 
 	public static PitEnchant getEnchant(String refName) {
-
 		if(refName.equals("")) return null;
 		for(PitEnchant enchant : pitEnchants) {
 
@@ -281,35 +286,16 @@ public class EnchantManager implements Listener {
 	}
 
 	public static String enchantLevelToRoman(int enchantLvl) {
-
 		return enchantLvl <= 1 ? "" : " " + AUtil.toRoman(enchantLvl);
 	}
-	
+
 	public static int getEnchantLevel(Player player, PitEnchant pitEnchant) {
 		if(player == null) return 0;
-
-//		List<ItemStack> inUse = player.getInventory().getArmorContents() != null ?
-//				new ArrayList<>(Arrays.asList(player.getInventory().getArmorContents())) : new ArrayList<>();
-		List<ItemStack> inUse = new ArrayList<>();
-		for(ItemStack armor : player.getInventory().getArmorContents()) if(armor != null) inUse.add(armor);
-		inUse.add(player.getItemInHand());
-
-		int finalLevel = 0;
-		for(ItemStack itemStack : inUse) {
-			int enchantLvl = getEnchantLevel(itemStack, pitEnchant);
-			if(pitEnchant.levelStacks) {
-
-				finalLevel += enchantLvl;
-			} else {
-				if(enchantLvl > finalLevel) finalLevel = enchantLvl;
-			}
-		}
-
-		return finalLevel;
+		if(!enchantMap.containsKey(player)) return 0;
+		return enchantMap.get(player).getOrDefault(pitEnchant, 0);
 	}
 
 	public static int getEnchantLevel(ItemStack itemStack, PitEnchant pitEnchant) {
-
 		if(itemStack == null || itemStack.getType() == Material.AIR) return 0;
 		NBTItem nbtItem = new NBTItem(itemStack);
 		if(!nbtItem.hasKey(NBTTag.ITEM_UUID.getRef())) return 0;
@@ -319,9 +305,7 @@ public class EnchantManager implements Listener {
 	}
 
 	public static int getEnchantLevel(Map<PitEnchant, Integer> enchantMap, PitEnchant pitEnchant) {
-
 		for(Map.Entry<PitEnchant, Integer> entry : enchantMap.entrySet()) {
-
 			if(entry.getKey() != pitEnchant) continue;
 			return entry.getValue();
 		}
@@ -329,37 +313,43 @@ public class EnchantManager implements Listener {
 		return 0;
 	}
 
-	public static Map<PitEnchant, Integer> getEnchantsOnPlayer(Player player) {
-
-		List<ItemStack> inUse = new ArrayList<>(Arrays.asList(player.getInventory().getArmorContents()));
-		inUse.add(player.getItemInHand());
-
-		return getEnchantsOnPlayer(inUse.toArray(new ItemStack[5]));
+	public static Map<PitEnchant, Integer> getEnchantsOnPlayer(LivingEntity checkPlayer) {
+		if(!(checkPlayer instanceof Player)) return new HashMap<>();
+		Player player = (Player) checkPlayer;
+		if(!enchantMap.containsKey(player)) return new HashMap<>();
+		return enchantMap.get(player);
 	}
 
-	public static Map<PitEnchant, Integer> getEnchantsOnPlayer(ItemStack[] inUseArr) {
+	public static Map<PitEnchant, Integer> readEnchantsOnPlayer(LivingEntity checkPlayer) {
+		if(!(checkPlayer instanceof Player)) return new HashMap<>();
+		Player player = (Player) checkPlayer;
+		return readEnchantsOnEquipment(new PitEquipment(player));
+	}
 
-		Map<PitEnchant, Integer> playerEnchantMap = new HashMap<>();
-		for(int i = 0; i < inUseArr.length; i++) {
-			if(Misc.isAirOrNull(inUseArr[i])) continue;
-			Map<PitEnchant, Integer> itemEnchantMap = getEnchantsOnItem(inUseArr[i], playerEnchantMap);
-			if(i == 4) {
-				for(Map.Entry<PitEnchant, Integer> entry : itemEnchantMap.entrySet())
+	public static Map<PitEnchant, Integer> readEnchantsOnEquipment(PitEquipment pitEquipment) {
+		List<ItemStack> equipmentList = pitEquipment.getAsList();
+		LinkedHashMap<PitEnchant, Integer> playerEnchantMap = new LinkedHashMap<>();
+		for(int i = 0; i < equipmentList.size(); i++) {
+			ItemStack equipmentPiece = equipmentList.get(i);
+			if(Misc.isAirOrNull(equipmentPiece)) continue;
+			Map<PitEnchant, Integer> itemEnchantMap = getEnchantsOnItem(equipmentPiece, playerEnchantMap);
+			if(i == 0) {
+				for(Map.Entry<PitEnchant, Integer> entry : itemEnchantMap.entrySet()) {
 					if(entry.getKey().applyType != ApplyType.PANTS) playerEnchantMap.put(entry.getKey(), entry.getValue());
-			} else playerEnchantMap.putAll(itemEnchantMap);
+				}
+			} else {
+				playerEnchantMap.putAll(itemEnchantMap);
+			}
 		}
-
 		return playerEnchantMap;
 	}
 
 	public static Map<PitEnchant, Integer> getEnchantsOnItem(ItemStack itemStack) {
-		return getEnchantsOnItem(itemStack, new HashMap<>());
+		return getEnchantsOnItem(itemStack, new LinkedHashMap<>());
 	}
 
-	@org.jetbrains.annotations.NotNull
-	public static Map<PitEnchant, Integer> getEnchantsOnItem(ItemStack itemStack, @NotNull Map<PitEnchant, Integer> currentEnchantMap) {
-
-		Map<PitEnchant, Integer> itemEnchantMap = new LinkedHashMap<>();
+	public static Map<PitEnchant, Integer> getEnchantsOnItem(ItemStack itemStack, @NotNull LinkedHashMap<PitEnchant, Integer> currentEnchantMap) {
+		LinkedHashMap<PitEnchant, Integer> itemEnchantMap = new LinkedHashMap<>();
 		if(itemStack == null || itemStack.getType() == Material.AIR) return itemEnchantMap;
 		NBTItem nbtItem = new NBTItem(itemStack);
 		if(!nbtItem.hasKey(NBTTag.ITEM_UUID.getRef())) return itemEnchantMap;
@@ -367,13 +357,9 @@ public class EnchantManager implements Listener {
 		NBTCompound itemEnchants = nbtItem.getCompound(NBTTag.PIT_ENCHANTS.getRef());
 		Set<String> keys = itemEnchants.getKeys();
 		for(String key : keys) {
-
 			PitEnchant pitEnchant = getEnchant(key);
 			Integer enchantLvl = itemEnchants.getInteger(key);
 			if(pitEnchant == null || enchantLvl == 0) continue;
-
-//			if(currentEnchantMap.containsKey(pitEnchant) && currentEnchantMap.get(pitEnchant) >= enchantLvl) continue;
-//			itemEnchantMap.put(pitEnchant, enchantLvl);
 
 			if(currentEnchantMap.containsKey(pitEnchant) && currentEnchantMap.get(pitEnchant) >= enchantLvl && !pitEnchant.levelStacks) continue;
 			if(currentEnchantMap.containsKey(pitEnchant) && !pitEnchant.levelStacks) itemEnchantMap.put(pitEnchant, enchantLvl);

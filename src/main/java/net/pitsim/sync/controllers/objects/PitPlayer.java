@@ -4,6 +4,7 @@ import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.pitsim.sync.PitSim;
+import net.pitsim.sync.enchants.GottaGoFast;
 import net.pitsim.sync.enchants.Hearts;
 import net.pitsim.sync.events.HealEvent;
 import net.pitsim.sync.hypixel.Loadout;
@@ -122,6 +123,15 @@ public class PitPlayer {
 
 		if(player.getMaxHealth() == maxHealth) return;
 		player.setMaxHealth(maxHealth);
+	}
+
+	public void updateWalkingSpeed() {
+		float previousWalkSpeed = player.getWalkSpeed();
+
+		float newWalkSpeed = 0.2F;
+		newWalkSpeed *= 1 + (GottaGoFast.getWalkSpeedIncrease(this) / 100.0);
+
+		if(previousWalkSpeed != newWalkSpeed) player.setWalkSpeed(newWalkSpeed);
 	}
 
 	public void save() {

@@ -4,15 +4,18 @@ import de.tr7zw.nbtapi.NBTItem;
 import dev.kyro.arcticapi.misc.AOutput;
 import net.pitsim.sync.PitSim;
 import net.pitsim.sync.controllers.objects.PitPlayer;
+import net.pitsim.sync.enums.EquipmentType;
 import net.pitsim.sync.enums.NBTTag;
 import net.pitsim.sync.events.AttackEvent;
-import net.pitsim.sync.hypixel.HypixelPlayer;
+import net.pitsim.sync.events.EquipmentChangeEvent;
 import net.pitsim.sync.hypixel.LoadoutManager;
 import net.pitsim.sync.misc.Misc;
+import net.pitsim.sync.misc.PitEquipment;
 import net.pitsim.sync.misc.Sounds;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,12 +30,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerManager implements Listener {
-//	public static Map<Player, BossBarManager> bossBars = new HashMap<>();
+	public static final Map<Player, PitEquipment> previousEquipmentMap = new HashMap<>();
+	private static final List<UUID> realPlayers = new ArrayList<>();
+
+	public static void addRealPlayer(UUID uuid) {
+		realPlayers.add(uuid);
+	}
+
+	public static boolean isRealPlayer(LivingEntity testPlayer) {
+		if(!(testPlayer instanceof Player)) return false;
+		return realPlayers.contains(testPlayer.getUniqueId());
+	}
+
 	static {
 		new BukkitRunnable() {
 			@Override
@@ -46,6 +58,33 @@ public class PlayerManager implements Listener {
 				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) PitPlayer.getPitPlayer(onlinePlayer).save();
 			}
 		}.runTaskTimer(PitSim.INSTANCE, 0L, 20);
+
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				EnchantManager.readPlayerEnchants();
+				for(Player player : Bukkit.getOnlinePlayers()) {
+					PitEquipment currentEquipment = new PitEquipment(player);
+					if(!previousEquipmentMap.containsKey(player)) {
+						previousEquipmentMap.put(player, currentEquipment);
+						continue;
+					}
+
+					PitEquipment previousEquipment = previousEquipmentMap.get(player);
+
+					for(EquipmentType equipmentType : EquipmentType.values()) {
+						ItemStack previousItem = previousEquipment.getItemStack(equipmentType);
+						ItemStack currentItem = currentEquipment.getItemStack(equipmentType);
+						if(previousItem.equals(currentItem)) continue;
+
+						EquipmentChangeEvent event = new EquipmentChangeEvent(player, equipmentType, previousEquipment, currentEquipment, false);
+						Bukkit.getPluginManager().callEvent(event);
+					}
+
+					previousEquipmentMap.put(player, currentEquipment);
+				}
+			}
+		}.runTaskTimer(PitSim.INSTANCE, 0L, 1L);
 	}
 
 	@EventHandler
@@ -109,6 +148,13 @@ public class PlayerManager implements Listener {
 
 			pitPlayer.premiumGUI.open();
 		}
+	}
+
+	@EventHandler
+	public void onEquipmentChange(EquipmentChangeEvent event) {
+		PitPlayer pitPlayer = event.getPitPlayer();
+		pitPlayer.updateMaxHealth();
+		pitPlayer.updateWalkingSpeed();
 	}
 
 	@EventHandler
@@ -239,13 +285,6 @@ public class PlayerManager implements Listener {
 		Player player = event.getPlayer();
 		Location spawnLoc = MapManager.getLobbySpawn();
 		player.teleport(spawnLoc);
-
-//		new BukkitRunnable() {
-//			@Override
-//			public void run() {
-//				Bukkit.getServer().dispatchCommand(player, "spawn");
-//			}
-//		}.runTaskLater(PitSim.INSTANCE,  10L);
 	}
 
 	@EventHandler
@@ -255,10 +294,13 @@ public class PlayerManager implements Listener {
 
 	@EventHandler
 	public void onJoin(AsyncPlayerPreLoginEvent event) {
+		UUID playerUUID = event.getUniqueId();
+		if(!realPlayers.contains(playerUUID)) addRealPlayer(playerUUID);
 		Player player = Bukkit.getServer().getPlayerExact(event.getName());
 		if(player == null) return;
 		if(player.isOnline()) {
 			event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "You are already online! \nIf you believe this is an error, try re-logging in a few seconds.");
+			return;
 		}
 	}
 

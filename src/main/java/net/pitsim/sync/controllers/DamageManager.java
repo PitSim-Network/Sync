@@ -9,7 +9,6 @@ import net.pitsim.sync.controllers.objects.PitEnchant;
 import net.pitsim.sync.controllers.objects.PitPlayer;
 import net.pitsim.sync.enchants.Regularity;
 import net.pitsim.sync.enchants.Telebow;
-import net.pitsim.sync.enchants.needtoinspect.WolfPack;
 import net.pitsim.sync.events.AttackEvent;
 import net.pitsim.sync.events.KillEvent;
 import net.pitsim.sync.misc.ArmorReduction;
@@ -229,7 +228,6 @@ public class DamageManager implements Listener {
 		if(damager instanceof Player) return (Player) damager;
 		if(damager instanceof Arrow) return (Player) ((Arrow) damager).getShooter();
 //		if(damager instanceof Slime) return PitBlob.getOwner((Slime) damager);
-		if(damager instanceof Wolf) return WolfPack.getOwner((Wolf) damager);
 
 		return null;
 	}

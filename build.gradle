@@ -5,6 +5,8 @@ plugins {
 
 group 'net.pitsim'
 version '1.0.0'
+project.sourceCompatibility = '1.8'
+project.targetCompatibility = '1.8'
 
 repositories {
     mavenCentral()
@@ -27,7 +29,7 @@ dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
 //    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
     compileOnly files('libs/ispigot.jar')
-    compileOnly files("libs/Citizens.jar")
+    compileOnly files("libs/Citizens-2.0.30-Kyro.jar")
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
     compileOnly "me.clip:placeholderapi:2.10.9"
     compileOnly 'com.sk89q.worldguard:worldguard-legacy:6.2'
@@ -35,7 +37,7 @@ dependencies {
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
     compileOnly 'com.github.MWHunter:GrimAPI:add576ba8b'
 
-    compile 'com.github.ArcticDevelopment:ArcticAPI:b3172a60bd'
+    compile 'com.github.ArcticDevelopment:ArcticAPI:032bf8696c'
     compile 'de.tr7zw:item-nbt-api-plugin:2.8.0'// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     compileOnly files('libs/Buzz_API.jar')
@@ -50,7 +52,12 @@ dependencies {
 }
 
 shadowJar {
-
     relocate 'dev.kyro.arcticapi', 'dev.kyro.sync.arcticapi'
     relocate 'net.kyori', 'dev.kyro.sync.kyori'
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "1000"
+    }
 }

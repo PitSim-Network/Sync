@@ -3,7 +3,7 @@ package net.pitsim.sync;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import dev.kyro.arcticapi.ArcticAPI;
-import dev.kyro.arcticapi.commands.ABaseCommand;
+import dev.kyro.arcticapi.commands.AMultiCommand;
 import dev.kyro.arcticapi.data.AData;
 import dev.kyro.arcticapi.hooks.AHook;
 import dev.kyro.arcticapi.misc.AOutput;
@@ -20,11 +20,9 @@ import net.pitsim.sync.enchants.DiamondAllergy;
 import net.pitsim.sync.enchants.*;
 import net.pitsim.sync.enchants.intentionaluseless.*;
 import net.pitsim.sync.enchants.needtoinspect.*;
-import net.pitsim.sync.enchants.useless.WolfPack;
 import net.pitsim.sync.enchants.useless.*;
 import net.pitsim.sync.hypixel.Loadout;
 import net.pitsim.sync.hypixel.LoadoutManager;
-import net.pitsim.sync.misc.SpawnNPCs;
 import net.pitsim.sync.perks.NoPerk;
 import net.pitsim.sync.perks.Vampire;
 import net.pitsim.sync.placeholders.*;
@@ -78,8 +76,6 @@ public class PitSim extends JavaPlugin {
 			toRemove.get(0).destroy();
 			toRemove.remove(0);
 		}
-
-		SpawnNPCs.createNPCs();
 
 		if (!setupEconomy()) {
 			AOutput.log(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -136,21 +132,8 @@ public class PitSim extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		SpawnNPCs.removeNPCs();
-
 		for(PitEnchant pitEnchant : EnchantManager.pitEnchants) pitEnchant.onDisable();
-
-//		Iterator<Map.Entry<Player, EntitySongPlayer>> it = StereoManager.playerMusic.entrySet().iterator();
-//		while(it.hasNext()) {
-//			Map.Entry<Player, EntitySongPlayer> pair = it.next();
-//			EntitySongPlayer esp = pair.getValue();
-//			esp.destroy();
-//			it.remove();
-//		}
-
-		for(Match match : DuelManager.matches) {
-			match.onPluginDisable();
-		}
+		for(Match match : DuelManager.matches) match.onPluginDisable();
 	}
 
 	private void registerPerks() {
@@ -160,19 +143,19 @@ public class PitSim extends JavaPlugin {
 
 	private void registerCommands() {
 
-		ABaseCommand adminCommand = new BaseAdminCommand("pitsim");
+		AMultiCommand adminCommand = new BaseAdminCommand("pitsim");
 		getCommand("ps").setExecutor(adminCommand);
 
-		ABaseCommand giveCommand = new BaseGiveCommand(adminCommand, "give");
-		giveCommand.registerCommand(new CreditGiveCommand("credits"));
+		AMultiCommand giveCommand = new BaseGiveCommand(adminCommand, "give");
+		new CreditGiveCommand(giveCommand, "credit");
 
-		adminCommand.registerCommand(new UnloadCommand("unload"));
-		adminCommand.registerCommand(new LoadCommand("load"));
-		adminCommand.registerCommand(new FullLoadCommand("fullload"));
-		adminCommand.registerCommand(new HopperCommand("hopper"));
-		adminCommand.registerCommand(new ReloadCommand("reload"));
-		adminCommand.registerCommand(new BypassCommand("bypass"));
-		adminCommand.registerCommand(new LockdownCommand("lockdown"));
+		new UnloadCommand(adminCommand, "unload");
+		new LoadCommand(adminCommand, "load");
+		new FullLoadCommand(adminCommand, "fullload");
+		new HopperCommand(adminCommand, "hopper");
+		new ReloadCommand(adminCommand, "reload");
+		new BypassCommand(adminCommand, "bypass");
+		new LockdownCommand(adminCommand, "lockdown");
 
 		getCommand("atest").setExecutor(new ATestCommand());
 
@@ -198,7 +181,6 @@ public class PitSim extends JavaPlugin {
 	}
 
 	private void registerListeners() {
-
 		getServer().getPluginManager().registerEvents(new DamageManager(), this);
 		getServer().getPluginManager().registerEvents(new PlayerManager(), this);
 		getServer().getPluginManager().registerEvents(new DamageIndicator(), this);
@@ -206,7 +188,6 @@ public class PitSim extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new SpawnManager(), this);
 		getServer().getPluginManager().registerEvents(new AFKManager(), this);
 		getServer().getPluginManager().registerEvents(new EnchantManager(), this);
-		getServer().getPluginManager().registerEvents(new SpawnNPCs(), this);
 		getServer().getPluginManager().registerEvents(new DuelManager(), this);
 		getServer().getPluginManager().registerEvents(new ResourcePackManager(), this);
 		getServer().getPluginManager().registerEvents(new LoadoutManager(), this);
@@ -218,7 +199,6 @@ public class PitSim extends JavaPlugin {
 	}
 
 	private void loadConfig() {
-
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 	}
