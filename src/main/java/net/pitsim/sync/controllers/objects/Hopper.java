@@ -30,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Hopper {
@@ -113,11 +112,7 @@ public class Hopper {
 					watcher.setObject(0, (byte) (0x0));
 					packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
 
-					try {
-						PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
-					} catch(InvocationTargetException e) {
-						e.printStackTrace();
-					}
+					PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
 				}
 			} else {
 				for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -128,11 +123,7 @@ public class Hopper {
 					watcher.setObject(0, (byte) (0x10));
 					packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
 
-					try {
-						PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
-					} catch(InvocationTargetException e) {
-						e.printStackTrace();
-					}
+					PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
 				}
 			}
 		}

@@ -6,16 +6,16 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import dev.kyro.arcticapi.data.APlayer;
 import dev.kyro.arcticapi.data.APlayerData;
 import dev.kyro.arcticapi.misc.AOutput;
-import net.pitsim.sync.PitSim;
-import net.pitsim.sync.controllers.EnchantManager;
-import net.pitsim.sync.enums.MysticType;
-import net.pitsim.sync.enums.PantColor;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.trait.Equipment;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.util.Util;
 import net.minecraft.server.v1_8_R3.PacketPlayOutAnimation;
+import net.pitsim.sync.PitSim;
+import net.pitsim.sync.controllers.EnchantManager;
+import net.pitsim.sync.enums.MysticType;
+import net.pitsim.sync.enums.PantColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,7 +32,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -235,11 +234,7 @@ public class ATestCommand implements CommandExecutor {
 						watcher.setObject(0, (byte) (0x0));
 						packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
 
-						try {
-							PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
-						} catch(InvocationTargetException e) {
-							e.printStackTrace();
-						}
+						PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
 					}
 				} else {
 					for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -250,11 +245,7 @@ public class ATestCommand implements CommandExecutor {
 						watcher.setObject(0, (byte) (0x10));
 						packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
 
-						try {
-							PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
-						} catch(InvocationTargetException e) {
-							e.printStackTrace();
-						}
+						PitSim.PROTOCOL_MANAGER.sendServerPacket(onlinePlayer, packet);
 					}
 				}
 

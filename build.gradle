@@ -27,9 +27,6 @@ repositories {
 
 dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
-//    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-    compileOnly files('libs/ispigot.jar')
-    compileOnly files("libs/Citizens-2.0.30-Kyro.jar")
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
     compileOnly "me.clip:placeholderapi:2.10.9"
     compileOnly 'com.sk89q.worldguard:worldguard-legacy:6.2'
@@ -40,15 +37,15 @@ dependencies {
     compile 'com.github.ArcticDevelopment:ArcticAPI:032bf8696c'
     compile 'de.tr7zw:item-nbt-api-plugin:2.8.0'// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    compileOnly files('libs/Buzz_API.jar')
-    compileOnly files('libs/FeatherBoard.jar')
 
     compileOnly 'net.luckperms:api:5.3'
     implementation 'com.github.HypixelDev.PublicAPI:Java:2.0.0'
 
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
-    compile group: 'org.json', name: 'json', version: '20201115'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+    compile group: 'org.json', name: 'json', version: '20230227'
     compile 'com.github.TheNullicorn:Nedit:v2.0.0'
+
+    compileOnly files('libs/PitSimSpigotDependencies-1-all.jar')
 }
 
 shadowJar {
