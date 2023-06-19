@@ -6,3 +6,7 @@ anticheat:
   abnormal-angle: 40
   abnormal-distance: 30
   alert-interval: 15
+security:
+  require-captcha: false
+  require verification: false
+hypixel-api-key: ""
