@@ -272,7 +272,7 @@ public class PlayerManager implements Listener {
 		LoadoutManager.getHypixelPlayer(player.getUniqueId());
 
 		PitPlayer pitPlayer = PitPlayer.getPitPlayer(player);
-		if(!pitPlayer.loadout.stash.isEmpty()) {
+		if(pitPlayer.loadout != null && !pitPlayer.loadout.stash.isEmpty()) {
 			int stashSize = pitPlayer.loadout.stash.size();
 			AOutput.send(player, "c&lSTASH!&7 You have " + stashSize + " item" + (stashSize == 1 ? "" : "s" + " in your stash"));
 		}

@@ -12,7 +12,6 @@ depend:
   - NoteBlockAPI
   - ProtocolLib
   - Essentials
-  - GrimAC
 commands:
   pitsim:
   ps:
