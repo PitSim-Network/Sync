@@ -37,26 +37,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-//import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-
 public class PitSim extends JavaPlugin {
-
-	public static double version = 2.0;
-
 	public static LuckPerms LUCKPERMS;
 	public static PitSim INSTANCE;
 	public static Economy VAULT = null;
 	public static ProtocolManager PROTOCOL_MANAGER = null;
 
 	public static AData playerList;
-//	private BukkitAudiences adventure;
-//
-//	public BukkitAudiences adventure() {
-//		if(this.adventure == null) {
-//			throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-//		}
-//		return this.adventure;
-//	}
 
 	@Override
 	public void onEnable() {
@@ -85,19 +72,14 @@ public class PitSim extends JavaPlugin {
 
 		Plugin essentials = Bukkit.getPluginManager().getPlugin("Essentials");
 		EntityDamageEvent.getHandlerList().unregister(essentials);
-		for(RegisteredListener listener : EntityDamageEvent.getHandlerList().getRegisteredListeners()) {
-		}
 
-		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-		} else {
-			AOutput.log(String.format("Could not find PlaceholderAPI! This plugin is required."));
+		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+			AOutput.log("Could not find PlaceholderAPI! This plugin is required.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
 
-		boolean NoteBlockAPI = true;
 		if (!Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI")){
 			getLogger().severe("*** NoteBlockAPI is not installed or not enabled. ***");
-			NoteBlockAPI = false;
 			return;
 		}
 
