@@ -30,7 +30,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -124,7 +123,6 @@ public class PitSim extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-
 		AMultiCommand adminCommand = new BaseAdminCommand("pitsim");
 		getCommand("ps").setExecutor(adminCommand);
 
